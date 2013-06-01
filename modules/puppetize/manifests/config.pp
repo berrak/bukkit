@@ -45,6 +45,36 @@ class puppetize::config {
             notify => Class["puppetize::service"],
         }
         
+        # Utilities to run puppet manifests
+        
+        file { "/root/bin" :
+             ensure => directory,
+              owner => 'root',
+              group => 'root',
+               mode => '0700',
+        }
+        
+        file { "/root/bin/puppet.exec" :
+             ensure => present,
+             source => "puppet:///modules/puppetize/puppet.exec",
+              owner => 'root',
+              group => 'root',
+               mode => '0700',
+            require => Class["puppetize::install"],
+             notify => Class["puppetize::service"],
+        }
+        
+        file { "/root/bin/puppet.simulate" :
+             ensure => present,
+             source => "puppet:///modules/puppetize/puppet.simulate",
+              owner => 'root',
+              group => 'root',
+               mode => '0700',
+            require => Class["puppetize::install"],
+             notify => Class["puppetize::service"],
+        }
+        
+        
         # sets e.g. if puppet master runs as daemon or not 
         
         file { "/etc/default/puppetmaster" :
