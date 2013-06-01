@@ -11,21 +11,22 @@ class puppetize::service {
     # and change 'ensure' below with 'ensure => running'
     
     service { "halt_puppet_agent":
-              name => "puppet",
-            enable => false,
-            ensure => stopped,
-	   require => Class["puppetize::install"],
+                  name => puppet,
+	    hasrestart => true,
+                enable => false,
+                ensure => stopped,
+	       require => Class["puppetize::install"],
     }
 
     # For the puppet server only
 	
     if $::fqdn == $::puppetize::params::mypuppetserver_fqdn {
 
-        service { "run_puppet_master":
-	      name => "puppetmaster",
-            enable => true,
-            ensure => running,
-            require => Class["puppetize::install"],
+        service { "puppetmaster":
+	    hasrestart => true,
+                enable => true,
+                ensure => running,
+               require => Class["puppetize::install"],
         }
     
     } 
