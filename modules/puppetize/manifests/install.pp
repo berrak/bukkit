@@ -14,7 +14,14 @@ class puppetize::install {
         ensure => present,
     }
 	
-    # install some utilities
+    # install some utilities for root
+    
+    file { "/root/bin" :
+        ensure => directory,
+         owner => 'root',
+         group => 'root',
+          mode => '0700',
+    }
     
     file { "/root/bin/puppet.exec":
 	    source => "puppet:///modules/puppetize/puppet.exec",
