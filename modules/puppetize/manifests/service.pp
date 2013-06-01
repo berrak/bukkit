@@ -10,7 +10,7 @@ class puppetize::service {
     # agent is NOT running. If this is not wanted, configure that file.
     # and change 'ensure' below with 'ensure => running'
     
-    service { "reload_puppet_agent":
+    service { "halt_puppet_agent":
               name => "puppet",
             enable => false,
             ensure => stopped,
@@ -21,7 +21,8 @@ class puppetize::service {
 	
     if $::fqdn == $::puppetize::params::mypuppetserver_fqdn {
 
-        service { "puppetmaster":
+        service { "run_puppet_master":
+	      name => "puppetmaster",
             enable => true,
             ensure => running,
             require => Class["puppetize::install"],
