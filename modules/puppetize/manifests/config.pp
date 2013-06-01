@@ -16,26 +16,6 @@ class puppetize::config {
         notify => Class["puppetize::service"],
     }
     
-    # copy the configuration files for security
-    
-        file { "/etc/puppet/auth.conf" :
-        ensure => present,
-        source => "puppet:///modules/puppetize/auth.conf",
-        owner => 'root',
-        group => 'root',
-        require => Class["puppetize::install"],
-        notify => Class["puppetize::service"],
-    }
-    
-        file { "/etc/puppet/fileserver.conf" :
-        ensure => present,
-        source => "puppet:///modules/puppetize/fileserver.conf",
-        owner => 'root',
-        group => 'root',
-        require => Class["puppetize::install"],
-        notify => Class["puppetize::service"],
-    }
-    
     if $::fqdn == $::puppetize::params::mypuppetserver_fqdn {
     
         file { "/etc/puppet/puppet.conf" :
