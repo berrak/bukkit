@@ -3,6 +3,6 @@
 ##
 class admin_hosts {
 
-	include admin_hosts::config
+	include le_hosts::config
 	
 }

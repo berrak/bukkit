@@ -1,7 +1,7 @@
 ##
 ## This class manage the setting in each node host file.
 ## 
-class admin_hosts::config ( $puppetserver_hostname = '' ) {
+class le_hosts::config ( $puppetserver_hostname = '' ) {
 		
 	case $::hostname {
     
