@@ -1,0 +1,160 @@
+#!/bin/sh
+# /root/bin/fw.levonline.server
+###################################################################
+#                      MANAGED IN GIT.                            #
+###################################################################
+#
+# Rules for public Minecraft host (VPS).
+#
+# Copyright (C) (2012-13) K-B.Kronlund <bkronmailbox-copyright@yahoo.se>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+## Basic data
+
+IPTABLES=/sbin/iptables
+MODPROBE=/sbin/modprobe
+
+IPTSAVE=/sbin/iptables-save
+IPTSAVEFILE=/root/bin/IPTABLES.FW
+
+# localhost
+
+# HOSTADDR="217.70.39.231/24"
+
+# Home network
+DKTRUSTEDNET="81.237.0.0/16"
+JHTRUSTEDNET="90.227.0.0/16"
+EKTRUSTEDNET="83.250.0.0/16"
+ARTRUSTEDNET="94.191.0.0/16"
+JMTRUSTEDNET="81.216.0.0/16"
+JM2TRUSTEDNET="79.102.0.0/16"
+JM3TRUSTEDNET="37.197.0.0/16"
+RPTRUSTEDNET="94.234.0.0/16"
+
+
+# multicast mDNS packets
+MDNSMULTICASTADDR="224.0.0.251"
+
+# multicast intra router communiaction
+IGMPADDR="224.0.0.1"
+
+## Log options - i.e. log to file var/log/debug
+LOGOPT="LOG --log-level 7 --log-ip-options --log-tcp-options"
+
+## Prevent excessive logging
+RLIMIT="-m limit --limit 3/s --limit-burst 8"
+
+## Load modules
+$MODPROBE ip_conntrack
+$MODPROBE ip_conntrack_ftp
+
+## Flush old rules, old custom rules
+$IPTABLES -F
+$IPTABLES -X
+
+#---------------------------------------------------------------------
+# Default policies
+#---------------------------------------------------------------------
+$IPTABLES -P INPUT DROP
+$IPTABLES -P OUTPUT ACCEPT
+$IPTABLES -P FORWARD DROP
+
+## Free reign to loopback interfaces
+$IPTABLES -I INPUT 1 -i lo -j ACCEPT
+$IPTABLES -I OUTPUT 1 -o lo -j ACCEPT
+
+#--------------------------------------------------------------------------------------
+## Drop broadcast-packages (only log for initial test -- comment out not to fill logs)
+$IPTABLES -N broadcast-drop
+# $IPTABLES -A broadcast-drop -m pkttype --pkt-type broadcast -j $LOGOPT $RLIMIT --log-prefix "BROADCAST DROP "
+$IPTABLES -A broadcast-drop -m pkttype --pkt-type broadcast -j DROP
+$IPTABLES -A broadcast-drop -j RETURN
+#--------------------------------------------------------------------------------------
+
+## ======================
+## ALLOW INBOUND TRAFFIC
+## ======================
+
+# allow all established and related in
+$IPTABLES -A INPUT -p all -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# ssh client access for management
+$IPTABLES -A INPUT -p tcp -m tcp --dport 22 -m state --state NEW -j ACCEPT
+
+# public minecraft clients talks to the server on this port
+$IPTABLES -A INPUT -p tcp -s $DKTRUSTEDNET -m tcp --dport 25565:25566 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $JHTRUSTEDNET -m tcp --dport 25565:25566 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $EKTRUSTEDNET -m tcp --dport 25565:25566 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $ARTRUSTEDNET -m tcp --dport 25565:25566 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $JMTRUSTEDNET -m tcp --dport 25565:25566 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $JM2TRUSTEDNET -m tcp --dport 25565:25566 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $JM3TRUSTEDNET -m tcp --dport 25565:25666 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $RPTRUSTEDNET -m tcp --dport 25565:25666 -m state --state NEW -j ACCEPT
+
+
+# allow DHCP requests
+$IPTABLES -A INPUT -p udp -m udp --dport 67:68 --sport 67:68 -m state --state NEW -j ACCEPT
+
+# allow dns (udp/tcp) queries to our host
+$IPTABLES -A INPUT -p tcp -m tcp --sport 53 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p udp -m udp --sport 53 -m state --state NEW -j ACCEPT
+
+# Puppet client: allow puppet server input to this puppet client
+$IPTABLES -A INPUT -p tcp -m tcp --dport 8139 -m state --state NEW -j ACCEPT
+
+# Puppet server: allow puppet client requests to this puppet server
+$IPTABLES -A INPUT -p tcp -m tcp --dport 8140 -m state --state NEW -j ACCEPT
+
+
+# allow possible multicast mDNS packets
+$IPTABLES -A INPUT -p udp -m udp --dport 5353 -j ACCEPT
+
+## ==========================
+## DROP OTHER INBOUND TRAFFIC
+## ==========================
+
+# do not allow IGMP to fill logs
+$IPTABLES -A INPUT -p all -d $IGMPADDR -j DROP
+
+# do not not allow broadcasts input to fill logs
+$IPTABLES -t filter -A INPUT -j broadcast-drop
+
+#---------------------------------------------------------------------------
+# CATCH ALL INPUT LOG-and-DROP RULES (you may be suprised what ends up here)
+#---------------------------------------------------------------------------
+
+## Prevent invalid input packages
+$IPTABLES -A INPUT -m state --state INVALID -j $LOGOPT $RLIMIT --log-prefix "DROP INPUT INVALID "
+$IPTABLES -A INPUT -m state --state INVALID -j DROP
+
+$IPTABLES -A INPUT ! -i lo -j $LOGOPT $RLIMIT --log-prefix "DROP INPUT DEFAULT "
+$IPTABLES -A INPUT ! -i lo -j DROP
+
+
+#############################
+## SAVE THE FILE
+#############################
+
+$IPTSAVE > $IPTSAVEFILE
+chmod 700 $IPTSAVEFILE
+
+#############################
+## LIST LOADED IPTABLES RULES
+#############################
+
+$IPTABLES -L -v --line-numbers
+
+exit 0
+
