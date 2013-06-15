@@ -8,7 +8,6 @@ class le_hosts::config ( $puppetserver_hostname = '' ) {
         $puppetserver_hostname : {
 		
             file { '/etc/hosts' :
-                 ensure => present,
                  source => "puppet:///modules/le_hosts/$puppetserver_hostname_hosts",
                   owner => 'root',
                   group => 'root',
