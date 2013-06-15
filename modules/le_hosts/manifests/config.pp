@@ -1,22 +1,18 @@
 ##
 ## This class manage iptables
 ## 
-class le_iptables::config ( $puppetserver_hostname = '' ) {
+class le_hosts::config ( $puppetserver_hostname = '' ) {
 		
 	case $::hostname {
     
         $puppetserver_hostname : {
 		
-            file { "/root/bin/fw.levonline.server" :
-                 source => "puppet:///modules/le_iptables/fw.levonline.server",
+            file { "/etc/hosts" :
+                 source => "puppet:///modules/le_hosts/kronlund01_hosts",
                   owner => 'root',
                   group => 'root',
-                   mode => '0700',
-		        require => File["/root/bin"],
-		         notify => Exec["/bin/sh /root/bin/fw.levonline.server"],
+                   mode => '0640',
             }
-			
-            exec { "/bin/sh /root/bin/fw.levonline.server": refreshonly => true }
         
         }
 		
