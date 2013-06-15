@@ -5,7 +5,7 @@ node 'kronlund01.levonline.com' {
     
     include puppetize
         
-    class { admin_hosts::config :
+    class { le_hosts::config :
          puppetserver_hostname => 'kronlund01'
     }
     
