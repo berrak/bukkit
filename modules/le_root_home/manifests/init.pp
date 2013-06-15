@@ -17,14 +17,6 @@ class le_root_home {
 		subscribe => File["/root"],
 		refreshonly => true,
 	}
-
-	# create a bin subdirectory directory only for root's binary tools
-	file { "/root/bin":
-		ensure => "directory",
-		owner => 'root',
-		group => 'root',
-		mode => '0700',
-	}
 	
 	# create a jobs subdirectory directory only for local admins cron scripts
 	file { "/root/jobs":
