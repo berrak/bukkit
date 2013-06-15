@@ -3,6 +3,6 @@
 ##
 class le_iptables {
 
-	include le_iptables::config, le_iptables::config
+	include le_iptables::install, le_iptables::config
 	
 }

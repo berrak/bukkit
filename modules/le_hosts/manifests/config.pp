@@ -1,5 +1,5 @@
 ##
-## This class manage iptables
+## This class manage hosts
 ## 
 class le_hosts::config ( $puppetserver_hostname = '' ) {
 		

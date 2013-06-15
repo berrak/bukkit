@@ -12,6 +12,4 @@ node 'kronlund01.levonline.com' {
     class { le_iptables::config : puppetserver_hostname => 'kronlund01' }
     
 
-    
-    
 }
