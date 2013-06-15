@@ -7,8 +7,8 @@ class le_hosts::config ( $puppetserver_hostname = '' ) {
     
         $puppetserver_hostname : {
 		
-            file { '/etc/hosts' :
-                 source => "puppet:///modules/le_hosts/$puppetserver_hostname_hosts",
+            file { "/etc/hosts" :
+                 source => "puppet:///modules/le_hosts/kronlund01_hosts",
                   owner => 'root',
                   group => 'root',
                    mode => '0644',
