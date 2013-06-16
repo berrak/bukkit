@@ -7,7 +7,7 @@ class le_iptables::install {
                 ensure => installed }
 
 	file { "/etc/rc.local" :
-		 source => "puppet:///modules/puppet_iptables/rc.local",
+		 source => "puppet:///modules/le_iptables/rc.local",
 		  owner => 'root',
 		  group => 'root',
 		   mode => '0700',
