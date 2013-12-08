@@ -4,7 +4,7 @@
 #                      MANAGED IN GIT.                            #
 ###################################################################
 #
-# Rules for public Minecraft host (VPS).
+# Rules for public Minecraft host (VPS) and Apache2 HTTP server.
 #
 # Copyright (C) (2012-13) K-B.Kronlund <bkronmailbox-copyright@yahoo.se>
 #
@@ -42,6 +42,8 @@ JMTRUSTEDNET="81.216.0.0/16"
 JM2TRUSTEDNET="79.102.0.0/16"
 JM3TRUSTEDNET="37.197.0.0/16"
 RPTRUSTEDNET="94.234.0.0/16"
+ESTRUSTEDNET="90.229.0.0/16"
+CPTRUSTEDNET="92.32.0.0/16"
 
 
 # multicast mDNS packets
@@ -102,6 +104,8 @@ $IPTABLES -A INPUT -p tcp -s $JMTRUSTEDNET -m tcp --dport 25565:25566 -m state -
 $IPTABLES -A INPUT -p tcp -s $JM2TRUSTEDNET -m tcp --dport 25565:25566 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $JM3TRUSTEDNET -m tcp --dport 25565:25666 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $RPTRUSTEDNET -m tcp --dport 25565:25666 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $ESTRUSTEDNET -m tcp --dport 25565:25666 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $CSTRUSTEDNET -m tcp --dport 25565:25666 -m state --state NEW -j ACCEPT
 
 
 # allow DHCP requests
