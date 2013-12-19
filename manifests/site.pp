@@ -4,6 +4,9 @@
 node 'kronlund01.levonline.com' {
     
     include puppetize
+    
+    include vb_puppet_utils
+    
     include le_root_home
     include le_screen
         
