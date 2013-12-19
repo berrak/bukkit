@@ -27,10 +27,10 @@ node 'kronlund01.levonline.com' {
     
     # Define a new Apache2 virtual host (suexec to user jensen)    
     #vb_apache2::vhost { 'jensen.mc-butter.se' :
-            priority => '001',
-          devgroupid => 'jensen',
-          execscript => 'suexec',
-    }        
+    #        priority => '001',
+    #      devgroupid => 'jensen',
+    #     execscript => 'suexec',
+    #}        
     
     # user profile
     vb_user_bashrc::config { 'jensen' : }
