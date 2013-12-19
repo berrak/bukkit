@@ -98,7 +98,7 @@ define vb_apache2::vhost ( $priority='', $devgroupid='', $urlalias='', $aliastgt
              ensure => "directory",
               owner => $devgroupid,
               group => $devgroupid,
-               mode => '0755',
+               mode => '0700',
             require => File["/home/${devgroupid}/${name}/public_html"],
         }        
     
@@ -179,11 +179,11 @@ define vb_apache2::vhost ( $priority='', $devgroupid='', $urlalias='', $aliastgt
             
             # sh.index.cgi (test that user is wrapped by suExec) and favicon
     
-            file { "/home/${devgroupid}/${name}/public_html/cgi-bin/sh.index.cgi":
+            file { "/home/${devgroupid}/${name}/public_html/cgi-bin/jensen.cgi":
                 source => "puppet:///modules/vb_apache2/newvhost.index.cgi",    
                 owner => $devgroupid,
                 group => $devgroupid,
-                mode => '0755',
+                mode => '0700',
                 require => File["/home/${devgroupid}/${name}/public_html/cgi-bin"],
             }   
     
