@@ -23,14 +23,14 @@ node 'kronlund01.levonline.com' {
     include vb_aptconf
     
     # use apache2 prefork
-    #include vb_apache2
+    include vb_apache2
     
     # Define a new Apache2 virtual host (suexec to user jensen)    
-    #vb_apache2::vhost { 'jensen.mc-butter.se' :
-    #        priority => '001',
-    #      devgroupid => 'jensen',
-    #     execscript => 'suexec',
-    #}        
+    vb_apache2::vhost { 'jensen.mc-butter.se' :
+            priority => '001',
+          devgroupid => 'jensen',
+         execscript => 'suexec',
+    }        
     
     # user profile
     vb_user_bashrc::config { 'jensen' : }
