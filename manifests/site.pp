@@ -36,7 +36,7 @@ node 'kronlund01.levonline.com' {
     vb_user_bashrc::config { 'jensen' : }
     
     # postgreSQL-9.1
-    #include vb_postgresql
+    include vb_postgresql
     
     # packages without any special configurations
     class { vb_install_debs : debs => [ "build-essential", "tree" ] }
