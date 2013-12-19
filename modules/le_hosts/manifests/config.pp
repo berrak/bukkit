@@ -11,7 +11,7 @@ class le_hosts::config ( $puppetserver_hostname = '' ) {
                  source => "puppet:///modules/le_hosts/kronlund01_hosts",
                   owner => 'root',
                   group => 'root',
-                   mode => '0640',
+                   mode => '0644',
             }
         
         }
