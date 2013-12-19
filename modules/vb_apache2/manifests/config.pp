@@ -26,18 +26,18 @@ class vb_apache2::config {
 	$default_fqdn = $::fqdn
 	$site_domain = $::domain
 	
-    file { '/etc/apache2/sites-available/default':
+    file { '/etc/apache2/sites-available/zdefault':
         content =>  template('vb_apache2/default.erb'),
           owner => 'root',
           group => 'root',       
         require => Class["vb_apache2::install"],
     }
 
-    ## Enable the default vhost site, but dont put lowest priority
+    ## Enable the default vhost site, but put lowest priority
     
-    file { '/etc/apache2/sites-enabled/000-default':
+    file { '/etc/apache2/sites-enabled/999-zdefault':
         ensure => 'link',
-        target => '/etc/apache2/sites-available/default',
+        target => '/etc/apache2/sites-available/zdefault',
        require => Class["vb_apache2::install"],
 	    notify => Service["apache2"],
     }
@@ -51,7 +51,7 @@ class vb_apache2::config {
 	}	
 	
     
-	# Create the directory structure for the default site
+	# Create the directory structure for the 'zdefault' site
     
 	file { "/var/www/default":
 		 ensure => "directory",
