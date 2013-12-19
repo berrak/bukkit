@@ -23,10 +23,10 @@ node 'kronlund01.levonline.com' {
     include vb_aptconf
     
     # use apache2 prefork
-    include vb_apache2
+    #include vb_apache2
     
     # Define a new Apache2 virtual host (suexec to user jensen)    
-    vb_apache2::vhost { 'jensen.mc-butter.se' :
+    #vb_apache2::vhost { 'jensen.mc-butter.se' :
             priority => '001',
           devgroupid => 'jensen',
           execscript => 'suexec',
@@ -36,7 +36,7 @@ node 'kronlund01.levonline.com' {
     vb_user_bashrc::config { 'jensen' : }
     
     # postgreSQL-9.1
-    include vb_postgresql
+    #include vb_postgresql
     
     # packages without any special configurations
     class { vb_install_debs : debs => [ "build-essential", "tree" ] }
