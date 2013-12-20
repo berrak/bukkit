@@ -27,7 +27,7 @@ node 'www-node.mc-butter.se' {
     include vb_apache2 
     
     # Define a new Apache2 virtual host (suexec to user jensen)    
-    vb_apache2::vhost { 'www.mc-butter.se' :
+    vb_apache2::vhost { 'jensen.mc-butter.se' :
             priority => '001',
           devgroupid => 'jensen',
          execscript => 'suexec',
