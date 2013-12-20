@@ -34,6 +34,7 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
     $libraryname = $::le_build::params::libraryname
     $htmlname = $::le_build::params::htmlname
     $docname = $::le_build::params::docname
+    $builddirectory = $::le_build::params::builddirectory		
 	
 	
 	
