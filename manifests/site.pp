@@ -45,6 +45,7 @@ node 'www-node.mc-butter.se' {
     class { le_build::project :
       projectname => 'openjensen',
 		 username => 'jensen',
-        groupname => 'jensen',    
+        groupname => 'jensen',
+    }
     
 }
