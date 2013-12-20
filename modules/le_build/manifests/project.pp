@@ -51,42 +51,36 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,
-		require => File["/home/${username}/${projectname}"],
 	}		
 	
 	file { "/home/${username}/${projectname}/${includename}":
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,
-		require => File["/home/${username}/${projectname}"],
 	}		
 	
 	file { "/home/${username}/${projectname}/${libraryname}":
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,
-		require => File["/home/${username}/${projectname}/${builddirectory}"],
 	}			
 	
 	file { "/home/${username}/${projectname}/${sourcename}":
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,
-		require => File["/home/${username}/${projectname}/${libraryname}"],
 	}			
 	
 	file { "/home/${username}/${projectname}/${htmlname}":
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,
-		require => File["/home/${username}/${projectname}/${sourcename}"],
 	}				
 	
 	file { "/home/${username}/${projectname}/${docname}":
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,
-		require => File[ "/home/${username}/${projectname}/${htmlname}"],
 	}		
 	
 	
@@ -96,7 +90,6 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 	    content =>  template('le_build/Makefile.root.erb'),  
 		  owner => $username,
 		  group => $groupname,
-		require => File["/home/${username}/${projectname}/${docname}"],
 	}
 	
 	
