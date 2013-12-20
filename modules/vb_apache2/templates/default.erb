@@ -39,14 +39,6 @@
 </VirtualHost>
 
 
-# Redirect to localhost if just the domain name is given
-
-<VirtualHost *:80>
-
-	ServerName <%= site_domain %>
-	Redirect 301  /  http://www.<%= site_domain %>
-	
-</VirtualHost>
 
 
 
