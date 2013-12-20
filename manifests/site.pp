@@ -5,17 +5,18 @@ node 'kronlund01.levonline.com' {
     
     include puppetize
     
-    include vb_puppet_utils
-    
     include le_root_home
     include le_screen
         
     class { le_hosts::config : puppetserver_hostname => 'kronlund01' }
     class { le_iptables::config : puppetserver_hostname => 'kronlund01' }
     
-    
-    
     ## modules from virtualhost repo ##
+    
+    include vb_puppet_utils
+    
+    # packages without any special configurations
+    class { vb_install_debs : debs => [ "build-essential", "tree", "dnsutils" ] }    
     
     include vb_root_bashrc
     
@@ -37,12 +38,9 @@ node 'kronlund01.levonline.com' {
     
     # postgreSQL-9.1
     include vb_postgresql
-    
-    # packages without any special configurations
-    class { vb_install_debs : debs => [ "build-essential", "tree" ] }
+
     
     # partial install of required debian pacakges for OC-ESQL pre-compiler
     include vb_ocesql
-    
     
 }
