@@ -26,13 +26,13 @@ class le_build::params {
     
     ## List of cobol source files
     
-    $srclist = [ 'gnucobol.cbl' ]
+    $srclist = 'gnucobol.cbl'
     
     
     
     ## List of html files
     
-    $htmllist = [ 'index.html' ]    
+    $htmllist = 'index.html'    
     
     
     
