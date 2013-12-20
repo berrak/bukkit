@@ -57,7 +57,7 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
 		}
 		
 		file { "/home/${username}/${projectname}/${sourcename}/${srclist}":
-			 source => "puppet:///modules/lb_build/${srclist}",    
+			 source => "puppet:///modules/le_build/${srclist}",    
 			  owner => $username,
 			  group => $groupname,
 			require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],
@@ -77,7 +77,7 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
 		
 		
 		file { "/home/${username}/${projectname}/${htmlname}/${htmllist}":
-			 source => "puppet:///modules/lb_build/${htmllist}",    
+			 source => "puppet:///modules/le_build/${htmllist}",    
 			  owner => $username,
 			  group => $groupname,
 			require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],
