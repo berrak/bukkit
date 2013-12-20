@@ -49,54 +49,44 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
 
 	## install subdirectory makefile's and source files
 	
-	case $name  {
+	if $name == $sourcename {
 	
-		$sourcename: {
 		
-			file { "/home/${username}/${projectname}/${sourcename}/Makefile":
-				content =>  template('le_build/Makefile.${name}.erb'),  
-				  owner => $username,
-				  group => $groupname,
-				require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],
-			}
-			
-			file { "/home/${username}/${projectname}/${sourcename}/${srclist}":
-                 source => "puppet:///modules/lb_build/${srclist}",    
-                  owner => $username,
-                  group => $groupname,
-				require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],
-            }      			
-			
-		
+		file { "/home/${username}/${projectname}/${sourcename}/Makefile":
+			content =>  template('le_build/Makefile.${name}.erb'),  
+			  owner => $username,
+			  group => $groupname,
+			require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],
 		}
 		
-		$htmlname: {
-		
-			file { "/home/${username}/${projectname}/${htmlname}/Makefile":
-				content =>  template('le_build/Makefile.${name}.erb'),  
-				  owner => $username,
-				  group => $groupname,
-				require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],
-			}
-			
-			
-			file { "/home/${username}/${projectname}/${htmlname}/${htmllist}":
-                 source => "puppet:///modules/lb_build/${htmllist}",    
-                  owner => $username,
-                  group => $groupname,
-				require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],
-            }      					
+		file { "/home/${username}/${projectname}/${sourcename}/${srclist}":
+			 source => "puppet:///modules/lb_build/${srclist}",    
+			  owner => $username,
+			  group => $groupname,
+			require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],
+		}      			
 			
 		
+	}
+		
+	if $name == $htmlname {
+		
+		file { "/home/${username}/${projectname}/${htmlname}/Makefile":
+			content =>  template('le_build/Makefile.${name}.erb'),  
+			  owner => $username,
+			  group => $groupname,
+			require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],
 		}
 		
-		default: {
 		
-			fail("FAIL: Required project ($name) directory is missing or unknown!")
+		file { "/home/${username}/${projectname}/${htmlname}/${htmllist}":
+			 source => "puppet:///modules/lb_build/${htmllist}",    
+			  owner => $username,
+			  group => $groupname,
+			require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],
+		}      					
+			
 		
-		}
-		
-
 	}
  
     
