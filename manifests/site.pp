@@ -38,9 +38,13 @@ node 'www-node.mc-butter.se' {
     
     # postgreSQL-9.1
     include vb_postgresql
-
     
     # partial install of required debian pacakges for OC-ESQL pre-compiler
     include vb_ocesql
+    
+    class { le_build::project :
+      projectname => 'openjensen',
+		 username => 'jensen',
+        groupname => 'jensen',    
     
 }

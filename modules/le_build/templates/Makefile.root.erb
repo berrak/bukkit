@@ -1,0 +1,17 @@
+#
+# Project: <%= projectname %> 
+# 
+# Top Makefile
+#
+
+MAKE = /usr/bin/make
+
+
+all clean:
+
+	cd <%= sourcename %> && $(MAKE) $@
+
+
+.PHONY: all clean
+
+
