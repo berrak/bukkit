@@ -42,10 +42,27 @@ node 'www-node.mc-butter.se' {
     # partial install of required debian pacakges for OC-ESQL pre-compiler
     include vb_ocesql
     
+    
+    ## set up project structure and makefiles
+    
     class { le_build::project :
       projectname => 'openjensen',
 		 username => 'jensen',
         groupname => 'jensen',
     }
+    
+    le_build::make { 'src' :
+     	projectname => 'openjensen',
+		   username => 'jensen',
+          groupname => 'jensen',
+    }
+    
+    le_build::make { 'html' :
+     	projectname => 'openjensen',
+		   username => 'jensen',
+          groupname => 'jensen',
+    }    
+    
+    
     
 }
