@@ -1,7 +1,7 @@
 #
 # site.pp
 #
-node 'kronlund01.levonline.com' {
+node 'www-node.mc-butter.se' {
     
     include puppetize
     
