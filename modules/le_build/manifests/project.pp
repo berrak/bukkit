@@ -35,13 +35,17 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 	}	
 
     
-	## Create the overall project directory structure
+	## Create the project directory structure
 	
 	file { "/home/${username}/${projectname}":
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,      
 	}
+	
+	
+	## create the individual sub directories
+	
 	
 	file { "/home/${username}/${projectname}/${builddirectory}":
 		ensure => "directory",
@@ -61,38 +65,38 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,
-		require => File["/home/${username}/${projectname}"],
+		require => File["/home/${username}/${projectname}/${builddirectory}"],
 	}			
 	
 	file { "/home/${username}/${projectname}/${sourcename}":
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,
-		require => File["/home/${username}/${projectname}"],
+		require => File["/home/${username}/${projectname}/${libraryname}"],
 	}			
 	
 	file { "/home/${username}/${projectname}/${htmlname}":
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,
-		require => File["/home/${username}/${projectname}"],
+		require => File["/home/${username}/${projectname}/${sourcename}"],
 	}				
 	
 	file { "/home/${username}/${projectname}/${docname}":
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,
-		require => File["/home/${username}/${projectname}"],
+		require => File[ "/home/${username}/${projectname}/${htmlname}"],
 	}		
 	
 	
-	## nstall the top makefile's for the project
+	## install the top makefile's for the project
 	
 	file { "/home/${username}/${projectname}/Makefile":
 	    content =>  template('le_build/Makefile.root.erb'),  
 		  owner => $username,
 		  group => $groupname,
-		require => File["/home/${username}/${projectname}"],
+		require => File["/home/${username}/${projectname}/${docname}"],
 	}
 	
 	
