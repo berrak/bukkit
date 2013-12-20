@@ -20,7 +20,7 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
     $libraryname = $::le_build::params::libraryname
     $htmlname = $::le_build::params::htmlname
     $docname = $::le_build::params::docname
-	
+    $builddirectory = $::le_build::params::builddirectory	
 	
 	if $projectname =='' {
 		fail("FAIL: Missing required project name!")
@@ -51,36 +51,42 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,
+		require => File["/home/${username}/${projectname}"],
 	}		
 	
 	file { "/home/${username}/${projectname}/${includename}":
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,
+		require => File["/home/${username}/${projectname}"],
 	}		
 	
 	file { "/home/${username}/${projectname}/${libraryname}":
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,
+		require => File["/home/${username}/${projectname}"],
 	}			
 	
 	file { "/home/${username}/${projectname}/${sourcename}":
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,
+		require => File["/home/${username}/${projectname}"],
 	}			
 	
 	file { "/home/${username}/${projectname}/${htmlname}":
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,
+		require => File["/home/${username}/${projectname}"],
 	}				
 	
 	file { "/home/${username}/${projectname}/${docname}":
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,
+		require => File["/home/${username}/${projectname}"],
 	}		
 	
 	
@@ -90,8 +96,7 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 	    content =>  template('le_build/Makefile.root.erb'),  
 		  owner => $username,
 		  group => $groupname,
+		require => File["/home/${username}/${projectname}"],
 	}
 	
-	
-
 }
