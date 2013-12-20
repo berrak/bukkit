@@ -8,8 +8,8 @@ node 'www-node.mc-butter.se' {
     include le_root_home
     include le_screen
         
-    class { le_hosts::config : puppetserver_hostname => 'kronlund01' }
-    class { le_iptables::config : puppetserver_hostname => 'kronlund01' }
+    class { le_hosts::config : puppetserver_hostname => 'www' }
+    class { le_iptables::config : puppetserver_hostname => 'www' }
     
     ## modules from virtualhost repo ##
     
