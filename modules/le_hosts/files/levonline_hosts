@@ -1,9 +1,8 @@
 ##############################################################
 # Managed by Puppet. Do not edit. Changes will be wiped out. # 
 ##############################################################
-127.0.0.1	localhost
-127.0.1.1	debian.levonline.com	debian
-217.70.39.231   kronlund01.levonline.com kronlund01 puppet
+127.0.0.1	    localhost
+217.70.39.231   www.mc-butter.se  www  www-node 
 
 # The following lines are desirable for IPv6 capable hosts
 ::1     ip6-localhost ip6-loopback
