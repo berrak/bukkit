@@ -23,10 +23,6 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
 		fail("FAIL: Missing required group name!")
 	}
 	
-	if $installpath =='' {
-		fail("FAIL: Missing required install path!")
-	}
-	
 
     include le_build::params
 	
