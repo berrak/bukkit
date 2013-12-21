@@ -95,6 +95,7 @@ clean : \
 	cleangen 
  
 cleangen :
+	$(QUIET) $(ECHO) [makefile]: Remove all generated binary files
 	$(QUIET) $(FIND) . -type f -perm -u+x -print0 | $(XARGS) -0 $(ERASE)
 
 
@@ -104,6 +105,7 @@ cleangen :
 
 cleanall : \
 	clean
+	$(QUIET) $(ECHO) [makefile]: Remove all generated binary files in build directory
 	$(ERASE) ../build/*
 	$(ERASE) ../build/cgi-bin/*
 
