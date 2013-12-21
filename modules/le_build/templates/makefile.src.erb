@@ -152,8 +152,8 @@ dist:
 install:
 	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(ECHO) [makefile]: Install files to target directory <%= cgiinstallpath %>
 	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(CP) ../<%= builddirectory %>/cgi-bin/*.cgi <%= cgiinstallpath %>/.
-	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.html && $(ECHO) [makefile]: Change ownership of all files in <%= cgiinstallpath %>
-	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.html && $(CHOWN) <%= username %>:<%= groupname %> <%= cgiinstallpath %>/*
-	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.html && $(ECHO) [makefile]: Change file permission to 0700 in <%= cgiinstallpath %>
-	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.html && $(CHMOD) 0700 <%= cgiinstallpath %>/*
+	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.cgi && $(ECHO) [makefile]: Change ownership of all files in <%= cgiinstallpath %>
+	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.cgi && $(CHOWN) <%= username %>:<%= groupname %> <%= cgiinstallpath %>/*
+	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.cgi && $(ECHO) [makefile]: Change file permission to 0700 in <%= cgiinstallpath %>
+	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.cgi && $(CHMOD) 0700 <%= cgiinstallpath %>/*
 
