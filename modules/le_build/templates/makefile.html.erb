@@ -10,7 +10,9 @@ CP = /bin/cp
 ECHO = /bin/echo
 CHOWN = /bin/chown
 TEST = /usr/bin/test
-ERASE = /bin/rm
+
+# the -f option suppress return status and prevents make to emit error
+ERASE = /bin/rm -f
 
 all: \
 	dist
@@ -31,7 +33,7 @@ clean: \
 	cleanall
 
 cleanall:
-	$(QUIET) $(TEST) -f ../<%= builddirectory %>/*.html && $(ECHO) [makefile]: Remove html files in build directory
-	$(QUIET) $(TEST) -f ../<%= builddirectory %>/*.html && $(ERASE) ../<%= builddirectory %>/*.html
+	$(QUIET) $(ECHO) [makefile]: Remove html files in build directory
+	$(QUIET) $(ERASE) ../<%= builddirectory %>/*.html
 
 .PHONY: all dist install clean cleanall

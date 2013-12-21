@@ -44,8 +44,10 @@ CP = /bin/cp
 ECHO = /bin/echo
 CHOWN = /bin/chown
 CHMOD = /bin/chmod
-ERASE = /bin/rm
 TEST = /usr/bin/test
+
+# the -f option suppress return status and prevents make to emit error
+ERASE = /bin/rm -f
 
 #############################################################################
 #  2 -- MAKE USER CATEGORIES i.e. <user_name>
@@ -95,10 +97,10 @@ clean: \
 	cleangen
  
 cleangen:
-	$(QUIET) $(TEST) -f \*.cgi && $(ECHO) [makefile]: Remove local cgi-files
-	$(QUIET) $(TEST) -f \*.cgi && $(ERASE) *.cgi
-	$(QUIET) $(TEST) -f \*.so && $(ECHO) [makefile]: Remove local so-files
-	$(QUIET) $(TEST) -f \*.so && $(ERASE) *.so
+	$(QUIET) $(ECHO) [makefile]: Remove local cgi-files
+	$(QUIET) $(ERASE) *.cgi
+	$(QUIET) $(ECHO) [makefile]: Remove local so-files
+	$(QUIET) $(ERASE) *.so
 
 #****************************************************************************
 #		   3b - make cleanall (local and binary files in build directory
@@ -106,8 +108,8 @@ cleangen:
 
 cleanall: \
 	clean
-	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(ECHO) [makefile]: Remove binary files in build directory
-	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(ERASE) ../<%= builddirectory %>/cgi-bin/*.cgi
+	$(QUIET) $(ECHO) [makefile]: Remove binary files in build directory
+	$(QUIET) $(ERASE) ../<%= builddirectory %>/cgi-bin/*.cgi
 
 
 #############################################################################
@@ -142,8 +144,8 @@ gnucobol.so: gnucobol.cbl
 
 .PHONY: dist install
 dist:
-	$(QUIET) $(TEST) -f \*.cgi && $(ECHO) [makefile]: Copy binary files to build directory ../<%= builddirectory %>/cgi-bin
-	$(QUIET) $(TEST) -f \*.cgi && $(CP) -t ../<%= builddirectory %>/cgi-bin/.
+	$(QUIET) $(TEST) -f *.cgi && $(ECHO) [makefile]: Copy binary files to build directory ../<%= builddirectory %>/cgi-bin
+	$(QUIET) $(TEST) -f *.cgi && $(CP) -t ../<%= builddirectory %>/cgi-bin/.
 	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(ECHO) [makefile]: Change ownership of binary files 
 	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/cgi-bin/*
 
