@@ -124,7 +124,7 @@ cleanall : \
 #****************************************************************************
 
 gnucobol: gnucobol.so
-	$(COBC) $(EXT) gnucobol.cbl $(OUTFILE) gnucobol.cgi
+	$(COBC) $(EXEFLAG) gnucobol.cbl $(OUTFILE) gnucobol.cgi
 
 gnucobol.so: gnucobol.cbl
 	$(COBC) $(COBFLAGS) gnucobol.cbl
