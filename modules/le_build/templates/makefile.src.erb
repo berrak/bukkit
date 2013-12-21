@@ -47,6 +47,7 @@ CHMOD = /bin/chmod
 ERASE = /bin/rm
 FIND = /usr/bin/find
 XARGS = /usr/bin/xargs
+TEST = /usr/bin/test
 
 #############################################################################
 #  2 -- MAKE USER CATEGORIES i.e. <user_name>
@@ -96,7 +97,7 @@ clean: \
 	cleangen
  
 cleangen:
-	$(QUIET) $(ECHO) [makefile]: Remove possible local generated binary files
+	$(QUIET) $(ECHO) [makefile]: Remove any local generated binary files
 	$(QUIET) $(FIND) . -type f -perm -u+x -exec $(ERASE) {} \;
 
 
@@ -108,8 +109,8 @@ clean: \
 	cleanall
 
 cleanall:
-	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/* && $(ECHO) [makefile]: Remove binary files in build directory
-	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/* && $(ERASE) ../<%= builddirectory %>/cgi-bin/*
+	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(ECHO) [makefile]: Remove binary files in build directory
+	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(ERASE) ../<%= builddirectory %>/cgi-bin/*.cgi
 
 
 #############################################################################
@@ -144,8 +145,8 @@ gnucobol.so: gnucobol.cbl
 
 .PHONY: dist install
 dist:
-	$(QUIET) $(ECHO) [makefile]: Possible copy any binary files to build directory ../<%= builddirectory %>/cgi-bin
-	$(QUIET) $(FIND) . -type f -name *.cgi -print0 | $(XARGS) -0 $(CP) -t ../<%= builddirectory %>/cgi-bin/.
+	$(QUIET) $(TEST) -f \*.cgi && $(ECHO) [makefile]: Copy binary files to build directory ../<%= builddirectory %>/cgi-bin
+	$(QUIET) $(TEST) -f \*.cgi && $(CP) -t ../<%= builddirectory %>/cgi-bin/.
 	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(ECHO) [makefile]: Change ownership of binary files 
 	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/cgi-bin/*
 
