@@ -18,7 +18,7 @@ class le_build::params {
     
     ##  Target paths
     
-    $srcinstallpath = '/home/jensen/www.mc-butter.se/public_html/cgi-bin'
+    $cgiinstallpath = '/home/jensen/www.mc-butter.se/public_html/cgi-bin'
     $htmlinstallpath = '/home/jensen/www.mc-butter.se/public_html'    
     
     

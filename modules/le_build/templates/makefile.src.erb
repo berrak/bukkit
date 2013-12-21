@@ -44,6 +44,8 @@ CP = /bin/cp
 ECHO = /bin/echo
 CHOWN = /bin/chown
 ERASE = /bin/rm
+FIND = /usr/bin/find
+XARGS = /usr/bin/xargs
 
 #############################################################################
 #  2 -- MAKE USER CATEGORIES i.e. <user_name>
@@ -137,4 +139,15 @@ gnucobol.so: gnucobol.cbl
 #############################################################################
 
 .PHONY: dist install
+dist:
+	$(QUIET) $(ECHO) [makefile]: Copy binary files to build directory ../<%= builddirectory %>/cgi-bin
+	$(QUIET) $(FIND) . -type f -perm -u+x -print0 | $(XARGS) -0 $(CP) -t ../<%= builddirectory %>/cgi-bin/.
+	$(QUIET) $(ECHO) [makefile]: Change ownership of binary files 
+	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/cgi-bin/*
+
+install:
+	$(QUIET) $(ECHO) [makefile]: Install files to target directory <%= cgiinstallpath %>
+	$(QUIET) $(CP) ../<%= builddirectory %>/cgi-bin/* <%= cgiinstallpath %>/.
+	$(QUIET) $(ECHO) [makefile]: Change ownership of binary files in <%= cgiinstallpath %>
+	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> <%= cgiinstallpath %>/*
 
