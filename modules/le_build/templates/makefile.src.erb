@@ -43,6 +43,7 @@ QUIET = @
 CP = /bin/cp
 ECHO = /bin/echo
 CHOWN = /bin/chown
+CHMOD = /bin/chmod
 ERASE = /bin/rm
 FIND = /usr/bin/find
 XARGS = /usr/bin/xargs
@@ -153,4 +154,6 @@ install:
 	$(QUIET) $(CP) ../<%= builddirectory %>/cgi-bin/*.cgi <%= cgiinstallpath %>/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of all files in <%= cgiinstallpath %>
 	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> <%= cgiinstallpath %>/*
+	$(QUIET) $(ECHO) [makefile]: Change file permission to 0700 in <%= cgiinstallpath %>
+	$(QUIET) $(CHMOD) 0700 <%= cgiinstallpath %>/*
 
