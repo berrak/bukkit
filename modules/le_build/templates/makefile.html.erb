@@ -9,19 +9,29 @@ QUIET = @
 CP = /bin/cp
 ECHO = /bin/echo
 CHOWN = /bin/chown
+TEST = /usr/bin/test
+ERASE = /bin/rm
 
-all: dist
+all: \
+	dist
 
 dist:
-	$(QUIET) $(ECHO) [makefile]: Copy files to build directory
-	$(QUIET) $(CP) *.html ../<%= builddirectory %>/.
-	$(QUIET) $(ECHO) [makefile]: Change ownership of HTML files 
-	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/*.html
-    
-install:
-	$(QUIET) $(ECHO) [makefile]: Install files to target directory <%= htmlinstallpath %>
-	$(QUIET) $(CP) ../<%= builddirectory %>/*.html <%= htmlinstallpath %>/.
-	$(QUIET) $(ECHO) [makefile]: Change ownership of HTML files in <%= htmlinstallpath %>
-	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> <%= htmlinstallpath %>/*.html
+	$(QUIET) $(TEST) -f *.html && $(ECHO) [makefile]: Copy files to build directory
+	$(QUIET) $(TEST) -f *.html && $(CP) *.html ../<%= builddirectory %>/.
+	$(QUIET) $(TEST) -f ../<%= builddirectory %>/*.html && $(ECHO) [makefile]: Change ownership of HTML files 
+	$(QUIET) $(TEST) -f ../<%= builddirectory %>/*.html && $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/*.html
 
-.PHONY: all dist install
+install:
+	$(QUIET) $(TEST) -f ../<%= builddirectory %>/*.html && $(ECHO) [makefile]: Install files to target directory <%= htmlinstallpath %>
+	$(QUIET) $(TEST) -f ../<%= builddirectory %>/*.html && $(CP) ../<%= builddirectory %>/*.html <%= htmlinstallpath %>/.
+	$(QUIET) $(TEST) -f <%= htmlinstallpath %>/*.html && $(ECHO) [makefile]: Change ownership of HTML files in <%= htmlinstallpath %>
+	$(QUIET) $(TEST) -f <%= htmlinstallpath %>/*.html && $(CHOWN) <%= username %>:<%= groupname %> <%= htmlinstallpath %>/*.html
+
+clean: \
+	cleanall
+
+cleanall:
+	$(QUIET) $(TEST) -f ../<%= builddirectory %>/*.html && $(ECHO) [makefile]: Remove html files in build directory
+	$(QUIET) $(TEST) -f ../<%= builddirectory %>/*.html && $(ERASE) ../<%= builddirectory %>/*.html
+
+.PHONY: all dist install clean cleanall

@@ -62,14 +62,14 @@ XARGS = /usr/bin/xargs
 #		   2a - make all
 #****************************************************************************
 
-all : \
+all: \
 	gnucobol
 
 #****************************************************************************
 #		   2b - make <user_name>=bekr
 #****************************************************************************
 
-bekr : \
+bekr: \
 	gnucobol
 
 #****************************************************************************
@@ -88,28 +88,28 @@ bekr : \
 #############################################################################
 
 #****************************************************************************
-#		   3a - make clean (all binary files)
+#		   3a - make clean (local binary files)
 #****************************************************************************
 .PHONY: clean cleangen cleanall
 
-clean : \
-	cleangen 
+clean: \
+	cleangen
  
-cleangen :
-	$(QUIET) $(ECHO) [makefile]: Remove all local generated binary files
+cleangen:
+	$(QUIET) $(ECHO) [makefile]: Remove possible local generated binary files
 	$(QUIET) $(FIND) . -type f -perm -u+x -exec $(ERASE) {} \;
 
 
 #****************************************************************************
-#		   3b - make cleanall (+all generated files in build directory
+#		   3b - make cleanall (local and binary files in build directory
 #****************************************************************************
 
-cleanall : \
-	clean
-	$(QUIET) $(ECHO) [makefile]: Remove html files in build directory
-	$(QUIET) $(ERASE) ../build/*.html
-	$(QUIET) $(ECHO) [makefile]: Remove binary files in build directory
-	$(QUIET) $(ERASE) ../build/cgi-bin/*
+clean: \
+	cleanall
+
+cleanall:
+	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/* && $(ECHO) [makefile]: Remove binary files in build directory
+	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/* && $(ERASE) ../<%= builddirectory %>/cgi-bin/*
 
 
 #############################################################################
@@ -144,16 +144,16 @@ gnucobol.so: gnucobol.cbl
 
 .PHONY: dist install
 dist:
-	$(QUIET) $(ECHO) [makefile]: Copy binary files to build directory ../<%= builddirectory %>/cgi-bin
+	$(QUIET) $(ECHO) [makefile]: Possible copy any binary files to build directory ../<%= builddirectory %>/cgi-bin
 	$(QUIET) $(FIND) . -type f -name *.cgi -print0 | $(XARGS) -0 $(CP) -t ../<%= builddirectory %>/cgi-bin/.
-	$(QUIET) $(ECHO) [makefile]: Change ownership of binary files 
-	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/cgi-bin/*
+	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(ECHO) [makefile]: Change ownership of binary files 
+	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/cgi-bin/*
 
 install:
-	$(QUIET) $(ECHO) [makefile]: Install files to target directory <%= cgiinstallpath %>
-	$(QUIET) $(CP) ../<%= builddirectory %>/cgi-bin/*.cgi <%= cgiinstallpath %>/.
-	$(QUIET) $(ECHO) [makefile]: Change ownership of all files in <%= cgiinstallpath %>
-	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> <%= cgiinstallpath %>/*
-	$(QUIET) $(ECHO) [makefile]: Change file permission to 0700 in <%= cgiinstallpath %>
-	$(QUIET) $(CHMOD) 0700 <%= cgiinstallpath %>/*
+	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(ECHO) [makefile]: Install files to target directory <%= cgiinstallpath %>
+	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(CP) ../<%= builddirectory %>/cgi-bin/*.cgi <%= cgiinstallpath %>/.
+	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.html && $(ECHO) [makefile]: Change ownership of all files in <%= cgiinstallpath %>
+	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.html && $(CHOWN) <%= username %>:<%= groupname %> <%= cgiinstallpath %>/*
+	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.html && $(ECHO) [makefile]: Change file permission to 0700 in <%= cgiinstallpath %>
+	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.html && $(CHMOD) 0700 <%= cgiinstallpath %>/*
 

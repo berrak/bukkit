@@ -6,11 +6,11 @@
 
 MAKE = /usr/bin/make
 
-all clean:
+all clean cleanall install dist:
 
 	cd <%= sourcename %> && $(MAKE) $@
 	cd <%= htmlname %> && $(MAKE) $@
 
-.PHONY: all clean
+.PHONY: all clean cleanall install dist
 
 
