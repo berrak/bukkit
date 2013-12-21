@@ -35,9 +35,9 @@
 #############################################################################
 
 COBC = /usr/bin/cobc
-EXEFLAGS = -x
 OBJFLAGS = -c
-
+EXEFLAG = -x
+EXT = -ext
 QUIET = @
 
 CP = /bin/cp
@@ -87,7 +87,7 @@ bekr : \
 #############################################################################
 
 #****************************************************************************
-#		   3a - make clean
+#		   3a - make clean (all binary files)
 #****************************************************************************
 .PHONY: clean cleangen cleanall
 
@@ -95,11 +95,11 @@ clean : \
 	cleangen 
  
 cleangen :
-	$(ERASE) *.so 
+	$(QUIET) $(FIND) . -type f -perm -u+x -print0 | $(XARGS) -0 $(ERASE)
 
 
 #****************************************************************************
-#		   3b - make cleanall
+#		   3b - make cleanall (+all generated files in build directory
 #****************************************************************************
 
 cleanall : \
@@ -120,7 +120,7 @@ cleanall : \
 #****************************************************************************
 
 gnucobol: gnucobol.so
-	$(COBC) $(EXEFLAGS) gnucobol.cbl
+	$(COBC) $(EXT) cgi $(EXEFLAG) gnucobol.cbl
 
 gnucobol.so: gnucobol.cbl
 	$(COBC) $(COBFLAGS) gnucobol.cbl
