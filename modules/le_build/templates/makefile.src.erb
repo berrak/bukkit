@@ -142,7 +142,8 @@ gnucobol.so: gnucobol.cbl
 #############################################################################
 
 .PHONY: dist install
-dist:
+dist: \
+	all
 	$(QUIET) $(TEST) -f *.cgi && $(ECHO) [makefile]: Copy binary files to build directory ../<%= builddirectory %>/cgi-bin
 	$(QUIET) $(TEST) -f *.cgi && $(CP) -t ../<%= builddirectory %>/cgi-bin/.
 	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(ECHO) [makefile]: Change ownership of binary files 
