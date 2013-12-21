@@ -144,14 +144,14 @@ gnucobol.so: gnucobol.cbl
 .PHONY: dist install
 dist: \
 	all
-	$(QUIET) $(TEST) -f *.cgi && $(ECHO) [makefile]: Copy binary files to build directory ../<%= builddirectory %>/cgi-bin
-	$(QUIET) $(TEST) -f *.cgi && $(CP) *.cgi -t ../<%= builddirectory %>/cgi-bin/.
+	$(QUIET) $(ECHO) [makefile]: Copy any binary files to build directory ../<%= builddirectory %>/cgi-bin
+	$(QUIET) $(CP) *.cgi -t ../<%= builddirectory %>/cgi-bin/.
 	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(ECHO) [makefile]: Change ownership of binary files 
 	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/cgi-bin/*
 
 install:
-	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(ECHO) [makefile]: Install files to target directory <%= cgiinstallpath %>
-	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(CP) ../<%= builddirectory %>/cgi-bin/*.cgi <%= cgiinstallpath %>/.
+	$(QUIET) $(ECHO) [makefile]: Install any files to target directory <%= cgiinstallpath %>
+	$(QUIET) $(CP) ../<%= builddirectory %>/cgi-bin/*.cgi <%= cgiinstallpath %>/.
 	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.cgi && $(ECHO) [makefile]: Change ownership of all files in <%= cgiinstallpath %>
 	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.cgi && $(CHOWN) <%= username %>:<%= groupname %> <%= cgiinstallpath %>/*
 	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.cgi && $(ECHO) [makefile]: Change file permission to 0700 in <%= cgiinstallpath %>
