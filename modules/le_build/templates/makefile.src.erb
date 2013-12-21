@@ -1,0 +1,134 @@
+#############################################################################
+#
+# MAKEFILE for OpenCobol 1.1 (now GnuCOBOL)	applications
+#
+# Project: <%= projectname %> 	
+#
+# Enter one of the following commands 
+#
+#  make <app_name>	  - Builds the program designated by <app_name>
+#
+#  make all		      - Builds all COBOL programs
+#
+#  make <user_name>   - Builds all COBOL programs designated by <user_name>
+#
+#  make dist			Builds all COBOL programs, moves them to build directory
+#
+#  make install			Installs build files on target system directories
+#  
+#
+#  make clean		   - Erases intermediate files
+#  make cleanall	   - Erases all files produced in the build process,
+#			             except the original source files
+#
+# The makefile contains the following sections:
+#
+#    1 -- VARIABLES
+#    2 -- MAKE USER CATEGORIES
+#    3 -- MAKE CLEAN COMMANDS
+#    4 -- COMMANDS TO MAKE INDIVIDUAL PROGRAMS
+#    5 -- PHONY TARGETS
+#
+#
+#############################################################################
+#		   1 -- VARIABLES				 
+#############################################################################
+
+COBC = /usr/bin/cobc
+EXEFLAGS = -x
+OBJFLAGS = -c
+ERASE = /bin/rm
+
+#############################################################################
+#  2 -- MAKE USER CATEGORIES i.e. <user_name>
+#	       2a - make all
+#	       2b - make bekr
+#	       2c - make <other_user>  
+#	       .
+#          .
+#############################################################################
+
+
+#****************************************************************************
+#		   2a - make all
+#****************************************************************************
+
+all : \
+	gnucobol
+
+#****************************************************************************
+#		   2b - make <user_name>=bekr
+#****************************************************************************
+
+bekr : \
+	gnucobol
+
+#****************************************************************************
+#		   2c - make <user_name>=<other_user>
+#****************************************************************************
+
+# other_user_name : \
+#	otherpgm
+
+#############################################################################
+#  3 -- COMMANDS TO CLEAN
+#		   3a -  make  clean - Erases intermediate files (*.s, )
+#		   3b -  make  cleanall - Erases intermediate files (*.s, ) and erase
+#                all files in the build directory
+#		   
+#############################################################################
+
+#****************************************************************************
+#		   3a - make clean
+#****************************************************************************
+.PHONY: clean cleangen cleanall
+
+clean : \
+	cleangen 
+ 
+cleangen :
+	$(ERASE) *.so 
+
+
+#****************************************************************************
+#		   3b - make cleanall
+#****************************************************************************
+
+cleanall : \
+	clean
+	$(ERASE) ../build/*
+	$(ERASE) ../build/cgi-bin/*
+
+
+#############################################################################
+#  4 -- COMMANDS TO MAKE INDIVIDUAL SAMPLES
+#		   4a -  catogori of files (TBD)
+#		   4b -  another category of files
+#
+#############################################################################
+
+#****************************************************************************
+#		   4a -  categori TDB
+#****************************************************************************
+
+gnucobol: gnucobol.so
+	$(COBC) $(EXEFLAGS) gnucobol.cbl
+
+gnucobol.so: gnucobol.cbl
+	$(COBC) $(COBFLAGS) gnucobol.cbl
+
+
+#****************************************************************************
+#		   4b -  categori TDB
+#****************************************************************************
+
+
+#############################################################################
+#  5 -- PHONY TARGETS
+#		   5a -  make  dist - Moves files to build directory
+#		   5b -  make  install - Installs files to system directories
+#
+#############################################################################
+
+.PHONY: dist install
+

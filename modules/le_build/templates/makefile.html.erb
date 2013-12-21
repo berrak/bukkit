@@ -1,0 +1,20 @@
+#
+# Project: <%= projectname %> 
+# 
+# HTML Makefile
+#
+
+
+CP = /bin/cp
+CHOWN = /bin/chown
+
+default: install
+
+install:
+	cp *.html ../<%= builddirectory %>/.
+	chown <%= username %>:<%= groupname %> ../<%= builddirectory %>/*.html
+
+.PHONY: default install
+	
+
+

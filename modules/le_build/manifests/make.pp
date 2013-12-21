@@ -49,8 +49,8 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
 	if $name == $sourcename {
 	
 		
-		file { "/home/${username}/${projectname}/${sourcename}/Makefile":
-			content =>  template("le_build/Makefile.${name}.erb"),  
+		file { "/home/${username}/${projectname}/${sourcename}/makefile":
+			content =>  template("le_build/makefile.${name}.erb"),  
 			  owner => $username,
 			  group => $groupname,
 			require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],
@@ -68,8 +68,8 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
 		
 	if $name == $htmlname {
 		
-		file { "/home/${username}/${projectname}/${htmlname}/Makefile":
-			content =>  template("le_build/Makefile.${name}.erb"),  
+		file { "/home/${username}/${projectname}/${htmlname}/makefile":
+			content =>  template("le_build/makefile.${name}.erb"),  
 			  owner => $username,
 			  group => $groupname,
 			require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],

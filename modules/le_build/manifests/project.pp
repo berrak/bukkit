@@ -44,7 +44,7 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 	}
 	
 	
-	## create the individual sub directories
+	## sub build outpu directories for the final installation 
 	
 	
 	file { "/home/${username}/${projectname}/${builddirectory}":
@@ -52,7 +52,18 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 		owner => $username,
 		group => $groupname,
 		require => File["/home/${username}/${projectname}"],
-	}		
+	}
+	
+	file { "/home/${username}/${projectname}/${builddirectory}/cgi-bin":
+		ensure => "directory",
+		owner => $username,
+		group => $groupname,
+		require => File[ "/home/${username}/${projectname}/${builddirectory}"],
+	}	
+	
+	
+	
+	## create the individual sub directories	
 	
 	file { "/home/${username}/${projectname}/${includename}":
 		ensure => "directory",
@@ -92,8 +103,8 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 	
 	## install the top makefile's for the project
 	
-	file { "/home/${username}/${projectname}/Makefile":
-	    content =>  template('le_build/Makefile.root.erb'),  
+	file { "/home/${username}/${projectname}/makefile":
+	    content =>  template('le_build/makefile.root.erb'),  
 		  owner => $username,
 		  group => $groupname,
 		require => File["/home/${username}/${projectname}"],
