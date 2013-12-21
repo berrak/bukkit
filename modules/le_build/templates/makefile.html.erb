@@ -14,7 +14,7 @@ all: dist
 
 dist:
 	$(QUIET) $(ECHO) [makefile]: Copy files to build directory
-    $(QUIET) $(CP) *.html ../<%= builddirectory %>/.
+	$(QUIET) $(CP) *.html ../<%= builddirectory %>/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of HTML files 
 	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/*.html
     
