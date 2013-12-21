@@ -16,12 +16,11 @@ class le_build::params {
     $builddirectory = 'build'
     
     
-    ####  Target paths not yet used! ####
+    ##  Target paths
     
     $srcinstallpath = '/home/jensen/www.mc-butter.se/public_html/cgi-bin'
     $htmlinstallpath = '/home/jensen/www.mc-butter.se/public_html'    
     
-    #####################################
     
     
     ## List of cobol source files

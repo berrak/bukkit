@@ -4,17 +4,24 @@
 # HTML Makefile
 #
 
+QUIET = @
 
 CP = /bin/cp
+ECHO = /bin/echo
 CHOWN = /bin/chown
 
-default: install
+all: dist
 
+dist:
+	$(QUIET) $(ECHO) [makefile]: Copy files to build directory
+    $(QUIET) $(CP) *.html ../<%= builddirectory %>/.
+	$(QUIET) $(ECHO) [makefile]: Change ownership of HTML files 
+	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/*.html
+    
 install:
-	cp *.html ../<%= builddirectory %>/.
-	chown <%= username %>:<%= groupname %> ../<%= builddirectory %>/*.html
+	$(QUIET) $(ECHO) [makefile]: Install files to target directory <%= htmlinstallpath %>
+	$(QUIET) $(CP) ../<%= builddirectory %>/*.html <%= htmlinstallpath %>/.
+	$(QUIET) $(ECHO) [makefile]: Change ownership of HTML files in <%= htmlinstallpath %>
+	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> <%= htmlinstallpath %>/*.html
 
-.PHONY: default install
-	
-
-
+.PHONY: all dist install

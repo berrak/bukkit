@@ -1,16 +1,15 @@
 #
 # Project: <%= projectname %> 
 # 
-# Top Makefile
+# Top Makefile (re)
 #
 
 MAKE = /usr/bin/make
 
-
-default clean:
+all clean:
 
 	cd <%= sourcename %> && $(MAKE) $@
-
+	cd <%= htmlname %> && $(MAKE) $@
 
 .PHONY: all clean
 

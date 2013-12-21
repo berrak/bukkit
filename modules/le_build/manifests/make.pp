@@ -37,6 +37,10 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
     $builddirectory = $::le_build::params::builddirectory		
 	
 	
+	# target install directories in production system
+	
+	$srcinstallpath = $::le_build::params::srcinstallpath
+	$htmlinstallpath = $::le_build::params::htmlinstallpath	
 	
 	## source files
 	
