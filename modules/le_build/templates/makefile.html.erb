@@ -33,7 +33,7 @@ clean: \
 	cleanall
 
 cleanall:
-	$(QUIET) $(TEST) -f ../<%= builddirectory %>/*.html && $(ECHO) [makefile]: Remove html files in build directory
+	$(QUIET)$(ECHO) [makefile]: Remove any html files in build directory
 	$(QUIET) $(ERASE) ../<%= builddirectory %>/*.html
 
 .PHONY: all dist install clean cleanall
