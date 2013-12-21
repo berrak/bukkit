@@ -97,9 +97,9 @@ clean: \
 	cleangen
  
 cleangen:
-	$(QUIET) $(ECHO) [makefile]: Remove local cgi-files
+	$(QUIET) $(TEST) -f *.cgi && $(ECHO) [makefile]: Remove local cgi-files
 	$(QUIET) $(ERASE) *.cgi
-	$(QUIET) $(ECHO) [makefile]: Remove local so-files
+	$(QUIET) $(TEST) -f *.so && $(ECHO) [makefile]: Remove local so-files
 	$(QUIET) $(ERASE) *.so
 
 #****************************************************************************
@@ -108,7 +108,7 @@ cleangen:
 
 cleanall: \
 	clean
-	$(QUIET) $(ECHO) [makefile]: Remove binary files in build directory
+	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(ECHO) [makefile]: Remove binary files in build directory
 	$(QUIET) $(ERASE) ../<%= builddirectory %>/cgi-bin/*.cgi
 
 
