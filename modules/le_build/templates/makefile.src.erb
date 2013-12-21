@@ -96,7 +96,7 @@ clean : \
  
 cleangen :
 	$(QUIET) $(ECHO) [makefile]: Remove all generated binary files
-	$(QUIET) $(FIND) . -type f -perm -u+x -print0 | $(XARGS) -0 $(ERASE)
+	$(QUIET) $(FIND) . -type f -perm -u+x -exec $(ERASE) {} \;
 
 
 #****************************************************************************
