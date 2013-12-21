@@ -40,11 +40,10 @@ EXEFLAG = -x
 OUTFILE = -o
 QUIET = @
 
-CP = /bin/cp
 ECHO = /bin/echo
 CHOWN = /bin/chown
 CHMOD = /bin/chmod
-TEST = /usr/bin/test
+CP = /bin/cp
 
 # the -f option suppress return status and prevents make to emit error
 ERASE = /bin/rm -f
@@ -65,7 +64,7 @@ ERASE = /bin/rm -f
 
 all: \
 	gnucobol
-	dist
+
 
 #****************************************************************************
 #		   2b - make <user_name>=bekr
@@ -146,15 +145,15 @@ gnucobol.so: gnucobol.cbl
 dist: \
 	all
 	$(QUIET) $(ECHO) [makefile]: Copy any binary files to build directory ../<%= builddirectory %>/cgi-bin
-	$(QUIET) $(CP) *.cgi -t ../<%= builddirectory %>/cgi-bin/.
-	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(ECHO) [makefile]: Change ownership of binary files 
-	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/cgi-bin/*
+	$(QUIET) $(CP) *.cgi ../<%= builddirectory %>/cgi-bin/.
+	$(QUIET) $(ECHO) [makefile]: Change ownership of binary files 
+	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/cgi-bin/*
 
 install:
 	$(QUIET) $(ECHO) [makefile]: Install any files to target directory <%= cgiinstallpath %>
 	$(QUIET) $(CP) ../<%= builddirectory %>/cgi-bin/*.cgi <%= cgiinstallpath %>/.
-	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.cgi && $(ECHO) [makefile]: Change ownership of all files in <%= cgiinstallpath %>
-	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.cgi && $(CHOWN) <%= username %>:<%= groupname %> <%= cgiinstallpath %>/*
-	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.cgi && $(ECHO) [makefile]: Change file permission to 0700 in <%= cgiinstallpath %>
-	$(QUIET) $(TEST) -f <%= cgiinstallpath %>/*.cgi && $(CHMOD) 0700 <%= cgiinstallpath %>/*
+	$(QUIET) $(ECHO) [makefile]: Change ownership of all files in <%= cgiinstallpath %>
+	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> <%= cgiinstallpath %>/*
+	$(QUIET) $(ECHO) [makefile]: Change file permission to 0700 in <%= cgiinstallpath %>
+	$(QUIET) $(CHMOD) 0700 <%= cgiinstallpath %>/*
 
