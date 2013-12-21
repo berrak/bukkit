@@ -95,7 +95,7 @@ clean : \
 	cleangen 
  
 cleangen :
-	$(QUIET) $(ECHO) [makefile]: Remove all generated binary files
+	$(QUIET) $(ECHO) [makefile]: Remove all local generated binary files
 	$(QUIET) $(FIND) . -type f -perm -u+x -exec $(ERASE) {} \;
 
 
@@ -105,9 +105,10 @@ cleangen :
 
 cleanall : \
 	clean
-	$(QUIET) $(ECHO) [makefile]: Remove all generated binary files in build directory
-	$(ERASE) ../build/*
-	$(ERASE) ../build/cgi-bin/*
+	$(QUIET) $(ECHO) [makefile]: Remove html files in build directory
+	$(QUIET) $(ERASE) ../build/*.html
+	$(QUIET) $(ECHO) [makefile]: Remove binary files in build directory
+	$(QUIET) $(ERASE) ../build/cgi-bin/*
 
 
 #############################################################################
