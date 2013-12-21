@@ -45,8 +45,6 @@ ECHO = /bin/echo
 CHOWN = /bin/chown
 CHMOD = /bin/chmod
 ERASE = /bin/rm
-FIND = /usr/bin/find
-XARGS = /usr/bin/xargs
 TEST = /usr/bin/test
 
 #############################################################################
@@ -97,18 +95,17 @@ clean: \
 	cleangen
  
 cleangen:
-	$(QUIET) $(ECHO) [makefile]: Remove any local generated binary files
-	$(QUIET) $(FIND) . -type f -perm -u+x -exec $(ERASE) {} \;
-
+	$(QUIET) $(TEST) -f \*.cgi && $(ECHO) [makefile]: Remove local cgi-files
+	$(QUIET) $(TEST) -f \*.cgi && $(ERASE) *.cgi
+	$(QUIET) $(TEST) -f \*.so && $(ECHO) [makefile]: Remove local so-files
+	$(QUIET) $(TEST) -f \*.so && $(ERASE) *.so
 
 #****************************************************************************
 #		   3b - make cleanall (local and binary files in build directory
 #****************************************************************************
 
-clean: \
-	cleanall
-
-cleanall:
+cleanall: \
+	clean
 	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(ECHO) [makefile]: Remove binary files in build directory
 	$(QUIET) $(TEST) -f ../<%= builddirectory %>/cgi-bin/*.cgi && $(ERASE) ../<%= builddirectory %>/cgi-bin/*.cgi
 
