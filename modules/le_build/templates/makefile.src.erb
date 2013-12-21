@@ -109,6 +109,7 @@ cleanall: \
 	clean
 	$(QUIET) $(ECHO) [makefile]: Remove any binary files in build directory
 	$(QUIET) $(ERASE) ../<%= builddirectory %>/cgi-bin/*.cgi
+	$(QUIET) $(ERASE) ../<%= builddirectory %>/cgi-bin/*.so
 
 
 #############################################################################
