@@ -5,13 +5,15 @@
 #
 
 #############################################################################
-#	0 -- VARIABLES
+#	 -- EXTERNAL SHELL VARIABLES
 #############################################################################
 
 MAKE = /usr/bin/make
 QUIET = @
 
 ECHO = /bin/echo
+DATE = /bin/date
+DATEOPT = +%Y%m%d.%H%M
 CP = /bin/cp
 MKDIR = mkdir -p
 TAR = /bin/tar
@@ -21,8 +23,13 @@ GZIPOPT = -9 -c
 # the -f option suppress return status and prevents make to emit an error
 ERASEREC = /bin/rm -fr
 
+
+#############################################################################
+#	 -- INTERNAL VARIABLES
+#############################################################################
+
 package = <%= projectname %>
-version = 1.0
+version =: 1.$(DATE) $(DATEOPT)
 tarname = $(package)
 distdir = $(tarname)-$(version)
 
