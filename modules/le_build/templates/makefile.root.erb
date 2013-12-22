@@ -12,8 +12,8 @@ MAKE = /usr/bin/make
 QUIET = @
 
 ECHO = /bin/echo
-DATE = /bin/date
-DATEOPT = +%Y%m%d.%H%M
+# DATE = /bin/date
+# DATEOPT = +%Y%m%d.%H%M
 CP = /bin/cp
 MKDIR = mkdir -p
 TAR = /bin/tar
@@ -29,7 +29,7 @@ ERASEREC = /bin/rm -fr
 #############################################################################
 
 package = <%= projectname %>
-version =: 1.$(DATE) $(DATEOPT)
+version = 1.0
 tarname = $(package)
 distdir = $(tarname)-$(version)
 
