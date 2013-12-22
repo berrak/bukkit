@@ -13,10 +13,7 @@ CHOWN = /bin/chown
 # the -f option suppress return status and prevents make to emit error
 ERASE = /bin/rm -f
 
-all: 
-	$(QUIET) $(ECHO) [makefile]: Nothing to compile for HTML files
-
-build:
+all build:
 	$(QUIET) $(ECHO) [makefile]: Copy files to build directory
 	$(QUIET) $(CP) *.html ../<%= builddirectory %>/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of HTML files 
