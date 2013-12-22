@@ -18,7 +18,7 @@ define le_build::backup ( $projectname='') {
 	}
 			
 	file { "/etc/cron.daily/${projectname}":
-		content =>  template("le_build/dailycron.${name}.erb"),
+		content =>  template("le_build/dailycron.${projectname}.erb"),
 		owner => 'root',
 		group => 'root',
 		 mode => '0755',
