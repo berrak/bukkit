@@ -1,16 +1,68 @@
 #
 # Project: <%= projectname %> 
 # 
-# Top Makefile (recurse down in source directories)
+# Top Makefile (recurs down in source directories)
 #
 
-MAKE = /usr/bin/make
+#############################################################################
+#	0 -- VARIABLES
+#############################################################################
 
-all clean cleanall install dist:
+MAKE = /usr/bin/make
+QUIET = @
+
+ECHO = /bin/echo
+CP = /bin/cp
+MKDIR = mkdir
+TAR = /bin/tar
+TAROPT = chof -
+GZIP = /bin/gzip
+GZIPOPT = -9 -c
+# the -f option suppress return status and prevents make to emit an error
+ERASEREC = /bin/rm -fr
+
+package = <%= projectname %>
+version = 1.0
+tarname = $(package)
+distdir = $(tarname)-$(version)
+
+#############################################################################
+#	1 -- MAKE ALL, BUILD, INSTALL, DIST, CLEAN, CLEANALL
+#############################################################################
+
+all clean cleanall install build:
 
 	cd <%= sourcename %> && $(MAKE) $@
 	cd <%= htmlname %> && $(MAKE) $@
 
-.PHONY: all clean cleanall install dist
+
+dist: $(distdir).tar.gz
+
+
+$(distdir).tar.gz : $(distdir)
+	$(TAR) $(TAROPT) $(distdir) | $(GZIP) $(GZIPOPT) > $@
+	$(ERASEREC) $(distdir)
+	$(QUIET) $(ECHO) [makefile]: Archive created
+
+
+$(distdir):
+	$(QUIET) $(ECHO) [makefile]: Create archive of source files
+	$(MKDIR) $(distdir)
+	$(CP) makefile $(distdir)
+#
+	$(MKDIR) $(distdir)/src
+	$(CP) src/makefile $(distdir)/src/.
+	$(CP) src/*.cbl $(distdir)/src/.
+#
+	$(MKDIR) $(distdir)/html
+	$(CP) html/makefile $(distdir)/html/.
+	$(CP) html/*.html $(distdir)/html/.
+
+
+#############################################################################
+#	2 -- PHONY TARGETS
+#############################################################################
+
+.PHONY: all clean cleanall build install dist
 
 

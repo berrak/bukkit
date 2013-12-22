@@ -12,26 +12,28 @@
 #
 #  make <user_name>   - Builds all COBOL programs designated by <user_name>
 #
-#  make dist			Builds all COBOL programs, moves them to build directory
+#  make build			Builds all COBOL programs, moves them to build directory
 #
 #  make install			Installs build files on target system directories
 #  
-#
 #  make clean		   - Erases intermediate files
+#
 #  make cleanall	   - Erases all files produced in the build process,
 #			             except the original source files
 #
 # The makefile contains the following sections:
 #
 #    1 -- VARIABLES
-#    2 -- MAKE USER CATEGORIES
-#    3 -- MAKE CLEAN COMMANDS
-#    4 -- COMMANDS TO MAKE INDIVIDUAL PROGRAMS
-#    5 -- PHONY TARGETS
+#    2 -- PHONY TARGETS
+#    3 -- MAKE BUILS AND USER CATEGORIES
+#    4 -- MAKE CLEAN COMMANDS
+#    5 -- COMMANDS TO MAKE INDIVIDUAL PROGRAMS
 #
 #
 #############################################################################
-#		   1 -- VARIABLES				 
+#
+#	1 -- VARIABLES
+#
 #############################################################################
 
 COBC = /usr/bin/cobc
@@ -45,106 +47,20 @@ CHOWN = /bin/chown
 CHMOD = /bin/chmod
 CP = /bin/cp
 
-# the -f option suppress return status and prevents make to emit error
+# the -f option suppress return status and prevents make to emit an error
 ERASE = /bin/rm -f
 
 #############################################################################
-#  2 -- MAKE USER CATEGORIES i.e. <user_name>
-#	       2a - make all
-#	       2b - make bekr
-#	       2c - make <other_user>  
-#	       .
-#          .
+#	2 -- PHONY TARGETS
+#
+#		   2a -  make  all - Complile and copy files to build directory
+#		   2b -  make  install - Installs files to system directories
+#
 #############################################################################
 
-
-#****************************************************************************
-#		   2a - make all
-#****************************************************************************
-
+.PHONY: install all
 all: \
-	gnucobol
-
-
-#****************************************************************************
-#		   2b - make <user_name>=bekr
-#****************************************************************************
-
-bekr: \
-	gnucobol
-
-#****************************************************************************
-#		   2c - make <user_name>=<other_user>
-#****************************************************************************
-
-# other_user_name : \
-#	otherpgm
-
-#############################################################################
-#  3 -- COMMANDS TO CLEAN
-#		   3a -  make  clean - Erases intermediate files (*.s, )
-#		   3b -  make  cleanall - Erases intermediate files (*.s, ) and erase
-#                all files in the build directory
-#		   
-#############################################################################
-
-#****************************************************************************
-#		   3a - make clean (local binary files)
-#****************************************************************************
-.PHONY: clean cleangen cleanall
-
-clean: \
-	cleangen
- 
-cleangen:
-	$(QUIET) $(ECHO) [makefile]: Remove any local so- and cgi-files
-	$(QUIET) $(ERASE) *.cgi
-	$(QUIET) $(ERASE) *.so
-
-#****************************************************************************
-#		   3b - make cleanall (local and binary files in build directory
-#****************************************************************************
-
-cleanall: \
-	clean
-	$(QUIET) $(ECHO) [makefile]: Remove any binary files in build directory
-	$(QUIET) $(ERASE) ../<%= builddirectory %>/cgi-bin/*.cgi
-	$(QUIET) $(ERASE) ../<%= builddirectory %>/cgi-bin/*.so
-
-
-#############################################################################
-#  4 -- COMMANDS TO MAKE INDIVIDUAL SAMPLES
-#		   4a -  catogori of files (TBD)
-#		   4b -  another category of files
-#
-#############################################################################
-
-#****************************************************************************
-#		   4a -  categori TDB
-#****************************************************************************
-
-gnucobol: gnucobol.so
-	$(COBC) $(EXEFLAG) gnucobol.cbl $(OUTFILE) gnucobol.cgi
-
-gnucobol.so: gnucobol.cbl
-	$(COBC) $(COBFLAGS) gnucobol.cbl
-
-
-#****************************************************************************
-#		   4b -  categori TDB
-#****************************************************************************
-
-
-#############################################################################
-#  5 -- PHONY TARGETS
-#		   5a -  make  dist - Moves files to build directory
-#		   5b -  make  install - Installs files to system directories
-#
-#############################################################################
-
-.PHONY: dist install
-dist: \
-	all
+	build
 	$(QUIET) $(ECHO) [makefile]: Copy any binary files to build directory ../<%= builddirectory %>/cgi-bin
 	$(QUIET) $(CP) *.cgi ../<%= builddirectory %>/cgi-bin/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of binary files 
@@ -157,4 +73,97 @@ install:
 	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> <%= cgiinstallpath %>/*
 	$(QUIET) $(ECHO) [makefile]: Change file permission to 0700 in <%= cgiinstallpath %>
 	$(QUIET) $(CHMOD) 0700 <%= cgiinstallpath %>/*
+
+
+#############################################################################
+#	3 -- MAKE BUILD AND USER CATEGORIES i.e. <user_name>
+#
+#	       3a - make build
+#	       3b - make bekr
+#	       3c - make <other_user>  
+#
+#############################################################################
+
+#****************************************************************************
+#		   3a - make build dependicies
+#****************************************************************************
+
+build: \
+	gnucobol
+
+
+#****************************************************************************
+#		   3b - make <user_name>=bekr dependicies
+#****************************************************************************
+
+bekr: \
+	gnucobol
+
+#****************************************************************************
+#		   3c - make <user_name>=<other_user> dependicies
+#****************************************************************************
+
+# other_user_name : \
+#	otherpgm
+
+#############################################################################
+#	4 -- COMMANDS TO CLEAN
+#
+#		   4a -  make  clean - Erases intermediate files (*.s, )
+#		   4b -  make  cleanall - Erases intermediate files (*.s, ) and erase
+#                all files in the build directory
+#
+#############################################################################
+
+#****************************************************************************
+#		   4a - make clean (local binary files)
+#****************************************************************************
+.PHONY: clean cleangen cleanall
+
+clean: \
+	cleangen
+ 
+cleangen:
+	$(QUIET) $(ECHO) [makefile]: Remove any local so- and cgi-files
+	$(QUIET) $(ERASE) *.cgi
+	$(QUIET) $(ERASE) *.so
+
+#****************************************************************************
+#		   4b - make cleanall (local and binary files in build directory
+#****************************************************************************
+
+cleanall: \
+	clean
+	$(QUIET) $(ECHO) [makefile]: Remove any binary files in build directory
+	$(QUIET) $(ERASE) ../<%= builddirectory %>/cgi-bin/*.cgi
+	$(QUIET) $(ERASE) ../<%= builddirectory %>/cgi-bin/*.so
+
+
+#############################################################################
+#  5 -- COMMANDS TO COMPILE INDIVIDUAL COBOL SOURCE FILES
+#
+#		   5a -  category of source files (TBD)
+#		   5b -  another category of source files
+#
+#############################################################################
+
+#****************************************************************************
+#		   5a -  categori test site
+#****************************************************************************
+
+gnucobol: gnucobol.so
+	$(COBC) $(EXEFLAG) gnucobol.cbl $(OUTFILE) gnucobol.cgi
+
+gnucobol.so: gnucobol.cbl
+	$(COBC) $(COBFLAGS) gnucobol.cbl
+
+
+#****************************************************************************
+#		   5b -  categori TDB
+#****************************************************************************
+
+
+
+
+
 

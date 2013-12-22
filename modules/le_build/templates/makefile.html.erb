@@ -13,10 +13,10 @@ CHOWN = /bin/chown
 # the -f option suppress return status and prevents make to emit error
 ERASE = /bin/rm -f
 
-all: \
-	dist
+all: 
+	$(QUIET) $(ECHO) [makefile]: Nothing to compile for HTML files
 
-dist:
+build:
 	$(QUIET) $(ECHO) [makefile]: Copy files to build directory
 	$(QUIET) $(CP) *.html ../<%= builddirectory %>/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of HTML files 
@@ -35,4 +35,4 @@ cleanall:
 	$(QUIET)$(ECHO) [makefile]: Remove any html files in build directory
 	$(QUIET) $(ERASE) ../<%= builddirectory %>/*.html
 
-.PHONY: all dist install clean cleanall
+.PHONY: all build install clean cleanall

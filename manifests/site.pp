@@ -43,7 +43,7 @@ node 'www-node.mc-butter.se' {
     include vb_ocesql
     
     
-    ## set up project structure and makefiles
+    ## set up project structure (no spaces in names) and makefiles
     
     class { le_build::project :
       projectname => 'openjensen',
