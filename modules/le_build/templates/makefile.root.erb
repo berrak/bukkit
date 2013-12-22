@@ -40,23 +40,22 @@ dist: $(distdir).tar.gz
 
 
 $(distdir).tar.gz : $(distdir)
-	$(TAR) $(TAROPT) $(distdir) | $(GZIP) $(GZIPOPT) > $@
-	$(ERASEREC) $(distdir)
-	$(QUIET) $(ECHO) [makefile]: Archive created
+	$(QUIET) $(TAR) $(TAROPT) $(distdir) | $(GZIP) $(GZIPOPT) > $@
+	$(QUIET) $(ERASEREC) $(distdir)
+	$(QUIET) $(ECHO) [makefile]: Archive $(distdir).tar.gz created
 
 
 $(distdir):
-	$(QUIET) $(ECHO) [makefile]: Create archive of source files
-	$(MKDIR) $(distdir)
-	$(CP) makefile $(distdir)
+	$(QUIET) $(MKDIR) $(distdir)
+	$(QUIET) $(CP) makefile $(distdir)
 #
-	$(MKDIR) $(distdir)/src
-	$(CP) src/makefile $(distdir)/src/.
-	$(CP) src/*.cbl $(distdir)/src/.
+	$(QUIET) $(MKDIR) $(distdir)/src
+	$(QUIET) $(CP) src/makefile $(distdir)/src/.
+	$(QUIET) $(CP) src/*.cbl $(distdir)/src/.
 #
-	$(MKDIR) $(distdir)/html
-	$(CP) html/makefile $(distdir)/html/.
-	$(CP) html/*.html $(distdir)/html/.
+	$(QUIET) $(MKDIR) $(distdir)/html
+	$(QUIET) $(CP) html/makefile $(distdir)/html/.
+	$(QUIET) $(CP) html/*.html $(distdir)/html/.
 
 
 #############################################################################
