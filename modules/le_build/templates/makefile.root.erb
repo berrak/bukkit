@@ -13,7 +13,7 @@ QUIET = @
 
 ECHO = /bin/echo
 CP = /bin/cp
-MKDIR = mkdir
+MKDIR = mkdir -p
 TAR = /bin/tar
 TAROPT = chof -
 GZIP = /bin/gzip
@@ -56,6 +56,9 @@ $(distdir):
 	$(QUIET) $(MKDIR) $(distdir)/html
 	$(QUIET) $(CP) html/makefile $(distdir)/html/.
 	$(QUIET) $(CP) html/*.html $(distdir)/html/.
+#
+	$(QUIET) $(MKDIR) $(distdir)/build/cgi-bin
+
 
 
 #############################################################################
