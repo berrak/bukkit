@@ -1,5 +1,5 @@
 #
-# Define new Apache2 virtual hosts in var/www file system and enables it
+# Define new programming project
 #
 # Sample usage:
 #

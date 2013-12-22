@@ -1,0 +1,16 @@
+#!/bin/sh
+
+cd /home/<%= name %>/<%= projectname %>
+make && make dist
+
+cd /var/backups || exit 0
+
+for FILE in *.gz ; do
+
+        test -f /home/<%= name %>/<%= projectname %>/$FILE             || continue
+        
+        cmp -s $FILE.bak /home/<%= name %>/<%= projectname %>/$FILE    && continue
+        
+        cp -p /home/<%= name %>/<%= projectname %>/$FILE $FILE.bak     && chmod 644 $FILE.bak
+        
+done
