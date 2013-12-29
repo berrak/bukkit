@@ -155,7 +155,7 @@ gnucobol: gnucobol.so
 	$(COBC) $(EXEFLAG) gnucobol.cbl $(OUTFILE) gnucobol.cgi
 
 gnucobol.so: gnucobol.cbl
-	$(COBC) $(COBFLAGS) gnucobol.cbl
+	$(COBC) $(OBJFLAGS) gnucobol.cbl
 
 
 #****************************************************************************

@@ -15,6 +15,9 @@ class vb_postgresql::config {
         notify => Service["postgresql"],
     }
 	
+	
+	# setup localization to sv_SE.utf8 m.m.
+	
     file { '/etc/postgresql/9.1/main/postgresql.conf':
          source => "puppet:///modules/vb_postgresql/postgresql.conf",    
           owner => 'postgres',
@@ -23,6 +26,8 @@ class vb_postgresql::config {
         require => Class["vb_postgresql::install"],
         notify => Service["postgresql"],
     }	
+	
+	
 	
     
 }

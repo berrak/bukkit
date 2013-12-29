@@ -39,6 +39,11 @@ node 'www-node.mc-butter.se' {
     # postgreSQL-9.1
     include vb_postgresql
     
+	# Create database for the application and owner (option: 2nd databaseuser)
+    vb_postgresql::create_database { 'openjensen' :
+		databaseowner => 'jensen',
+		databaseuser => '' }	    
+    
     # partial install of required debian pacakges for OC-ESQL pre-compiler
     include vb_ocesql
     
