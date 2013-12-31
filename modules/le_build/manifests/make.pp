@@ -34,8 +34,9 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
     $libraryname = $::le_build::params::libraryname
     $htmlname = $::le_build::params::htmlname
     $docname = $::le_build::params::docname
-    $builddirectory = $::le_build::params::builddirectory		
+    $builddirectory = $::le_build::params::builddirectory
 	
+	$copybookname = $::le_build::params::copybookname
 	
 	# target install directories in production system
 	
@@ -69,6 +70,8 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
 		
 		file { "/home/${username}/${projectname}/${sourcename}/${copybookname}/sqlca.cbl":
 		  ensure => link,
+		   owner => $username,
+		   group => $groupname,
 		  target => "/home/${username}/${projectname}/${sourcename}/${copybookname}/sqlca.cpy",
 		  require => File["/home/${username}/${projectname}/${sourcename}/${copybookname}/sqlca.cpy"],
 		}
@@ -108,6 +111,8 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
 		
 		file { "/home/${username}/${projectname}/${libraryname}/${copybookname}/sqlca.cbl":
 		  ensure => link,
+		   owner => $username,
+		   group => $groupname,
 		  target => "/home/${username}/${projectname}/${libraryname}/${copybookname}/sqlca.cpy",
 		  require => File["/home/${username}/${projectname}/${libraryname}/${copybookname}/sqlca.cpy"],		  
 		}
