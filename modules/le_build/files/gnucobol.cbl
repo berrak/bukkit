@@ -1,14 +1,3 @@
-        >>SOURCE FORMAT IS FIXED
-       *> ***************************************************************
-       *> Author:    Brian Tiffin, Francois Hiniger
-       *> Date:      30-Aug-2008, 02-Oct-2013
-       *> License:   Public Domain 
-       *> Purpose:   Display some GNU Cobol CGI environment space
-       *> Tectonics: cobc -x gnucobolcgi.cob
-       *>  Move gnucobol.cgi.cbl to the /cgi-bin directory as gnucobol.cgi
-       *>  browse http://<website>/cgi-bin/gnucobol.cgi
-       *>      or http://<website>/index.html
-       *> ***************************************************************
         identification division.
         program-id. gnucobolcgi.
  
@@ -141,6 +130,6 @@
  
        *> end the table, and being free software, link to the source
  
-        goback.
+        goback
+        .
         
-        end program gnucobolcgi.

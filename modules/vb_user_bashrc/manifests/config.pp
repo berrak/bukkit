@@ -94,6 +94,16 @@ define vb_user_bashrc::config {
 		   require => File["/home/${name}/bashrc.d/${name}"],
 	   	}
 
+		# postgresql rc file, sourced at login - for C and COBOL 
+		
+		file { "/home/${name}/bashrc.d/postgresql.rc":
+			source => "puppet:///modules/user_bashrc/postgresql.rc",
+			 owner => "${name}",
+			 group => "${name}",
+			  mode => '0644',
+		   require => File["/home/${name}/bashrc.d/${name}"],
+	   	}		
+
 
 	
 	} else {
