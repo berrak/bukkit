@@ -3,7 +3,7 @@
 ##
 class le_build::params {
 
-    # Directory structure for the project
+    # Top directory structure for the project
     
 	$includename = 'include'
     $libraryname = 'lib'
@@ -11,29 +11,23 @@ class le_build::params {
     $htmlname = 'html'
     $docname = 'doc'
     
+    # sub-directory below /src and /lib directories
     
-    # before copying (installing), make puts all files here
+    $copybookname = 'copy'
+    
+    
+    # before copying to target host file sytem (installing)
+    # 'make' copies all binaries and htmls files temporary
+    
     $builddirectory = 'build'
     
     
     ##  Target paths
     
     $cgiinstallpath = '/home/jensen/www.mc-butter.se/public_html/cgi-bin'
+    $libinstallpath = '/home/jensen/www.mc-butter.se/public_html/cgi-bin/lib'        
     $htmlinstallpath = '/home/jensen/www.mc-butter.se/public_html'    
-    
-    
-    
-    ## List of cobol source files
-    
-    $srclist = 'gnucobol.cbl'
-    
-    
-    
-    ## List of html files
-    
-    $htmllist = 'index.html'    
-    
-    
-    
+   
+ 
 
 }

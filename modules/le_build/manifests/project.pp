@@ -20,7 +20,9 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
     $libraryname = $::le_build::params::libraryname
     $htmlname = $::le_build::params::htmlname
     $docname = $::le_build::params::docname
-    $builddirectory = $::le_build::params::builddirectory	
+	
+    $builddirectory = $::le_build::params::builddirectory
+    $copybookname = $::le_build::params::copybookname	
 	
 	if $projectname =='' {
 		fail("FAIL: Missing required project name!")
@@ -44,7 +46,7 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 	}
 	
 	
-	## sub build outpu directories for the final installation 
+	## System directory structure for the final host installation 
 	
 	
 	file { "/home/${username}/${projectname}/${builddirectory}":
@@ -59,11 +61,62 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 		owner => $username,
 		group => $groupname,
 		require => File[ "/home/${username}/${projectname}/${builddirectory}"],
+	}
+	
+	file { "/home/${username}/${projectname}/${builddirectory}/cgi-bin/lib":
+		ensure => "directory",
+		owner => $username,
+		group => $groupname,
+		require => File[ "/home/${username}/${projectname}/${builddirectory}/cgi-bin"],
 	}	
 	
 	
 	
-	## create the individual sub directories	
+	## create the individual sub source directories	
+	
+	# Cobol source
+	
+	file { "/home/${username}/${projectname}/${sourcename}":
+		ensure => "directory",
+		owner => $username,
+		group => $groupname,
+		require => File["/home/${username}/${projectname}"],
+	}
+	
+	file { "/home/${username}/${projectname}/${sourcename}/${copybookname}":
+		ensure => "directory",
+		owner => $username,
+		group => $groupname,
+		require => File["/home/${username}/${projectname}/${sourcename}"],
+	}
+		
+		
+	# Cobol sharted libraries	
+		
+	file { "/home/${username}/${projectname}/${libraryname}":
+		ensure => "directory",
+		owner => $username,
+		group => $groupname,
+		require => File["/home/${username}/${projectname}"],
+	}
+	
+	file { "/home/${username}/${projectname}/${libraryname}/${copybookname}":
+		ensure => "directory",
+		owner => $username,
+		group => $groupname,
+		require => File["/home/${username}/${projectname}/${libraryname}"],
+	}	
+	
+	# html directory
+	
+	file { "/home/${username}/${projectname}/${htmlname}":
+		ensure => "directory",
+		owner => $username,
+		group => $groupname,
+		require => File["/home/${username}/${projectname}"],
+	}
+	
+	# Other directories
 	
 	file { "/home/${username}/${projectname}/${includename}":
 		ensure => "directory",
@@ -72,27 +125,7 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 		require => File["/home/${username}/${projectname}"],
 	}		
 	
-	file { "/home/${username}/${projectname}/${libraryname}":
-		ensure => "directory",
-		owner => $username,
-		group => $groupname,
-		require => File["/home/${username}/${projectname}"],
-	}			
-	
-	file { "/home/${username}/${projectname}/${sourcename}":
-		ensure => "directory",
-		owner => $username,
-		group => $groupname,
-		require => File["/home/${username}/${projectname}"],
-	}			
-	
-	file { "/home/${username}/${projectname}/${htmlname}":
-		ensure => "directory",
-		owner => $username,
-		group => $groupname,
-		require => File["/home/${username}/${projectname}"],
-	}				
-	
+
 	file { "/home/${username}/${projectname}/${docname}":
 		ensure => "directory",
 		owner => $username,
@@ -101,7 +134,7 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 	}		
 	
 	
-	## install the top makefile's for the project
+	## install the top makefile for the project
 	
 	file { "/home/${username}/${projectname}/makefile":
 	    content =>  template('le_build/makefile.root.erb'),  

@@ -68,6 +68,12 @@ node 'www-node.mc-butter.se' {
           groupname => 'jensen',
     }
     
+    le_build::make { 'lib' :
+     	projectname => 'openjensen',
+		   username => 'jensen',
+          groupname => 'jensen',
+    }    
+    
     # Ensure daily cron backup
     
     le_build::backup { 'jensen' : projectname => 'openjensen' }     

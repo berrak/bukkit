@@ -40,15 +40,11 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
 	# target install directories in production system
 	
 	$cgiinstallpath = $::le_build::params::cgiinstallpath
+	$libinstallpath = $::le_build::params::libinstallpath	
 	$htmlinstallpath = $::le_build::params::htmlinstallpath	
 	
-	## source files
-	
-	$srclist = $::le_build::params::srclist
-	$htmllist = $::le_build::params::htmllist
-	
 
-	## install subdirectory makefile's and source files
+	## install subdirectory makefiles
 	
 	if $name == $sourcename {
 	
@@ -59,16 +55,23 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
 			  group => $groupname,
 			require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],
 		}
+				
 		
-		file { "/home/${username}/${projectname}/${sourcename}/${srclist}":
-			 source => "puppet:///modules/le_build/${srclist}",    
+	}
+		
+	if $name == $libraryname {
+	
+		
+		file { "/home/${username}/${projectname}/$libraryname/makefile":
+			content =>  template("le_build/makefile.${name}.erb"),  
 			  owner => $username,
 			  group => $groupname,
 			require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],
-		}      			
-			
+		}
 		
-	}
+	}		
+		
+		
 		
 	if $name == $htmlname {
 		
@@ -78,15 +81,6 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
 			  group => $groupname,
 			require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],
 		}
-		
-		
-		file { "/home/${username}/${projectname}/${htmlname}/${htmllist}":
-			 source => "puppet:///modules/le_build/${htmllist}",    
-			  owner => $username,
-			  group => $groupname,
-			require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],
-		}      					
-			
 		
 	}
  

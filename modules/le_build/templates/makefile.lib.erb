@@ -1,24 +1,27 @@
 #############################################################################
 #
-# MAKEFILE for OpenCobol 1.1 (now GnuCOBOL) source file directory.
+# MAKEFILE for OpenCobol 1.1 (now GnuCOBOL) shared library directory.
 #
 # Makefile for COBOL source files (*.cbl) with or without
 # inline SQL EXEC statements using the OCESQL pre-processor.
 #
+# Output is a dynamic library with extension 'filename.so',
+# ready to be called or directly run by 'cobcrun filename'
+#
+# Project: <%= projectname %>
+#
 # Following convention is used:
 #
-#	*.cbl : COBOL source file with/without embedded SQL.
-#	*.cob : A COBOL SQL pre-processed file (*.cob).
-#
-# Project: <%= projectname %> 	
+# *.cbl : COBOL source file with/without embedded SQL.
+# *.cob : A COBOL SQL pre-processed file (*.cob).
 #
 # Enter one of the following commands 
 #
-#  make <app_name>	  - Builds a loadmodule from source program <app_name>
+#  make <app_name>	  - Builds a library from source program <app_name>
 #
-#  make all		      - Builds all loadmodules from all COBOL sources
+#  make all		      - Builds all libraries from all COBOL sources
 #
-#  make build			Builds all loadmodules, moves them to build directory
+#  make build			Builds all libraries, moves them to build directory
 #
 #  make install			Installs build files on target system directories
 #  
@@ -27,12 +30,12 @@
 #  make cleanall	    Erases all files produced in the build process,
 #			            except the original source files.
 #
-# OCESQL library is used for pre-processing the
+# OCESQL library is used for pre-processing the  
 # embedded SQL EXEC statements before the final compilation.
 #
 #############################################################################
 #
-#	VARIABLES
+#	VARIABLES AND COMMANDS
 #
 #############################################################################
 
@@ -47,7 +50,7 @@ CHMOD := /bin/chmod
 # make variables
 
 LDFLAG = -l
-CFLAG = -x
+CFLAG = -m
 QUIET = @
 OCESQL = ocesql
 COBC = cobc
@@ -60,13 +63,11 @@ export COBCPY=$(shell pwd)/$(COPYDIR)
 SRCS = $(wildcard *.cbl)
 TGTLIST = $(basename $(SRCS))
 
-
 #############################################################################
 #
 #	MAKE BUILD
 #
 #############################################################################
-
 
 build: $(TGTLIST)
 
@@ -86,25 +87,25 @@ build: $(TGTLIST)
 
 #############################################################################
 #
-#	MAKE ALL, MAKE INSTALL
+#	MAKE ALL, INSTALL
 #
 #############################################################################
 
 .PHONY: install all
 all: \
 	build
-	$(QUIET) $(ECHO) [makefile]: Copy any binary files to build directory ../<%= builddirectory %>/cgi-bin
-	$(QUIET) $(CP) *.cgi ../<%= builddirectory %>/cgi-bin/.
+	$(QUIET) $(ECHO) [makefile]: Copy any binary files to build directory ../<%= builddirectory %>/cgi-bin/lib
+	$(QUIET) $(CP) *.so ../<%= builddirectory %>/cgi-bin/lib/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of binary files 
-	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/cgi-bin/*
+	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/cgi-bin/lib/*
 
 install:
-	$(QUIET) $(ECHO) [makefile]: Install any files to target directory <%= cgiinstallpath %>
-	$(QUIET) $(CP) ../<%= builddirectory %>/cgi-bin/*.cgi <%= cgiinstallpath %>/.
-	$(QUIET) $(ECHO) [makefile]: Change ownership of all files in <%= cgiinstallpath %>
-	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> <%= cgiinstallpath %>/*
-	$(QUIET) $(ECHO) [makefile]: Change file permission to 0700 in <%= cgiinstallpath %>
-	$(QUIET) $(CHMOD) 0700 <%= cgiinstallpath %>/*
+	$(QUIET) $(ECHO) [makefile]: Install any files to target directory <%= libinstallpath %>
+	$(QUIET) $(CP) ../<%= builddirectory %>/cgi-bin/lib/*.so <%= libinstallpath %>/.
+	$(QUIET) $(ECHO) [makefile]: Change ownership of all files in <%= libinstallpath %>
+	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> <%= libinstallpath %>/*
+	$(QUIET) $(ECHO) [makefile]: Change file permission to 0700 in <%= libinstallpath %>
+	$(QUIET) $(CHMOD) 0700 <%= libinstallpath %>/*
 
 #############################################################################
 #
@@ -118,8 +119,8 @@ clean: \
 	cleangen
  
 cleangen:
-	$(QUIET) $(ECHO) [makefile]: Remove any local cgi-files
-	$(QUIET) $(ERASE) *.cgi
+	$(QUIET) $(ECHO) [makefile]: Remove any local so-files
+	$(QUIET) $(ERASE) *.so
 
 #############################################################################
 #
@@ -130,5 +131,8 @@ cleangen:
 cleanall: \
 	clean
 	$(QUIET) $(ECHO) [makefile]: Remove any binary files in build directory
-	$(QUIET) $(ERASE) ../<%= builddirectory %>/cgi-bin/*.cgi
+	$(QUIET) $(ERASE) ../<%= builddirectory %>/cgi-bin/lib/*.so
+
+
+
 
