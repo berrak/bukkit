@@ -55,6 +55,30 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
 			  group => $groupname,
 			require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],
 		}
+		
+		# Files in copybook sub directory
+		
+		file { "/home/${username}/${projectname}/${sourcename}/${copybookname}/sqlca.cpy":
+		     source => "puppet:///modules/le_build/sqlca.cpy",
+			  owner => $username,
+			  group => $groupname,
+			require => [ File["/home/${username}/${projectname}/${sourcename}/${copybookname}"], Class["le_build::project"]],
+		}		
+		
+		# symlink sqlca.cbl --> sqlca.cpy (library OCESQL requires the extension 'cbl')
+		
+		file { "/home/${username}/${projectname}/${sourcename}/${copybookname}/sqlca.cbl":
+		  ensure => link,
+		  target => "/home/${username}/${projectname}/${sourcename}/${copybookname}/sqlca.cpy",
+		  require => File["/home/${username}/${projectname}/${sourcename}/${copybookname}/sqlca.cpy"],
+		}
+		
+		file { "/home/${username}/${projectname}/${sourcename}/${copybookname}/${sourcename}_setupenv_${projectname}.cpy":
+		     source => "puppet:///modules/le_build/${sourcename}_setupenv_${projectname}.cpy",
+			  owner => $username,
+			  group => $groupname,
+			require => [ File["/home/${username}/${projectname}/${sourcename}/${copybookname}"], Class["le_build::project"]],
+		}				
 				
 		
 	}
@@ -68,6 +92,33 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
 			  group => $groupname,
 			require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],
 		}
+		
+		# Files in copybook sub directory
+		
+		# rename 'cbl' copybook to standard 'cpy' extension (library OCESQL requires extension cbl though)
+		
+		file { "/home/${username}/${projectname}/${libraryname}/${copybookname}/sqlca.cpy":
+		     source => "puppet:///modules/le_build/sqlca.cpy",
+			  owner => $username,
+			  group => $groupname,
+			require => [ File["/home/${username}/${projectname}/${libraryname}/${copybookname}"], Class["le_build::project"]],
+		}				
+		
+		# symlink sqlca.cbl --> sqlca.cpy (library OCESQL requires the extension 'cbl')
+		
+		file { "/home/${username}/${projectname}/${libraryname}/${copybookname}/sqlca.cbl":
+		  ensure => link,
+		  target => "/home/${username}/${projectname}/${libraryname}/${copybookname}/sqlca.cpy",
+		  require => File["/home/${username}/${projectname}/${libraryname}/${copybookname}/sqlca.cpy"],		  
+		}
+		
+		file { "/home/${username}/${projectname}/${libraryname}/${copybookname}/${libraryname}_setupenv_${projectname}.cpy":
+		     source => "puppet:///modules/le_build/${libraryname}_setupenv_${projectname}.cpy",
+			  owner => $username,
+			  group => $groupname,
+			require => [ File["/home/${username}/${projectname}/${libraryname}/${copybookname}"], Class["le_build::project"]],
+		}				
+		
 		
 	}		
 		
