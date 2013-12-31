@@ -1,17 +1,34 @@
 #
 # Project: <%= projectname %> 
 # 
-# HTML Makefile
+# Enter one of the following commands 
 #
+#  make, all, build		  Copy HTML file to build directory
+#
+#  make install			  Installs build files on target system directories
+#  
+#  make clean, cleanall   Erases all HTML files in build directory
+#
+#############################################################################
+#
+#	VARIABLES
+#
+#############################################################################
 
 QUIET = @
 
-CP = /bin/cp
-ECHO = /bin/echo
-CHOWN = /bin/chown
+CP := /bin/cp
+ECHO := /bin/echo
+CHOWN := /bin/chown
 
-# the -f option suppress return status and prevents make to emit error
-ERASE = /bin/rm -f
+# the -f option prevents 'make' to emit an error (if no files found)
+ERASE := /bin/rm -f
+
+#############################################################################
+#
+#	MAKE ALL, MAKE BUILD, MAKE INSTALL
+#
+#############################################################################
 
 all build:
 	$(QUIET) $(ECHO) [makefile]: Copy files to build directory
@@ -24,6 +41,12 @@ install:
 	$(QUIET) $(CP) ../<%= builddirectory %>/*.html <%= htmlinstallpath %>/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of HTML files in <%= htmlinstallpath %>
 	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> <%= htmlinstallpath %>/*.html
+
+#############################################################################
+#
+#	MAKE CLEAN, MAKE CLEANALL
+#
+#############################################################################
 
 clean: \
 	cleanall
