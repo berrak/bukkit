@@ -44,7 +44,8 @@ node 'www-node.mc-butter.se' {
 		databaseowner => 'jensen',
 		databaseuser => '' }	    
     
-    # partial install of required debian pacakges for OC-ESQL pre-compiler
+    # partial install for OC-ESQL pre-compiler. The source 
+    # OSS Consortium archieve have to be installed manually
     include vb_ocesql
     
     

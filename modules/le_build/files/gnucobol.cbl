@@ -27,7 +27,7 @@
         01 in-status            pic 9999.
         01 newline              pic x     value x'0a'.
  
-        01 name-count           constant  as 25.
+        01 name-count           pic 99    value 25.
         01 name-index           pic 99    usage comp-5.
         01 value-string         pic x(256).
            88 IS-POST                     value 'POST'.
@@ -59,7 +59,7 @@
               03 filler         pic x(20) value 'SERVER_SIGNATURE'.  
               03 filler         pic x(20) value 'SERVER_SOFTWARE'.  
            02 filler redefines name-strings.
-              03 name-string    pic x(20) occurs name-count times.
+              03 name-string    pic x(20) occurs 25 times.
               88 IS-REQUEST-METHOD        value 'REQUEST_METHOD'.
  
        *> ***************************************************************
