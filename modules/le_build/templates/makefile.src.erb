@@ -98,8 +98,7 @@ build:
 	$(QUIET) $(ECHO) [makefile]: Change ownership of binary files 
 	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/cgi-bin/*.cgi
 
-install:
-	build
+install: build
 	$(QUIET) $(ECHO) [makefile]: Install any files to target directory <%= cgiinstallpath %>
 	$(QUIET) $(CP) ../<%= builddirectory %>/cgi-bin/*.cgi <%= cgiinstallpath %>/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of all files in <%= cgiinstallpath %>

@@ -99,8 +99,7 @@ build:
 	$(QUIET) $(ECHO) [makefile]: Change ownership of binary files 
 	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/cgi-bin/*.so
 
-install:
-	build
+install: build
 	$(QUIET) $(ECHO) [makefile]: Install any files to target directory <%= libinstallpath %>
 	$(QUIET) $(CP) ../<%= builddirectory %>/cgi-bin/*.so <%= libinstallpath %>/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of all files in <%= libinstallpath %>
