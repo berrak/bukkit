@@ -25,9 +25,10 @@ class le_build::params {
     ##  Target paths
     
     $cgiinstallpath = '/home/jensen/www.mc-butter.se/public_html/cgi-bin'
-    $libinstallpath = '/home/jensen/www.mc-butter.se/public_html/cgi-bin/lib'        
     $htmlinstallpath = '/home/jensen/www.mc-butter.se/public_html'    
-   
+
+    # use same target location for *.so shared libraries 
+    $libinstallpath = '/home/jensen/www.mc-butter.se/public_html/cgi-bin'     
  
 
 }

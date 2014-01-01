@@ -96,15 +96,15 @@ all: \
 	$(QUIET) $(ECHO) [makefile]: Copy any binary files to build directory ../<%= builddirectory %>/cgi-bin
 	$(QUIET) $(CP) *.cgi ../<%= builddirectory %>/cgi-bin/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of binary files 
-	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/cgi-bin/*
+	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/cgi-bin/*.cgi
 
 install:
 	$(QUIET) $(ECHO) [makefile]: Install any files to target directory <%= cgiinstallpath %>
 	$(QUIET) $(CP) ../<%= builddirectory %>/cgi-bin/*.cgi <%= cgiinstallpath %>/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of all files in <%= cgiinstallpath %>
-	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> <%= cgiinstallpath %>/*
+	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> <%= cgiinstallpath %>/*.cgi
 	$(QUIET) $(ECHO) [makefile]: Change file permission to 0700 in <%= cgiinstallpath %>
-	$(QUIET) $(CHMOD) 0700 <%= cgiinstallpath %>/*
+	$(QUIET) $(CHMOD) 0700 <%= cgiinstallpath %>/*.cgi
 
 #############################################################################
 #

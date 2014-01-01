@@ -56,21 +56,16 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 		require => File["/home/${username}/${projectname}"],
 	}
 	
+	# we put all binaries and share libraries in the same directory /cgi-bin
+	# to make it easy to load share libraries (in apache/suexec environment)
+	
 	file { "/home/${username}/${projectname}/${builddirectory}/cgi-bin":
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,
 		require => File[ "/home/${username}/${projectname}/${builddirectory}"],
 	}
-	
-	file { "/home/${username}/${projectname}/${builddirectory}/cgi-bin/lib":
-		ensure => "directory",
-		owner => $username,
-		group => $groupname,
-		require => File[ "/home/${username}/${projectname}/${builddirectory}/cgi-bin"],
-	}	
-	
-	
+		
 	
 	## create the individual sub source directories	
 	

@@ -10,7 +10,7 @@ class vb_ocesql::install {
     package { "bison"        : ensure => installed }
     package { "flex"         : ensure => installed }
 
-        # standard autotools
+    # standard autotools
     package { "automake"     : ensure => installed }
     package { "autoconf"     : ensure => installed }
     package { "libtool"      : ensure => installed }
