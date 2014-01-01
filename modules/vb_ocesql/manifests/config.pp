@@ -13,7 +13,7 @@ class vb_ocesql::config {
     
     exec { "Install_Ocesql_symbolic_link_to_local_libraries" :
         cwd => "/usr/lib",
-        command => "/bin/ls -s /usr/local/lib/libocesql.so.0.0.0 libocesql.so.0",
+        command => "/bin/ln -s /usr/local/lib/libocesql.so.0.0.0 libocesql.so.0",
         onlyif => "/usr/bin/test -f /usr/local/lib/libocesql.so.0.0.0",
         creates => "/usr/lib/libocesql.so.0",
     }
