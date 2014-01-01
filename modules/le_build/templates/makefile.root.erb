@@ -30,9 +30,7 @@ MKDIR := mkdir -p
 
 TAR := /bin/tar
 GZIP := /bin/gzip
-
-# -f option prevents 'make' to halt incase no files to be removed
-ERASEREC = /bin/rm -fr
+RMDIR := /bin/rm -fr
 
 
 #############################################################################
@@ -62,7 +60,7 @@ dist: $(distdir).tar.gz
 
 $(distdir).tar.gz : $(distdir)
 	$(QUIET) $(TAR) $(TAROPT) $(distdir) | $(GZIP) $(GZIPOPT) > $@
-	$(QUIET) $(ERASEREC) $(distdir)
+	$(QUIET) $(RMDIR) $(distdir)
 	$(QUIET) $(ECHO) [makefile]: Archive $(distdir).tar.gz created
 
 

@@ -90,15 +90,17 @@ build: $(TGTLIST)
 #
 #############################################################################
 
-.PHONY: install all
-all: \
-	build
+.PHONY: build install all
+
+all: build
+
 	$(QUIET) $(ECHO) [makefile]: Copy any binary files to build directory ../<%= builddirectory %>/cgi-bin
 	$(QUIET) $(CP) *.cgi ../<%= builddirectory %>/cgi-bin/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of binary files 
 	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/cgi-bin/*.cgi
 
 install:
+
 	$(QUIET) $(ECHO) [makefile]: Install any files to target directory <%= cgiinstallpath %>
 	$(QUIET) $(CP) ../<%= builddirectory %>/cgi-bin/*.cgi <%= cgiinstallpath %>/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of all files in <%= cgiinstallpath %>
@@ -114,10 +116,10 @@ install:
 
 .PHONY: clean cleangen cleanall
 
-clean: \
-	cleangen
+clean: cleangen
  
 cleangen:
+
 	$(QUIET) $(ECHO) [makefile]: Remove any local cgi-files
 	$(QUIET) $(ERASE) *.cgi
 
@@ -127,8 +129,8 @@ cleangen:
 #
 #############################################################################
 
-cleanall: \
-	clean
+cleanall: clean
+
 	$(QUIET) $(ECHO) [makefile]: Remove any binary files in build directory
 	$(QUIET) $(ERASE) ../<%= builddirectory %>/cgi-bin/*.cgi
 
