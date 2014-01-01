@@ -30,15 +30,15 @@ RMDIR := /bin/rm -f
 
 all build:
 	$(QUIET) $(ECHO) [makefile]: Copy files to build directory
-	$(QUIET) $(CP) *.html ../<%= builddirectory %>/.
+	$(QUIET) - $(CP) *.html ../<%= builddirectory %>/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of HTML files 
-	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/*.html
+	$(QUIET) - $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/*.html
 
 install:
 	$(QUIET) $(ECHO) [makefile]: Install files to target directory <%= htmlinstallpath %>
-	$(QUIET) $(CP) ../<%= builddirectory %>/*.html <%= htmlinstallpath %>/.
+	$(QUIET) - $(CP) ../<%= builddirectory %>/*.html <%= htmlinstallpath %>/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of HTML files in <%= htmlinstallpath %>
-	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> <%= htmlinstallpath %>/*.html
+	$(QUIET) - $(CHOWN) <%= username %>:<%= groupname %> <%= htmlinstallpath %>/*.html
 
 #############################################################################
 #
@@ -49,7 +49,7 @@ install:
 clean: cleanall
 
 cleanall:
-	$(QUIET)$(ECHO) [makefile]: Remove any html files in build directory
+	$(QUIET) $(ECHO) [makefile]: Remove any html files in build directory
 	$(QUIET) $(RMDIR) ../<%= builddirectory %>/*.html
 
 .PHONY: all build install clean cleanall

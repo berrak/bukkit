@@ -95,17 +95,17 @@ all: $(TGTLIST)
 
 build:
 	$(QUIET) $(ECHO) [makefile]: Copy any binary files to build directory ../<%= builddirectory %>/cgi-bin
-	$(QUIET) $(CP) *.so ../<%= builddirectory %>/cgi-bin/.
+	$(QUIET) - $(CP) *.so ../<%= builddirectory %>/cgi-bin/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of binary files 
-	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/cgi-bin/*.so
+	$(QUIET) - $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/cgi-bin/*.so
 
 install: build
 	$(QUIET) $(ECHO) [makefile]: Install any files to target directory <%= libinstallpath %>
-	$(QUIET) $(CP) ../<%= builddirectory %>/cgi-bin/*.so <%= libinstallpath %>/.
+	$(QUIET) - $(CP) ../<%= builddirectory %>/cgi-bin/*.so <%= libinstallpath %>/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of all files in <%= libinstallpath %>
-	$(QUIET) $(CHOWN) <%= username %>:<%= groupname %> <%= libinstallpath %>/*.so
+	$(QUIET) - $(CHOWN) <%= username %>:<%= groupname %> <%= libinstallpath %>/*.so
 	$(QUIET) $(ECHO) [makefile]: Change file permission to 0700 in <%= libinstallpath %>
-	$(QUIET) $(CHMOD) 0700 <%= libinstallpath %>/*.so
+	$(QUIET) - $(CHMOD) 0700 <%= libinstallpath %>/*.so
 
 #############################################################################
 #
