@@ -20,9 +20,7 @@ QUIET = @
 CP := /bin/cp
 ECHO := /bin/echo
 CHOWN := /bin/chown
-
-# the -f option prevents 'make' to emit an error (if no files found)
-ERASE := /bin/rm -f
+RMDIR := /bin/rm -f
 
 #############################################################################
 #
@@ -52,6 +50,6 @@ clean: cleanall
 
 cleanall:
 	$(QUIET)$(ECHO) [makefile]: Remove any html files in build directory
-	$(QUIET) $(ERASE) ../<%= builddirectory %>/*.html
+	$(QUIET) $(RMDIR) ../<%= builddirectory %>/*.html
 
 .PHONY: all build install clean cleanall

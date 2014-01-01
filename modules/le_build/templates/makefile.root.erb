@@ -50,7 +50,6 @@ distdir = $(tarname)-$(version)
 #############################################################################
 
 all clean cleanall install build:
-
 	cd <%= sourcename %> && $(MAKE) $@
 	cd <%= htmlname %> && $(MAKE) $@
 
