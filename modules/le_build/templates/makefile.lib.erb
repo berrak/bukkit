@@ -79,7 +79,7 @@ all: $(TGTLIST)
 #############################################################################
 
 % : %.cob
-	$(COBC) $(CFLAG) -o $@.cgi $(LDFLAG) $(OCESQL) $<
+	$(COBC) $(CFLAG) -o $@ $(LDFLAG) $(OCESQL) $<
 
 %.cob : %.cbl
 	$(OCESQL) $< $@
