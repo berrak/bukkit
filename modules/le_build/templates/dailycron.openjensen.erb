@@ -1,8 +1,10 @@
 #!/bin/sh
 
-cd /home/<%= name %> || exit 0
+cd /home/<%= name %>/<%= projectname %>  || exit 0
 
 make && make dist
+
+cd /home/<%= name %>  || exit 0
 
 for FILE in *.gz ; do
     
