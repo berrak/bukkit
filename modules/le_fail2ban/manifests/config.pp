@@ -10,7 +10,7 @@ class le_fail2ban::config {
 		 group => 'root',
 		  mode => '0640',
 	   require => Package["fail2ban"],
-        notify => Service["fail2ban"],
+        notify => Service["fail2ban-server"],
     }
 	
 }
