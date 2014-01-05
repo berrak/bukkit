@@ -43,7 +43,7 @@ TAROPT = chof -
 package = <%= projectname %>
 version = 0.$(shell date +%Y%m%d.%H%M)
 tarname = $(package)
-distdir = $(HOME)/$(tarname)-$(version)
+distdir = /home/<%= username %>/$(tarname)-$(version)
 
 #############################################################################
 #	MAKE ALL, BUILD, INSTALL, DIST, CLEAN, CLEANALL
