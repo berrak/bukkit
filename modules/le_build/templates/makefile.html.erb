@@ -3,11 +3,11 @@
 # 
 # Enter one of the following commands 
 #
-#  make, all, build		  Copy HTML file to build directory
+#  make, all, build		  Copy HTML, PNG and JS file to build directory
 #
 #  make install			  Installs build files on target system directories
 #  
-#  make clean, cleanall   Erases all HTML files in build directory
+#  make clean, cleanall   Erases all HTML, PNG and JS files in build directory
 #
 #############################################################################
 #
@@ -29,16 +29,36 @@ RMDIR := /bin/rm -f
 #############################################################################
 
 all build:
-	$(QUIET) $(ECHO) [makefile]: Copy files to build directory
+	$(QUIET) $(ECHO) [makefile]: Copy HTML files to build directory
 	$(QUIET) - $(CP) *.html ../<%= builddirectory %>/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of HTML files 
 	$(QUIET) - $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/*.html
+#
+	$(QUIET) $(ECHO) [makefile]: Copy PNG files to build directory
+	$(QUIET) - $(CP) *.png ../<%= builddirectory %>/.
+	$(QUIET) $(ECHO) [makefile]: Change ownership of PNG files 
+	$(QUIET) - $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/*.png
+#
+	$(QUIET) $(ECHO) [makefile]: Copy JS files to build directory
+	$(QUIET) - $(CP) *.js ../<%= builddirectory %>/.
+	$(QUIET) $(ECHO) [makefile]: Change ownership of JS files 
+	$(QUIET) - $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/*.js
 
 install:
-	$(QUIET) $(ECHO) [makefile]: Install files to target directory <%= htmlinstallpath %>
+	$(QUIET) $(ECHO) [makefile]: Install HTML files to target directory <%= htmlinstallpath %>
 	$(QUIET) - $(CP) ../<%= builddirectory %>/*.html <%= htmlinstallpath %>/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of HTML files in <%= htmlinstallpath %>
 	$(QUIET) - $(CHOWN) <%= username %>:<%= groupname %> <%= htmlinstallpath %>/*.html
+#
+	$(QUIET) $(ECHO) [makefile]: Install PNG files to target directory <%= htmlinstallpath %>
+	$(QUIET) - $(CP) ../<%= builddirectory %>/*.png <%= htmlinstallpath %>/.
+	$(QUIET) $(ECHO) [makefile]: Change ownership of PNG files in <%= htmlinstallpath %>
+	$(QUIET) - $(CHOWN) <%= username %>:<%= groupname %> <%= htmlinstallpath %>/*.png
+#
+	$(QUIET) $(ECHO) [makefile]: Install JS files to target directory <%= htmlinstallpath %>
+	$(QUIET) - $(CP) ../<%= builddirectory %>/*.js <%= htmlinstallpath %>/.
+	$(QUIET) $(ECHO) [makefile]: Change ownership of JS files in <%= htmlinstallpath %>
+	$(QUIET) - $(CHOWN) <%= username %>:<%= groupname %> <%= htmlinstallpath %>/*.js
 
 #############################################################################
 #
@@ -49,7 +69,13 @@ install:
 clean: cleanall
 
 cleanall:
-	$(QUIET) $(ECHO) [makefile]: Remove any html files in build directory
+	$(QUIET) $(ECHO) [makefile]: Remove any HTML files in build directory
 	$(QUIET) $(RMDIR) ../<%= builddirectory %>/*.html
+#
+	$(QUIET) $(ECHO) [makefile]: Remove any PNG files in build directory
+	$(QUIET) $(RMDIR) ../<%= builddirectory %>/*.png
+#
+	$(QUIET) $(ECHO) [makefile]: Remove any JS files in build directory
+	$(QUIET) $(RMDIR) ../<%= builddirectory %>/*.js
 
 .PHONY: all build install clean cleanall
