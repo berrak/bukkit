@@ -4,6 +4,7 @@
 class le_iptables::config ( $puppetserver_hostname = '' ) {
 		
 	include le_iptables
+    include le_fail2ban
 	
 	case $::hostname {
     
