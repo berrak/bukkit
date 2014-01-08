@@ -136,7 +136,6 @@ $IPTABLES -A INPUT -p udp -m udp --dport 5353 -j ACCEPT
 ## DROP OTHER INBOUND TRAFFIC
 ## ==========================
 
-
 #---------------------------------------------------------------------------
 # CATCH ALL INPUT LOG-and-DROP RULES (you may be suprised what ends up here)
 #---------------------------------------------------------------------------

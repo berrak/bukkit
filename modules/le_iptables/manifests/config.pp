@@ -4,6 +4,7 @@
 class le_iptables::config ( $puppetserver_hostname = '' ) {
 		
 	include le_iptables
+	include le_fail2ban
 	
 	case $::hostname {
     
@@ -18,7 +19,10 @@ class le_iptables::config ( $puppetserver_hostname = '' ) {
 		         notify => Exec["/bin/sh /root/bin/fw.levonline.server"],
             }
 			
-            exec { "/bin/sh /root/bin/fw.levonline.server": refreshonly => true }
+            exec { "/bin/sh /root/bin/fw.levonline.server":
+				refreshonly => true,
+				     notify => Service[fail2ban::service],
+            }
         
         }
 		
