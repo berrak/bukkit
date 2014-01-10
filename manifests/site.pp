@@ -10,7 +10,7 @@ node 'www-node.mc-butter.se' {
 	include le_logwatch
 	
 	# ntp server provids time services
-    class { 'puppet_ntp' : role => 'lanserver', peerntpip => '217.70.39.231' }	
+    class { 'le_ntp' : role => 'lanserver', peerntpip => '217.70.39.231' }	
         
     class { le_hosts::config : puppetserver_hostname => 'www' }
 	
