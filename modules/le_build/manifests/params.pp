@@ -32,7 +32,7 @@ class le_build::params {
     
     
     ## help script to allow remote developers make and make install on server
-    $remote_install_scriptname = 'jensen_remote_make_makeinstall'
+    $remote_install_scriptname = 'remote_make_makeinstall'
  
 
 }
