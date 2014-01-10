@@ -117,7 +117,7 @@ $IPTABLES -A INPUT -p tcp -s $PB1TRUSTEDUSER -m tcp --dport 80 -m state --state 
 $IPTABLES -A INPUT -p tcp -s $PB2TRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $SSTRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $CATRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s JENSENSCHOOL -m tcp --dport 80 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $JENSENSCHOOL -m tcp --dport 80 -m state --state NEW -j ACCEPT
 
 # allow postgresql to accept input
 $IPTABLES -A INPUT -p tcp -s 0/0 --sport 1024:65535 -d $HOSTADDR --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
