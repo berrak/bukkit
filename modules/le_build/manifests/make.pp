@@ -45,7 +45,7 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
 	$htmlinstallpath = $::le_build::params::htmlinstallpath
 	
 	# help file for remote developers (runs make and make install)
-	$remote_install_scriptname = $::puppet_komodo_devsetup::params::remote_install_scriptname	
+	$remote_install_scriptname = $::le_build::params::remote_install_scriptname	
 	
     
 	# install the remote helper script
