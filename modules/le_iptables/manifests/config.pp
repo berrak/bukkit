@@ -20,8 +20,19 @@ class le_iptables::config ( $puppetserver_hostname = '' ) {
 			
             exec { "/bin/sh /root/bin/fw.levonline.server":
 				refreshonly => true,
-				     notify => Service[fail2ban::service],
+				     notify => Service["fail2ban"],
             }
+			
+			
+            file { "/etc/fail2ban/jail.local":
+					source => "puppet:///modules/le_iptables/jail.local",
+					 owner => 'root',
+					 group => 'root',
+					  mode => '0640',
+				   require => Package["fail2ban"],
+					notify => Service["fail2ban"],
+            }			
+			
         
         }
 		
