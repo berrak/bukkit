@@ -28,7 +28,11 @@ class le_build::params {
     $htmlinstallpath = '/home/jensen/www.mc-butter.se/public_html'    
 
     # use same target location for *.so shared libraries 
-    $libinstallpath = '/home/jensen/www.mc-butter.se/public_html/cgi-bin'     
+    $libinstallpath = '/home/jensen/www.mc-butter.se/public_html/cgi-bin'
+    
+    
+    ## help script to allow remote developers make and make install on server
+    $remote_install_scriptname = 'remote_make_makeinstall'
  
 
 }

@@ -42,8 +42,21 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
 	
 	$cgiinstallpath = $::le_build::params::cgiinstallpath
 	$libinstallpath = $::le_build::params::libinstallpath	
-	$htmlinstallpath = $::le_build::params::htmlinstallpath	
+	$htmlinstallpath = $::le_build::params::htmlinstallpath
 	
+	# help file for remote developers (runs make and make install)
+	$remote_install_scriptname = $::puppet_komodo_devsetup::params::remote_install_scriptname	
+	
+    
+	# install the remote helper script
+	file { "/home/${username}/bin/${remote_install_scriptname}":
+		content =>  template("le_build/${remote_install_scriptname}.erb"),  
+		  owner => $username,
+		  group => $groupname,
+		   mode => '0755',
+		require => Class["le_build::project"],
+	}
+
 
 	## install subdirectory makefiles
 	
