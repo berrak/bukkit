@@ -8,8 +8,20 @@ class le_logwatch::config {
 		source => "puppet:///modules/le_logwatch/logwatch.conf",
 		 owner => 'root',
 		 group => 'root',
-		  mode => '0644',
+		  mode => '0640',
 	   require => Package["logwatch"],
     }
+	
+	file { "/etc/cron.daily/00logwatch":
+		source => "puppet:///modules/le_logwatch/00logwatch",
+		 owner => 'root',
+		 group => 'root',
+		  mode => '0750',
+	   require => Package["logwatch"],
+    }
+		
+	
+	
+	
 	
 }
