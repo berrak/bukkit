@@ -22,7 +22,11 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
     $docname = $::le_build::params::docname
 	
     $builddirectory = $::le_build::params::builddirectory
-    $copybookname = $::le_build::params::copybookname	
+    $copybookname = $::le_build::params::copybookname
+	
+    # help file for remote developers (runs make and make install)
+	$remote_install_scriptname = $::le_build::params::remote_install_scriptname	
+	
 	
 	if $projectname =='' {
 		fail("FAIL: Missing required project name!")
@@ -137,5 +141,19 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 		  group => $groupname,
 		require => File["/home/${username}/${projectname}"],
 	}
+	
+	## install the remote helper script
+	
+	file { "/home/${username}/bin/${remote_install_scriptname}":
+		content =>  template("le_build/${remote_install_scriptname}.erb"),  
+		  owner => $username,
+		  group => $groupname,
+		   mode => '0755',
+		require => Class["le_build::project"],
+	}	
+	
+	
+	
+	
 	
 }

@@ -44,21 +44,6 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
 	$libinstallpath = $::le_build::params::libinstallpath	
 	$htmlinstallpath = $::le_build::params::htmlinstallpath
 	
-	# help file for remote developers (runs make and make install)
-	$remote_install_scriptname = $::le_build::params::remote_install_scriptname	
-	
-    
-	# install the remote helper script
-	
-	file { "/home/${username}/bin/${username}_${remote_install_scriptname}":
-		content =>  template("le_build/${username}_${remote_install_scriptname}.erb"),  
-		  owner => $username,
-		  group => $groupname,
-		   mode => '0755',
-		require => Class["le_build::project"],
-	}
-
-
 	## install subdirectory makefiles
 	
 	if $name == $sourcename {
