@@ -149,7 +149,6 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 		  owner => $username,
 		  group => $groupname,
 		   mode => '0755',
-		require => Class["le_build::project"],
 	}	
 	
 	
