@@ -113,7 +113,7 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 	  ensure => link,
 	   owner => $username,
 	   group => $groupname,
-	  target => "/home/${username}/${projectname}/${sourcename}/${copybookname}/sqlca.cpy",
+	  target => "/home/${username}/${projectname}/${copybookname}/sqlca.cpy",
 	  require => File["/home/${username}/${projectname}/${copybookname}/sqlca.cpy"],
 	}
 	
