@@ -25,6 +25,10 @@ export LD_LIBRARY_PATH=/usr/local/lib
 # In the developers case, the lib location is a same level in the 
 # directory hierarchy make sure the right library location is called!
 
+# Set OpenCOBOL's copybook file in this relative directory for development  
+
+export COBCPY=../copy
+
 export COB_LIBRARY_PATH=../lib
 
 # in run-time put all *.so files in the same directory as the executable file.

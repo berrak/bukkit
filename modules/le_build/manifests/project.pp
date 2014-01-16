@@ -81,14 +81,6 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 		group => $groupname,
 		require => File["/home/${username}/${projectname}"],
 	}
-	
-	file { "/home/${username}/${projectname}/${sourcename}/${copybookname}":
-		ensure => "directory",
-		owner => $username,
-		group => $groupname,
-		require => File["/home/${username}/${projectname}/${sourcename}"],
-	}
-		
 		
 	# Cobol sharted libraries	
 		
@@ -99,12 +91,39 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 		require => File["/home/${username}/${projectname}"],
 	}
 	
-	file { "/home/${username}/${projectname}/${libraryname}/${copybookname}":
+	# Copybook directory
+	
+	file { "/home/${username}/${projectname}/${copybookname}":
 		ensure => "directory",
 		owner => $username,
 		group => $groupname,
-		require => File["/home/${username}/${projectname}/${libraryname}"],
-	}	
+		require => File["/home/${username}/${projectname}"],
+	}
+	
+    file { "/home/${username}/${projectname}/${copybookname}/sqlca.cpy":
+		source => "puppet:///modules/le_build/sqlca.cpy",
+		 owner => $username,
+		 group => $groupname,
+	   require => File["/home/${username}/${projectname}/${copybookname}"],
+    }		
+		
+	# symlink sqlca.cbl --> sqlca.cpy (library OCESQL requires the extension 'cbl')
+	
+	file { "/home/${username}/${projectname}/${copybookname}/sqlca.cbl":
+	  ensure => link,
+	   owner => $username,
+	   group => $groupname,
+	  target => "/home/${username}/${projectname}/${sourcename}/${copybookname}/sqlca.cpy",
+	  require => File["/home/${username}/${projectname}/${copybookname}/sqlca.cpy"],
+	}
+	
+	file { "/home/${username}/${projectname}/${copybookname}/setupenv_${projectname}.cpy":
+		 source => "puppet:///modules/le_build/setupenv_${projectname}.cpy",
+		  owner => $username,
+		  group => $groupname,
+	   require => File["/home/${username}/${projectname}/${copybookname}"],
+	}				
+	
 	
 	# html directory
 	
