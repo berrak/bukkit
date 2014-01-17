@@ -7,5 +7,10 @@
 # source files for project <%= projectname %>
 #
 cd /home/<%= username %>/<%= projectname %>
+export COBCPY=/home/<%= username %>/<%= projectname %>/<%= copybookname %>
+export COB_LIBRARY_PATH=/home/<%= username %>/<%= projectname %>/<%= libraryname %>
+echo "-----------------Build Environment-----------------"
+env | grep COB
+echo "---------------------------------------------------"
 make
 make install
