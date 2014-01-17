@@ -6,6 +6,10 @@
 # Script to make and make install hosts all
 # source files for project <%= projectname %>
 #
+echo "---------------------------------------------------"
+echo -n "*** START MAKE & MAKE INSTALL: "
+`date +%Y%m%d.%T`
+echo "---------------------------------------------------"
 cd /home/<%= username %>/<%= projectname %>
 export COBCPY=/home/<%= username %>/<%= projectname %>/<%= copybookname %>
 export COB_LIBRARY_PATH=/home/<%= username %>/<%= projectname %>/<%= libraryname %>
@@ -14,3 +18,9 @@ env | grep COB
 echo "---------------------------------------------------"
 make
 make install
+echo "-----------------Build Environment-----------------"
+env | grep COB
+echo "---------------------------------------------------"
+echo -n "*** BUILD AND INSTALL FINISHED: "
+`date +%Y%m%d.%T`
+echo "---------------------------------------------------"
