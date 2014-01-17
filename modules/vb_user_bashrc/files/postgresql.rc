@@ -12,26 +12,25 @@
 export PGDATABASE=openjensen
 export PGUSER=jensen
 
-# avoid run-time issues when COBOL programs complied with support 
-# for SQL EXEC (and use OCESQL lib) will find required lobs.
-# Note this will not work in suexec-environment - use a symbolic
-# link in the file system in this case.
-
-export LD_LIBRARY_PATH=/usr/local/lib
-
 # Open COBOL (GnuCobol) programs requires some paths set to
 # find it run-time libraries.
 
 # In the developers case, the lib location is a same level in the 
 # directory hierarchy make sure the right library location is called!
 
-# Set OpenCOBOL's copybook file directory for development
-# Dont use relativ paths will not work.
+# Set OpenCOBOL's environment for DEVELOPMENT
+# Use absolute paths not relative!
 
+export COB_LIBRARY_PATH=/home/jensen/openjensen/lib
 export COBCPY=/home/jensen/openjensen/copy
 
-# Not tested - the double dots will likely not expand to parent directory.
-# For run-time, put all *.so files in the same directory as the executable file.
-export COB_LIBRARY_PATH=../lib
+# For run-time (PRODUCTION), put all *.so files in the same directory as the
+# executable file. Thus the COB_LIBRARY_PATH can be same as for development.
 
+# Avoid run-time issues when COBOL programs compiled with support 
+# for SQL EXEC (use OCESQL lib) will find required libs.
 
+# Note this will not work in suexec-environment - here use a symbolic
+# link in the file system in this case from /usr/lib to specific lib-files.
+
+export LD_LIBRARY_PATH=/usr/local/lib
