@@ -7,30 +7,32 @@
 # Sourced by user bash resource file
 #
 
-# For C development with ECPG lib and more
+## For C development with PostgreSQL ECPG lib.
 
 export PGDATABASE=openjensen
 export PGUSER=jensen
 
-# Open COBOL (GnuCobol) programs requires some paths set to
-# find it run-time libraries.
+## For COBOL development with OpenCobol + OCESQL (SQL pre-processor)
 
-# In the developers case, the lib location is a same level in the 
-# directory hierarchy make sure the right library location is called!
+# Build Environment
+# -----------------
 
-# Set OpenCOBOL's environment for DEVELOPMENT
-# Use absolute paths not relative!
-
-export COB_LIBRARY_PATH=/home/jensen/openjensen/lib
+# Developing - location for copybooks and my created so-libraries)
 export COBCPY=/home/jensen/openjensen/copy
+export COB_LIBRARY_PATH=/home/jensen/openjensen/lib
 
-# For run-time (PRODUCTION), put all *.so files in the same directory as the
-# executable file. Thus the COB_LIBRARY_PATH can be same as for development.
+# Run-time - OpenCobol
+# Installed by the apt package system - found automatically
 
-# Avoid run-time issues when COBOL programs compiled with support 
-# for SQL EXEC (use OCESQL lib) will find required libs.
-
-# Note this will not work in suexec-environment - here use a symbolic
-# link in the file system in this case from /usr/lib to specific lib-files.
-
+# Run-time - OCESQL libs - by manual source install
 export LD_LIBRARY_PATH=/usr/local/lib
+
+# Production Environment
+# ----------------------
+
+# Put all *.so files in the same directory as the executable cgi-file.
+(No need to change COB_LIBRARY_PATH, can be same as for development)
+
+# The LD_LIBRARY_PATH is same as in Production. But above will not work
+# in suexec-Apache web environment - then use a symbolic link in the local
+# file system, i.e. /usr/lib to the /usr/local/lib/<ocesql-lib> files.
