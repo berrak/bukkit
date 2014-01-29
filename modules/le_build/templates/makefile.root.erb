@@ -88,6 +88,21 @@ $(distdir):
 	$(QUIET) - $(CP) php/makefile $(distdir)/php/.
 	$(QUIET) - $(CP) php/*.php $(distdir)/php/.
 #
+	$(QUIET) $(MKDIR) $(distdir)/php/assets
+	$(QUIET) - $(CP) php/assets/*.php $(distdir)/php/assets/.
+#
+	$(QUIET) $(MKDIR) $(distdir)/php/assets/css
+	$(QUIET) - $(CP) php/assets/css/*.css $(distdir)/php/assets/css/.
+#
+	$(QUIET) $(MKDIR) $(distdir)/php/assets/fonts
+	$(QUIET) - $(CP) php/assets/fonts/* $(distdir)/php/assets/fonts/.
+#
+	$(QUIET) $(MKDIR) $(distdir)/php/assets/img
+	$(QUIET) - $(CP) php/assets/img/*.png $(distdir)/php/assets/img/.
+#
+	$(QUIET) $(MKDIR) $(distdir)/php/assets/js
+	$(QUIET) - $(CP) php/assets/js/*.js $(distdir)/php/assets/js/.
+#
 	$(QUIET) $(MKDIR) $(distdir)/build/cgi-bin
 
 
