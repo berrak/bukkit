@@ -88,9 +88,9 @@ install:
 	$(QUIET) - $(CHOWN) <%= username %>:<%= groupname %> <%= phpinstallpath %>/assets/img/*.png
 #
 	$(QUIET) $(ECHO) [makefile]: Install assets JS files to target directory <%= phpinstallpath %>/assets/js
-	$(QUIET) - $(CP) ../<%= builddirectory %>/assets/img/*.js <%= phpinstallpath %>/assets/js/.
+	$(QUIET) - $(CP) ../<%= builddirectory %>/assets/js/*.js <%= phpinstallpath %>/assets/js/.
 	$(QUIET) $(ECHO) [makefile]: Change ownership of assets JS files in <%= phpinstallpath %>/assets/js
-	$(QUIET) - $(CHOWN) <%= username %>:<%= groupname %> <%= phpinstallpath %>/assets/img/*.js
+	$(QUIET) - $(CHOWN) <%= username %>:<%= groupname %> <%= phpinstallpath %>/assets/js/*.js
 #
 
 #############################################################################
