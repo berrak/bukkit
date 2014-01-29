@@ -100,7 +100,59 @@ define vb_apache2::vhost ( $priority='', $devgroupid='', $urlalias='', $aliastgt
               group => $devgroupid,
                mode => '0755',
             require => File["/home/${devgroupid}/${name}/public_html"],
-        }        
+        }
+		
+		## directories for php application
+		
+		# ../assets
+
+        file { "/home/${devgroupid}/${name}/public_html/assets" :
+             ensure => "directory",
+              owner => $devgroupid,
+              group => $devgroupid,
+               mode => '0755',
+            require => File["/home/${devgroupid}/${name}/public_html"],
+        }
+		
+		# ../assets/css
+
+        file { "/home/${devgroupid}/${name}/public_html/assets/css" :
+             ensure => "directory",
+              owner => $devgroupid,
+              group => $devgroupid,
+               mode => '0755',
+            require => File["/home/${devgroupid}/${name}/public_html/assets"],
+        }
+				
+		# ../assets/fonts
+
+        file { "/home/${devgroupid}/${name}/public_html/assets/fonts" :
+             ensure => "directory",
+              owner => $devgroupid,
+              group => $devgroupid,
+               mode => '0755',
+            require => File["/home/${devgroupid}/${name}/public_html/assets"],
+        }
+		
+		# ../assets/img
+
+        file { "/home/${devgroupid}/${name}/public_html/assets/img" :
+             ensure => "directory",
+              owner => $devgroupid,
+              group => $devgroupid,
+               mode => '0755',
+            require => File["/home/${devgroupid}/${name}/public_html/assets"],
+        }		
+		
+		# ../assets/js
+
+        file { "/home/${devgroupid}/${name}/public_html/assets/js" :
+             ensure => "directory",
+              owner => $devgroupid,
+              group => $devgroupid,
+               mode => '0755',
+            require => File["/home/${devgroupid}/${name}/public_html/assets"],
+        }
     
     }
     
