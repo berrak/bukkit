@@ -51,7 +51,7 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 	}
 	
 	
-	## System directory structure for the final host installation 
+	## System directory structure for the build directory structure (make install)
 	
 	
 	file { "/home/${username}/${projectname}/${builddirectory}":
@@ -61,8 +61,7 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 		require => File["/home/${username}/${projectname}"],
 	}
 	
-	# we put all binaries and share libraries in the same directory /cgi-bin
-	# to make it easy to load share libraries (in apache/suexec environment)
+	# binaries and share libraries in the same directory sub directory /cgi-bin
 	
 	file { "/home/${username}/${projectname}/${builddirectory}/cgi-bin":
 		ensure => "directory",
@@ -70,7 +69,51 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 		group => $groupname,
 		require => File[ "/home/${username}/${projectname}/${builddirectory}"],
 	}
+	
+	# php layout requiress lots of different directories (build and in final install)
 		
+	file { "/home/${username}/${projectname}/${builddirectory}/assets":
+		ensure => "directory",
+		owner => $username,
+		group => $groupname,
+		require => File[ "/home/${username}/${projectname}/${builddirectory}"],
+	}		
+		
+	# ../assets/css		
+		
+	file { "/home/${username}/${projectname}/${builddirectory}/assets/css":
+		ensure => "directory",
+		owner => $username,
+		group => $groupname,
+		require => File[ "/home/${username}/${projectname}/${builddirectory}/assets"],
+	}		
+	
+	# ../assets/fonts		
+		
+	file { "/home/${username}/${projectname}/${builddirectory}/assets/fonts":
+		ensure => "directory",
+		owner => $username,
+		group => $groupname,
+		require => File[ "/home/${username}/${projectname}/${builddirectory}/assets"],
+	}				
+	
+	# ../assets/img		
+		
+	file { "/home/${username}/${projectname}/${builddirectory}/assets/img":
+		ensure => "directory",
+		owner => $username,
+		group => $groupname,
+		require => File[ "/home/${username}/${projectname}/${builddirectory}/assets"],
+	}	
+	
+	# ../assets/js		
+		
+	file { "/home/${username}/${projectname}/${builddirectory}/assets/js":
+		ensure => "directory",
+		owner => $username,
+		group => $groupname,
+		require => File[ "/home/${username}/${projectname}/${builddirectory}/assets"],
+	}	
 	
 	## create the individual sub source directories	
 	
@@ -135,7 +178,7 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 		require => File["/home/${username}/${projectname}"],
 	}
 	
-	# PHP directory
+	# PHP base source directory
 	
 	file { "/home/${username}/${projectname}/${phpname}":
 		ensure => "directory",
@@ -144,7 +187,50 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 		require => File["/home/${username}/${projectname}"],
 	}	
 	
+	# ../assets
 	
+	file { "/home/${username}/${projectname}/${phpname}/assets":
+		ensure => "directory",
+		owner => $username,
+		group => $groupname,
+		require => File["/home/${username}/${projectname}/${phpname}"],
+	}	
+	
+	# ../assets/css
+	
+	file { "/home/${username}/${projectname}/${phpname}/assets/css":
+		ensure => "directory",
+		owner => $username,
+		group => $groupname,
+		require => File["/home/${username}/${projectname}/${phpname}/assets"],
+	}	
+	
+	# ../assets/fonts
+	
+	file { "/home/${username}/${projectname}/${phpname}/assets/fonts":
+		ensure => "directory",
+		owner => $username,
+		group => $groupname,
+		require => File["/home/${username}/${projectname}/${phpname}/assets"],
+	}
+	
+	# ../assets/img
+	
+	file { "/home/${username}/${projectname}/${phpname}/assets/img":
+		ensure => "directory",
+		owner => $username,
+		group => $groupname,
+		require => File["/home/${username}/${projectname}/${phpname}/assets"],
+	}		
+	
+	# ../assets/js
+	
+	file { "/home/${username}/${projectname}/${phpname}/assets/js":
+		ensure => "directory",
+		owner => $username,
+		group => $groupname,
+		require => File["/home/${username}/${projectname}/${phpname}/assets"],
+	}	
 	
 	# Other directories
 	
