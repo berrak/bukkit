@@ -10,6 +10,7 @@ class le_build::params {
 	$sourcename = 'src'
     $htmlname = 'html'
     $docname = 'doc'
+    $phpname = 'php'
     
     # sub-directory below /src and /lib directories
     
@@ -24,10 +25,12 @@ class le_build::params {
     
     ##  Target paths
     
+    # use same target location for html and php files    
+    $htmlinstallpath = '/home/jensen/www.mc-butter.se/public_html'
+    $phpinstallpath = '/home/jensen/www.mc-butter.se/public_html'        
+    
+    # use same target location for *.cgi and *.so files     
     $cgiinstallpath = '/home/jensen/www.mc-butter.se/public_html/cgi-bin'
-    $htmlinstallpath = '/home/jensen/www.mc-butter.se/public_html'    
-
-    # use same target location for *.so shared libraries 
     $libinstallpath = '/home/jensen/www.mc-butter.se/public_html/cgi-bin'
     
     

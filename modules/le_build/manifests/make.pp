@@ -34,15 +34,19 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
     $libraryname = $::le_build::params::libraryname
     $htmlname = $::le_build::params::htmlname
     $docname = $::le_build::params::docname
+	$phpname = $::le_build::params::phpname	
+	
     $builddirectory = $::le_build::params::builddirectory
 	
 	$copybookname = $::le_build::params::copybookname
 	
-	# target install directories in production system
+	
+	## target install directories in production system
 	
 	$cgiinstallpath = $::le_build::params::cgiinstallpath
 	$libinstallpath = $::le_build::params::libinstallpath	
 	$htmlinstallpath = $::le_build::params::htmlinstallpath
+	$phpinstallpath = $::le_build::params::phpinstallpath	
 	
 	## install subdirectory makefiles
 	
@@ -82,6 +86,17 @@ define le_build::make ( $projectname='', $username='', $groupname='') {
 		}
 		
 	}
+	
+	if $name == $phpname {
+		
+		file { "/home/${username}/${projectname}/${phpname}/makefile":
+			content =>  template("le_build/makefile.${name}.erb"),  
+			  owner => $username,
+			  group => $groupname,
+			require => [ File["/home/${username}/${projectname}"], Class["le_build::project"]],
+		}
+		
+	}	
  
     
 }

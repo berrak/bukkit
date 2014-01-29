@@ -20,6 +20,7 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
     $libraryname = $::le_build::params::libraryname
     $htmlname = $::le_build::params::htmlname
     $docname = $::le_build::params::docname
+    $phpname = $::le_build::params::phpname	
 	
     $builddirectory = $::le_build::params::builddirectory
     $copybookname = $::le_build::params::copybookname
@@ -133,6 +134,17 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 		group => $groupname,
 		require => File["/home/${username}/${projectname}"],
 	}
+	
+	# PHP directory
+	
+	file { "/home/${username}/${projectname}/${phpname}":
+		ensure => "directory",
+		owner => $username,
+		group => $groupname,
+		require => File["/home/${username}/${projectname}"],
+	}	
+	
+	
 	
 	# Other directories
 	

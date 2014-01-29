@@ -53,7 +53,7 @@ all clean cleanall install build:
 	cd <%= sourcename %> && $(MAKE) $@
 	cd <%= libraryname %> && $(MAKE) $@
 	cd <%= htmlname %> && $(MAKE) $@
-
+	cd <%= phpname %> && $(MAKE) $@
 
 dist: $(distdir).tar.gz
 
@@ -83,6 +83,10 @@ $(distdir):
 	$(QUIET) $(MKDIR) $(distdir)/html
 	$(QUIET) - $(CP) html/makefile $(distdir)/html/.
 	$(QUIET) - $(CP) html/*.html $(distdir)/html/.
+#
+	$(QUIET) $(MKDIR) $(distdir)/php
+	$(QUIET) - $(CP) php/makefile $(distdir)/php/.
+	$(QUIET) - $(CP) php/*.php $(distdir)/php/.
 #
 	$(QUIET) $(MKDIR) $(distdir)/build/cgi-bin
 

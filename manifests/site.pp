@@ -79,7 +79,13 @@ node 'www-node.mc-butter.se' {
      	projectname => 'openjensen',
 		   username => 'jensen',
           groupname => 'jensen',
-    }    
+    }
+	
+    le_build::make { 'php' :
+     	projectname => 'openjensen',
+		   username => 'jensen',
+          groupname => 'jensen',
+    }    	
     
     # Ensure daily cron backup
     

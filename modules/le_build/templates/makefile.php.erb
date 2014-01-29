@@ -1,0 +1,58 @@
+#
+# Project: <%= projectname %> 
+# 
+# Enter one of the following commands 
+#
+#  make, all, build		  Copy PHP files to build directory
+#
+#  make install			  Installs build files on target system directories
+#  
+#  make clean, cleanall   Erases all PHP files in build directory
+#
+#############################################################################
+#
+#	VARIABLES
+#
+#############################################################################
+
+QUIET = @
+
+CP := /bin/cp
+ECHO := /bin/echo
+CHOWN := /bin/chown
+RMDIR := /bin/rm -f
+
+#############################################################################
+#
+#	MAKE ALL, MAKE BUILD, MAKE INSTALL
+#
+#############################################################################
+
+all build:
+	$(QUIET) $(ECHO) [makefile]: Copy PHP files to build directory
+	$(QUIET) - $(CP) *.php ../<%= builddirectory %>/.
+	$(QUIET) $(ECHO) [makefile]: Change ownership of PHP files 
+	$(QUIET) - $(CHOWN) <%= username %>:<%= groupname %> ../<%= builddirectory %>/*.php
+#
+
+
+install:
+	$(QUIET) $(ECHO) [makefile]: Install PHP files to target directory <%= phpinstallpath %>
+	$(QUIET) - $(CP) ../<%= builddirectory %>/*.php <%= htmlinstallpath %>/.
+	$(QUIET) $(ECHO) [makefile]: Change ownership of PHP files in <%= phpinstallpath %>
+	$(QUIET) - $(CHOWN) <%= username %>:<%= groupname %> <%= phpinstallpath %>/*.php
+
+
+#############################################################################
+#
+#	MAKE CLEAN, MAKE CLEANALL
+#
+#############################################################################
+
+clean: cleanall
+
+cleanall:
+	$(QUIET) $(ECHO) [makefile]: Remove any PHP files in build directory
+	$(QUIET) $(RMDIR) ../<%= builddirectory %>/*.php
+
+.PHONY: all build install clean cleanall
