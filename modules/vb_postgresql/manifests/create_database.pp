@@ -17,8 +17,8 @@ define vb_postgresql::create_database ( $databaseowner='', $databaseuser='' ) {
 	
 	$database_encoding = $::vb_postgresql::params::database_encoding
 	
-    file { "/var/lib/postgresql/create_database_${name}.sql":
-		content =>  template( "vb_postgresql/create_database_${name}.sql.erb" ),
+    file { "/var/lib/postgresql/pg_${name}_create_database.sql":
+		content =>  template( "vb_postgresql/pg_${name}_create_database.sql.erb" ),
           owner => 'postgres',
           group => 'postgres',
 		  mode  => '0644',
@@ -58,8 +58,34 @@ define vb_postgresql::create_database ( $databaseowner='', $databaseuser='' ) {
         require => Class["vb_postgresql::install"],
     }		
 	
+	# add postgresql tables and add data for openjensen project
+	
+	if $name == 'openjensen' {
+	
+		file { "/var/lib/postgresql/pg_${name}_create_all_tables.sql":
+			 source => "puppet:///modules/vb_postgresql/pg_${name}_create_all_tables.sql",    
+			  owner => 'postgres',
+			  group => 'postgres',
+			require => Class["vb_postgresql::install"],
+		}	
+	
+		file { "/var/lib/postgresql/pg_${name}_drop_all.sql":
+			 source => "puppet:///modules/vb_postgresql/pg_${name}_drop_all.sql",    
+			  owner => 'postgres',
+			  group => 'postgres',
+			require => Class["vb_postgresql::install"],
+		}		
+	
+		file { "/var/lib/postgresql/pg_${name}_insert_all_data.sql":
+			 source => "puppet:///modules/vb_postgresql/pg_${name}_insert_all_data.sql",    
+			  owner => 'postgres',
+			  group => 'postgres',
+			require => Class["vb_postgresql::install"],
+		}	
 	
 	
+	}
+
 	
 	# add (option) another user. (Note that this user still must be granted access to each
 	# table and other database objects before having free acess to owners database)
