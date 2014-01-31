@@ -33,6 +33,9 @@ IPTSAVEFILE=/root/bin/IPTABLES.FW
 
 HOSTADDR="217.70.39.231/32"
 
+# Port22only
+BKTRUSTEDIP="81.237.245.35/32"
+
 # Home network
 DKTRUSTEDNET="81.237.0.0/16"
 JHTRUSTEDNET="90.227.0.0/16"
@@ -91,7 +94,8 @@ $IPTABLES -I OUTPUT 1 -o lo -j ACCEPT
 $IPTABLES -A INPUT -p all -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 # ssh client access for management
-$IPTABLES -A INPUT -p tcp -m tcp --dport 22 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP -m tcp --dport 22 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $JENSENSCHOOL -m tcp --dport 22 -m state --state NEW -j ACCEPT
 
 # public minecraft clients talks to the server on this port
 $IPTABLES -A INPUT -p tcp -s $DKTRUSTEDNET -m tcp --dport 25565:25566 -m state --state NEW -j ACCEPT
