@@ -62,6 +62,7 @@ define vb_postgresql::create_database ( $databaseowner='', $databaseuser='' ) {
          source => "puppet:///modules/vb_postgresql/reinitiate-${name}-tables",    
           owner => 'postgres',
           group => 'postgres',
+		   mode => '0744',
         require => Class["vb_postgresql::install"],
     }	
 	
