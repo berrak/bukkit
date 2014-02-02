@@ -56,7 +56,14 @@ define vb_postgresql::create_database ( $databaseowner='', $databaseuser='' ) {
           owner => 'postgres',
           group => 'postgres',
         require => Class["vb_postgresql::install"],
-    }		
+    }
+	
+    file { "/var/lib/postgresql/reinitiate-${name}-tables":
+         source => "puppet:///modules/vb_postgresql/reinitiate-${name}-tables",    
+          owner => 'postgres',
+          group => 'postgres',
+        require => Class["vb_postgresql::install"],
+    }	
 	
 	# add postgresql tables and add data for openjensen project
 	
