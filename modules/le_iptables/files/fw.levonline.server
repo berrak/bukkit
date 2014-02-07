@@ -99,6 +99,7 @@ $IPTABLES -A INPUT -p all -m state --state ESTABLISHED,RELATED -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP -m tcp --dport 22 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $JENSENSCHOOL -m tcp --dport 22 -m state --state NEW -j ACCEPT
 
+
 # public minecraft clients talks to the server on this port
 $IPTABLES -A INPUT -p tcp -s $DKTRUSTEDNET -m tcp --dport 25565:25566 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $JHTRUSTEDNET -m tcp --dport 25565:25566 -m state --state NEW -j ACCEPT
@@ -146,6 +147,17 @@ $IPTABLES -A INPUT -p tcp -m tcp --dport 8140 -m state --state NEW -j ACCEPT
 # allow possible multicast mDNS packets
 $IPTABLES -A INPUT -p udp -m udp --dport 5353 -j ACCEPT
 
+
+# allow Git (port 9418) access for trusted users
+$IPTABLES -A INPUT -p tcp -s $BKTRUSTEDUSER -m tcp --dport 9418 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $JENSENSCHOOL -m tcp --dport 9418 -m state --state NEW -j ACCEPT
+
+$IPTABLES -A INPUT -p tcp -s $PB1TRUSTEDUSER -m tcp --dport 9418 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $PB2TRUSTEDUSER -m tcp --dport 9418 -m state --state NEW -j ACCEPT
+
+$IPTABLES -A INPUT -p tcp -s $EMILIOTRUSTEDUSER -m tcp --dport 9418 -m state --state NEW -j ACCEPT
+
+
 ## ==========================
 ## DROP OTHER INBOUND TRAFFIC
 ## ==========================
@@ -160,7 +172,6 @@ $IPTABLES -A INPUT -m state --state INVALID -j DROP
 
 $IPTABLES -A INPUT ! -i lo -j $LOGOPT $RLIMIT --log-prefix "DROP INPUT DEFAULT "
 $IPTABLES -A INPUT ! -i lo -j DROP
-
 
 #############################
 ## SAVE THE FILE
