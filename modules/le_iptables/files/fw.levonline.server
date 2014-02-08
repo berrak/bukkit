@@ -99,6 +99,11 @@ $IPTABLES -A INPUT -p all -m state --state ESTABLISHED,RELATED -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP -m tcp --dport 22 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $JENSENSCHOOL -m tcp --dport 22 -m state --state NEW -j ACCEPT
 
+# git authentication for team
+$IPTABLES -A INPUT -p tcp -s $PB1TRUSTEDUSER -m tcp --dport 22 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $PB2TRUSTEDUSER -m tcp --dport 22 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $EMILIOTRUSTEDUSER -m tcp --dport 22 -m state --state NEW -j ACCEPT
+
 
 # public minecraft clients talks to the server on this port
 $IPTABLES -A INPUT -p tcp -s $DKTRUSTEDNET -m tcp --dport 25565:25566 -m state --state NEW -j ACCEPT
