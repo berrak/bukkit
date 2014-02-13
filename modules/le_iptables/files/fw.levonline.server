@@ -30,7 +30,6 @@ IPTSAVE=/sbin/iptables-save
 IPTSAVEFILE=/root/bin/IPTABLES.FW
 
 # localhost
-
 HOSTADDR="217.70.39.231/32"
 
 # Port22only
@@ -139,8 +138,10 @@ $IPTABLES -A INPUT -p tcp -s $EMILIOTRUSTEDUSER -m tcp --dport 80 -m state --sta
 $IPTABLES -A OUTPUT -p udp -m udp --dport 123 -m state --state NEW -j ACCEPT
 
 
-# allow postgresql to accept input
+# allow postgresql to accept local input
 $IPTABLES -A INPUT -p tcp -s 0/0 --sport 1024:65535 -d $HOSTADDR --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
+# allow postgresql to accept some remote pgadmin connections
+$IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
 
 # Puppet client: allow puppet server input to this puppet client
 $IPTABLES -A INPUT -p tcp -m tcp --dport 8139 -m state --state NEW -j ACCEPT
