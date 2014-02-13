@@ -142,6 +142,10 @@ $IPTABLES -A OUTPUT -p udp -m udp --dport 123 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s 0/0 --sport 1024:65535 -d $HOSTADDR --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
 # allow postgresql to accept some remote pgadmin connections
 $IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $JENSENSCHOOL --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $EMILIOTRUSTEDUSER --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $PB1TRUSTEDUSER --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $PB2TRUSTEDUSER --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
 
 # Puppet client: allow puppet server input to this puppet client
 $IPTABLES -A INPUT -p tcp -m tcp --dport 8139 -m state --state NEW -j ACCEPT
