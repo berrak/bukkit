@@ -21,8 +21,8 @@ node 'www-node.mc-butter.se' {
     
     include vb_puppet_utils
     
-    # packages without any special configurations
-    class { vb_install_debs : debs => [ "build-essential", "tree", "dnsutils", "locales-all" ] }    
+    # packages without any special configurations (assumes php5 is installed by ISP)
+    class { vb_install_debs : debs => [ "build-essential", "tree", "dnsutils", "locales-all", "php5-curl" ] }    
     
     include vb_root_bashrc
     
