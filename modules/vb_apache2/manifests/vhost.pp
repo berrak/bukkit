@@ -110,7 +110,7 @@ define vb_apache2::vhost ( $priority='', $devgroupid='', $urlalias='', $aliastgt
              ensure => "directory",
               owner => $devgroupid,
               group => $devgroupid,
-               mode => '0755',
+               mode => '0775',
             require => File["/home/${devgroupid}/${name}/public_html"],
         }
 		
