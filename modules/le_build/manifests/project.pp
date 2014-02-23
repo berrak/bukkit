@@ -160,15 +160,7 @@ class le_build::project ( $projectname='', $username='', $groupname='' ) {
 	  target => "/home/${username}/${projectname}/${copybookname}/sqlca.cpy",
 	  require => File["/home/${username}/${projectname}/${copybookname}/sqlca.cpy"],
 	}
-	
-	file { "/home/${username}/${projectname}/${copybookname}/setupenv_${projectname}.cpy":
-		 source => "puppet:///modules/le_build/setupenv_${projectname}.cpy",
-		  owner => $username,
-		  group => $groupname,
-	   require => File["/home/${username}/${projectname}/${copybookname}"],
-	}				
-	
-	
+		
 	# html directory
 	
 	file { "/home/${username}/${projectname}/${htmlname}":
