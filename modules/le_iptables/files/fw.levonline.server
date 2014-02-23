@@ -125,7 +125,7 @@ $IPTABLES -A INPUT -p udp -m udp --dport 67:68 --sport 67:68 -m state --state NE
 $IPTABLES -A INPUT -p tcp -m tcp --sport 53 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p udp -m udp --sport 53 -m state --state NEW -j ACCEPT
 
-# allow trusted user access to web server (Jensen)
+# allow trusted user access to web server (openjensen project)
 $IPTABLES -A INPUT -p tcp -s $BKTRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $PB1TRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $PB2TRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
@@ -135,6 +135,18 @@ $IPTABLES -A INPUT -p tcp -s $JENSENSCHOOL -m tcp --dport 80 -m state --state NE
 
 $IPTABLES -A INPUT -p tcp -s $EMILIOTRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $JNTRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
+
+
+# allow same trusted users access web server (test for above project) on port 8080
+$IPTABLES -A INPUT -p tcp -s $BKTRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $PB1TRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $PB2TRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $SSTRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $CATRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $JENSENSCHOOL -m tcp --dport 8080 -m state --state NEW -j ACCEPT
+
+$IPTABLES -A INPUT -p tcp -s $EMILIOTRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $JNTRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
 
 # allow NTP to communicate with external time servers
 $IPTABLES -A OUTPUT -p udp -m udp --dport 123 -m state --state NEW -j ACCEPT
