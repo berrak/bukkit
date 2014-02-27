@@ -57,7 +57,7 @@ CATRUSTEDUSER="85.24.193.171/32"
 EMILIOTRUSTEDUSER="213.114.139.62/32"
 JNTRUSTEDUSER="83.250.146.128/32"
 
-# school
+# school (disabled i.e. not used)
 JENSENSCHOOL="62.209.0.0/16"
 
 # multicast mDNS packets
@@ -97,7 +97,7 @@ $IPTABLES -A INPUT -p all -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 # ssh client access for management
 $IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP -m tcp --dport 22 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $JENSENSCHOOL -m tcp --dport 22 -m state --state NEW -j ACCEPT
+
 
 # git authentication for team
 $IPTABLES -A INPUT -p tcp -s $PB1TRUSTEDUSER -m tcp --dport 22 -m state --state NEW -j ACCEPT
@@ -131,7 +131,7 @@ $IPTABLES -A INPUT -p tcp -s $PB1TRUSTEDUSER -m tcp --dport 80 -m state --state 
 $IPTABLES -A INPUT -p tcp -s $PB2TRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $SSTRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $CATRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $JENSENSCHOOL -m tcp --dport 80 -m state --state NEW -j ACCEPT
+
 
 $IPTABLES -A INPUT -p tcp -s $EMILIOTRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $JNTRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
@@ -143,7 +143,7 @@ $IPTABLES -A INPUT -p tcp -s $PB1TRUSTEDUSER -m tcp --dport 8080 -m state --stat
 $IPTABLES -A INPUT -p tcp -s $PB2TRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $SSTRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $CATRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $JENSENSCHOOL -m tcp --dport 8080 -m state --state NEW -j ACCEPT
+
 
 $IPTABLES -A INPUT -p tcp -s $EMILIOTRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $JNTRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
@@ -156,7 +156,7 @@ $IPTABLES -A OUTPUT -p udp -m udp --dport 123 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s 0/0 --sport 1024:65535 -d $HOSTADDR --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
 # allow postgresql to accept some remote pgadmin connections
 $IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $JENSENSCHOOL --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
+
 $IPTABLES -A INPUT -p tcp -s $EMILIOTRUSTEDUSER --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $PB1TRUSTEDUSER --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $PB2TRUSTEDUSER --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
@@ -174,7 +174,6 @@ $IPTABLES -A INPUT -p udp -m udp --dport 5353 -j ACCEPT
 
 # allow Git (port 9418) access for trusted users
 $IPTABLES -A INPUT -p tcp -s $BKTRUSTEDUSER -m tcp --dport 9418 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $JENSENSCHOOL -m tcp --dport 9418 -m state --state NEW -j ACCEPT
 
 $IPTABLES -A INPUT -p tcp -s $PB1TRUSTEDUSER -m tcp --dport 9418 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $PB2TRUSTEDUSER -m tcp --dport 9418 -m state --state NEW -j ACCEPT
