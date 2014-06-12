@@ -115,7 +115,7 @@ $IPTABLES -A INPUT -p tcp -s $JM2TRUSTEDNET -m tcp --dport 25565:25566 -m state 
 $IPTABLES -A INPUT -p tcp -s $JM3TRUSTEDNET -m tcp --dport 25565:25666 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $RPTRUSTEDNET -m tcp --dport 25565:25666 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $ESTRUSTEDNET -m tcp --dport 25565:25666 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $CSTRUSTEDNET -m tcp --dport 25565:25666 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $CPTRUSTEDNET -m tcp --dport 25565:25666 -m state --state NEW -j ACCEPT
 
 
 # allow DHCP requests
