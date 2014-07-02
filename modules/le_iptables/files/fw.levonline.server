@@ -6,7 +6,7 @@
 #
 # Rules for public Minecraft host (VPS) and Apache2 HTTP server.
 #
-# Copyright (C) (2012-13) K-B.Kronlund <bkronmailbox-copyright@yahoo.se>
+# Copyright (C) (2012-14) K-B.Kronlund <bkronmailbox-copyright@yahoo.se>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,12 +30,12 @@ IPTSAVE=/sbin/iptables-save
 IPTSAVEFILE=/root/bin/IPTABLES.FW
 
 # localhost
-HOSTADDR="217.70.39.231/32"
+HOSTADDR="217.70.39.231"
 
-# Port22only
-BKTRUSTEDIP="81.237.245.35/32"
+# Remote access on port: 22, 80, 8080, 5432 (postgreSQL), 9418 (Git)
+BKTRUSTEDIP="81.237.245.35"
 
-# Home network
+# Minecraft users network
 DKTRUSTEDNET="81.237.0.0/16"
 JHTRUSTEDNET="90.227.0.0/16"
 EKTRUSTEDNET="83.250.0.0/16"
@@ -47,19 +47,6 @@ JM4TRUSTEDNET="85.224.0.0/16"
 RPTRUSTEDNET="94.234.0.0/16"
 ESTRUSTEDNET="90.229.0.0/16"
 CPTRUSTEDNET="92.32.0.0/16"
-
-# Specific trusted users (openjensen team)
-BKTRUSTEDUSER="81.237.245.35/32"
-PB1TRUSTEDUSER="90.129.88.99/32"
-PB2TRUSTEDUSER="83.251.119.30/32"
-SSTRUSTEDUSER="85.229.195.252/32"
-CATRUSTEDUSER="85.24.193.171/32"
-
-EMILIOTRUSTEDUSER="213.114.139.62/32"
-JNTRUSTEDUSER="83.250.146.128/32"
-
-# school (disabled i.e. not used)
-JENSENSCHOOL="62.209.0.0/16"
 
 # multicast mDNS packets
 MDNSMULTICASTADDR="224.0.0.251"
@@ -99,14 +86,7 @@ $IPTABLES -A INPUT -p all -m state --state ESTABLISHED,RELATED -j ACCEPT
 # ssh client access for management
 $IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP -m tcp --dport 22 -m state --state NEW -j ACCEPT
 
-
-# git authentication for team
-$IPTABLES -A INPUT -p tcp -s $PB1TRUSTEDUSER -m tcp --dport 22 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $PB2TRUSTEDUSER -m tcp --dport 22 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $EMILIOTRUSTEDUSER -m tcp --dport 22 -m state --state NEW -j ACCEPT
-
-
-# public minecraft clients talks to the server on this port
+# public minecraft friends clients talks to the server on this port
 $IPTABLES -A INPUT -p tcp -s $DKTRUSTEDNET -m tcp --dport 25565:25566 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $JHTRUSTEDNET -m tcp --dport 25565:25566 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p tcp -s $EKTRUSTEDNET -m tcp --dport 25565:25566 -m state --state NEW -j ACCEPT
@@ -128,40 +108,19 @@ $IPTABLES -A INPUT -p tcp -m tcp --sport 53 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p udp -m udp --sport 53 -m state --state NEW -j ACCEPT
 
 # allow trusted user access to web server (openjensen project)
-$IPTABLES -A INPUT -p tcp -s $BKTRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $PB1TRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $PB2TRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $SSTRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $CATRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
-
-
-$IPTABLES -A INPUT -p tcp -s $EMILIOTRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $JNTRUSTEDUSER -m tcp --dport 80 -m state --state NEW -j ACCEPT
-
+$IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP -m tcp --dport 80 -m state --state NEW -j ACCEPT
 
 # allow same trusted users access web server (test for above project) on port 8080
-$IPTABLES -A INPUT -p tcp -s $BKTRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $PB1TRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $PB2TRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $SSTRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $CATRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
-
-
-$IPTABLES -A INPUT -p tcp -s $EMILIOTRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $JNTRUSTEDUSER -m tcp --dport 8080 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP -m tcp --dport 8080 -m state --state NEW -j ACCEPT
 
 # allow NTP to communicate with external time servers
 $IPTABLES -A OUTPUT -p udp -m udp --dport 123 -m state --state NEW -j ACCEPT
 
-
 # allow postgresql to accept local input
 $IPTABLES -A INPUT -p tcp -s 0/0 --sport 1024:65535 -d $HOSTADDR --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
+
 # allow postgresql to accept some remote pgadmin connections
 $IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
-
-$IPTABLES -A INPUT -p tcp -s $EMILIOTRUSTEDUSER --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $PB1TRUSTEDUSER --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $PB2TRUSTEDUSER --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
 
 # Puppet client: allow puppet server input to this puppet client
 $IPTABLES -A INPUT -p tcp -m tcp --dport 8139 -m state --state NEW -j ACCEPT
@@ -169,18 +128,11 @@ $IPTABLES -A INPUT -p tcp -m tcp --dport 8139 -m state --state NEW -j ACCEPT
 # Puppet server: allow puppet client requests to this puppet server
 $IPTABLES -A INPUT -p tcp -m tcp --dport 8140 -m state --state NEW -j ACCEPT
 
-
 # allow possible multicast mDNS packets
 $IPTABLES -A INPUT -p udp -m udp --dport 5353 -j ACCEPT
 
-
 # allow Git (port 9418) access for trusted users
-$IPTABLES -A INPUT -p tcp -s $BKTRUSTEDUSER -m tcp --dport 9418 -m state --state NEW -j ACCEPT
-
-$IPTABLES -A INPUT -p tcp -s $PB1TRUSTEDUSER -m tcp --dport 9418 -m state --state NEW -j ACCEPT
-$IPTABLES -A INPUT -p tcp -s $PB2TRUSTEDUSER -m tcp --dport 9418 -m state --state NEW -j ACCEPT
-
-$IPTABLES -A INPUT -p tcp -s $EMILIOTRUSTEDUSER -m tcp --dport 9418 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP -m tcp --dport 9418 -m state --state NEW -j ACCEPT
 
 
 ## ==========================
