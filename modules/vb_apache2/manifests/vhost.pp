@@ -279,6 +279,22 @@ define vb_apache2::vhost ( $priority='', $devgroupid='', $urlalias='', $aliastgt
             
                 
         }
+		
+		none: {
+    
+            file { "/etc/apache2/sites-available/${name}":
+                content =>  template('vb_apache2/vhost.erb'),
+                owner => 'root',
+                group => 'root',       
+                require => Class["vb_apache2::install"],
+                notify => Service["apache2"],
+            }
+            
+            # No need to copy other vhost site files (like favicon.ico
+			# index.html) since it is maintained by the vhost project
+            
+   
+        }		
         
         default: {
             fail("FAIL: Script language ($execscript) not defined or known!")
