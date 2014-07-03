@@ -35,8 +35,8 @@ HOSTADDR="217.70.39.231"
 # Remote access on port: 22, 80, 8080, 5432 (postgreSQL), 9418 (Git)
 BKTRUSTEDIP="81.237.245.35"
 
-# trusted domain to access port 80
-GOOGLE="google.com"
+# trusted domain net is google.com
+GOOGLENET="66.249.0.0/16"
 
 # Minecraft users network
 DKTRUSTEDNET="81.237.0.0/16"
@@ -86,8 +86,8 @@ $IPTABLES -I OUTPUT 1 -o lo -j ACCEPT
 # allow all established and related in
 $IPTABLES -A INPUT -p all -m state --state ESTABLISHED,RELATED -j ACCEPT
 
-# allow trusted domains access (restrictive use of this type of rule)
-$IPTABLES -A INPUT -p tcp -d $GOOGLE -m tcp -m state --state NEW -j ACCEPT
+# allow Google to access
+$IPTABLES -A INPUT -p tcp -s $GOOGLENET -m tcp -m state --state NEW -j ACCEPT
 
 # ssh client access for management
 $IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP -m tcp --dport 22 -m state --state NEW -j ACCEPT
