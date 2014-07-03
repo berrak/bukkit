@@ -34,7 +34,7 @@ node 'www-node.debinix.org' {
     include vb_apache2 
     	
 	## Define a new Apache2 virtual host (docroot directory writable by group 'bekr')
-    vb_apache2::vhost { 'www.debinix.org' :
+    vb_apache2::vhost { 'debinix.org' :
             priority => '001',
           devgroupid => 'bekr',
           execscript => 'none',
