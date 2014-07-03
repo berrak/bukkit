@@ -35,6 +35,9 @@ HOSTADDR="217.70.39.231"
 # Remote access on port: 22, 80, 8080, 5432 (postgreSQL), 9418 (Git)
 BKTRUSTEDIP="81.237.245.35"
 
+# trusted domain to access port 80
+GOOGLE="google.com"
+
 # Minecraft users network
 DKTRUSTEDNET="81.237.0.0/16"
 JHTRUSTEDNET="90.227.0.0/16"
@@ -107,8 +110,11 @@ $IPTABLES -A INPUT -p udp -m udp --dport 67:68 --sport 67:68 -m state --state NE
 $IPTABLES -A INPUT -p tcp -m tcp --sport 53 -m state --state NEW -j ACCEPT
 $IPTABLES -A INPUT -p udp -m udp --sport 53 -m state --state NEW -j ACCEPT
 
-# allow trusted user access to web server (openjensen project)
+# allow trusted user access to web server
 $IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP -m tcp --dport 80 -m state --state NEW -j ACCEPT
+
+# allow trusted domains access to web server (restrictive use of this type of rule)
+$IPTABLES -A INPUT -p tcp -d $GOOGLE -m tcp --dport 80 -m state --state NEW -j ACCEPT
 
 # allow same trusted users access web server (test for above project) on port 8080
 $IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP -m tcp --dport 8080 -m state --state NEW -j ACCEPT
