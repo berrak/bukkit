@@ -31,7 +31,7 @@ define vb_apache2::module {
 			}
 			
 			# Copy our configuration file with rules for mod-security
-			file { "/etc/${name}/modsecurity.conf":
+			file { "/etc/modsecurity/modsecurity.conf":
 				source => "puppet:///modules/vb_apache2/modsecurity.conf",    
 				owner => 'root',
 				group => 'root',
