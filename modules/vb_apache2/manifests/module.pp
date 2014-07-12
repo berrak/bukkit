@@ -37,6 +37,7 @@ define vb_apache2::module {
 				group => 'root',
 				mode => '0644',
 				require => Package["modsecurity-crs"],
+				notify => Service["apache2"],
 			}   	
 			
 			# Create private temp directory, writable for apache (www-data)
