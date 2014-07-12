@@ -45,7 +45,7 @@ define vb_apache2::module {
 				owner => $name,
 				group => 'root',
 				mode => '0770',
-				require => File["/etc/${name}/modsecurity.conf"],
+				require => File["/etc/modsecurity/modsecurity.conf"],
 			}		
 			
 			# Only enable if not already enabling symlink exist,
@@ -54,7 +54,7 @@ define vb_apache2::module {
 				command => "/usr/sbin/a2enmod $name >> /dev/null",		
 				path   => "/usr/bin:/usr/sbin:/bin",
 				unless => "test -e /etc/apache2/mods-enabled/$name.load",
-				require => File["/etc/${name}/modsecurity.conf"],
+				require => File["/etc/modsecurity/modsecurity.conf"],
 				notify => Service["apache2"],
 			}			
 			
