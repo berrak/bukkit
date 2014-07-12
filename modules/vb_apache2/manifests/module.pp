@@ -40,9 +40,9 @@ define vb_apache2::module {
 			}   	
 			
 			# Create private temp directory, writable for apache (www-data)
-			file { "/var/temp/${name}" :
+			file { "/var/tmp/modsecurity" :
 				ensure => "directory",
-				owner => $name,
+				owner => 'www-data',
 				group => 'root',
 				mode => '0770',
 				require => File["/etc/modsecurity/modsecurity.conf"],
