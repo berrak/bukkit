@@ -16,18 +16,18 @@ define vb_apache2::module {
 			# Install required Debian packages
 			package { [ "libxml2", "libxml2-dev","libxml2-utils"] :
 				ensure => installed,
-				require => "apache2-mpm-prefork",
+				require => Package["apache2-mpm-prefork"],
 			}
 			
 			package { [ "libaprutil1", "libaprutil1-dev"] :
 				ensure => installed,
-				require => "apache2-mpm-prefork",
+				require => Package["apache2-mpm-prefork"],
 			}
 		
 			# Install mod-security and rule set
 			package { [ "libapache-mod-security", "modsecurity-crs"] :
 				ensure => installed,
-				require => "apache2-mpm-prefork",
+				require => Package["apache2-mpm-prefork"],
 			}
 			
 			# Copy our configuration file with rules for mod-security
@@ -65,10 +65,11 @@ define vb_apache2::module {
 			# Only enable if not already enabling symlink exist,
 			# if so restart apache to include new module
 			exec { "Exec_enable_$name":
-			  command => "/usr/sbin/a2enmod $name >> /dev/null",		
-			  path   => "/usr/bin:/usr/sbin:/bin",
-			  unless => "test -e /etc/apache2/mods-enabled/$name.load",
-			  notify => Service["apache2"],
+			    command => "/usr/sbin/a2enmod $name >> /dev/null",		
+			    path   => "/usr/bin:/usr/sbin:/bin",
+			    unless => "test -e /etc/apache2/mods-enabled/$name.load",
+			    require => Package["apache2-mpm-prefork"],
+			    notify => Service["apache2"],
 			}
 		}
 			
