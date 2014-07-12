@@ -27,8 +27,8 @@
 # Set to one of:  Full | OS | Minimal | Minor | Major | Prod
 # where Full conveys the most information, and Prod the least.
 #
-#ServerTokens Minimal
-ServerTokens OS
+ServerTokens Minimal
+#ServerTokens OS
 #ServerTokens Full
 
 #
@@ -39,8 +39,8 @@ ServerTokens OS
 # Set to "EMail" to also include a mailto: link to the ServerAdmin.
 # Set to one of:  On | Off | EMail
 #
-#ServerSignature Off
-ServerSignature On
+ServerSignature Off
+#ServerSignature On
 
 #
 # Allow TRACE method
@@ -69,7 +69,7 @@ TraceEnable Off
 # else than declared by the content type in the HTTP headers.
 # Requires mod_headers to be enabled.
 #
-#Header set X-Content-Type-Options: "nosniff"
+Header set X-Content-Type-Options: "nosniff"
 
 #
 # Some browsers have a built-in XSS filter that will detect some cross site
@@ -79,11 +79,11 @@ TraceEnable Off
 # completely block access to the page instead.
 # Requires mod_headers to be enabled.
 #
-#Header set X-XSS-Protection: "1; mode=block"
+Header set X-XSS-Protection: "1; mode=block"
 
 #
 # Setting this header will prevent other sites from embedding pages from this
 # site as frames. This defends against clickjacking attacks.
 # Requires mod_headers to be enabled.
 #
-#Header set X-Frame-Options: "sameorigin"
+Header set X-Frame-Options: "sameorigin"
