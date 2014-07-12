@@ -40,6 +40,10 @@ node 'www-node.debinix.org' {
           execscript => 'none',
     }
 	
+	## Add mod-security for Apache (+ module headers)
+	vb_apache2::module { 'mod-security' : }
+	vb_apache2::module { 'headers' : }	
+	
     # user profile
     vb_user_bashrc::config { 'bekr' : }
     
