@@ -17,7 +17,13 @@ node 'www-node.debinix.org' {
     class { le_hosts::config : puppetserver_hostname => 'www' }
 	
 	# installs iptables + fail2ban
-    class { le_iptables::config : puppetserver_hostname => 'www' }
+	# enable fail2ban apache and modsec regexp ban actions, these
+	# latter two parameters needs both apache and mod-security installed
+    class { le_iptables::config :
+		puppetserver_hostname => 'www',
+		fail2ban_apache='true',
+		fail2ban_modsec='true',
+	}
     
 	
 	

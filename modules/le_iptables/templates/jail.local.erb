@@ -135,9 +135,19 @@ maxretry = 6
 # HTTP servers
 #
 
+[modsec]
+
+enabled  = <%= fail2ban_modsec %>
+filter   = modsec
+action   = iptables-multiport[name=ModSec, port="http,https"]
+# sendmail-buffered[name=ModSec, lines=5, dest=you@example.com]
+logpath  = /var/log/apache2/modsec_audit.log
+bantime  = 172800
+maxretry = 1
+
 [apache]
 
-enabled  = false
+enabled  = <%= fail2ban_apache %>
 port     = http,https
 filter   = apache-auth
 logpath  = /var/log/apache*/*error.log

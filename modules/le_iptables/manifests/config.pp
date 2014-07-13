@@ -1,7 +1,10 @@
 ##
 ## This class manage iptables
 ## 
-class le_iptables::config ( $puppetserver_hostname = '' ) {
+class le_iptables::config ( $puppetserver_hostname = '',
+                            $fail2ban_apache = 'false',
+							$fail2ban_modsec = 'false',
+) {
 		
 	include le_iptables
 	
@@ -22,10 +25,9 @@ class le_iptables::config ( $puppetserver_hostname = '' ) {
 				refreshonly => true,
 				     notify => Service["fail2ban"],
             }
-			
-			
+						
             file { "/etc/fail2ban/jail.local":
-					source => "puppet:///modules/le_iptables/jail.local",
+				   content =>  template( "le_iptables/jail.local.erb" ),
 					 owner => 'root',
 					 group => 'root',
 					  mode => '0640',
