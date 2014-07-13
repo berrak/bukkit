@@ -8,6 +8,7 @@
 define vb_apache2::module {
  
     include vb_apache2
+	include le_iptables
     
 	case $name {
 	
@@ -42,12 +43,15 @@ define vb_apache2::module {
 			
 			# Create private temp directory, writable for apache (www-data)
 			file { "/var/tmp/modsecurity" :
-				ensure => "directory",
-				owner => 'www-data',
-				group => 'root',
-				mode => '0770',
+				source => "puppet:///modules/vb_apache2/modsecurity.conf",   
 				require => File["/etc/modsecurity/modsecurity.conf"],
 			}		
+			
+			# Only install regexp modsec-filter if fail2ban is installed
+			file { "/etc/fail2ban/filter.d/modsec.conf" :
+				source => "puppet:///modules/vb_apache2/modsec.conf",    
+				require => Package["fail2ban"],
+			}						
 			
 			# Only enable if not already enabling symlink exist,
 			# if so restart apache to include new module
