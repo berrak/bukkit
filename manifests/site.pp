@@ -21,8 +21,8 @@ node 'www-node.debinix.org' {
 	# latter two parameters needs both apache and mod-security installed
     class { le_iptables::config :
 		puppetserver_hostname => 'www',
-		fail2ban_apache='true',
-		fail2ban_modsec='true',
+		      fail2ban_apache => 'true',
+		      fail2ban_modsec => 'true',
 	}
     
 	
