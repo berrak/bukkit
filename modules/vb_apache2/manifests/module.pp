@@ -43,7 +43,10 @@ define vb_apache2::module {
 			
 			# Create private temp directory, writable for apache (www-data)
 			file { "/var/tmp/modsecurity" :
-				source => "puppet:///modules/vb_apache2/modsecurity.conf",   
+				ensure => 'directory',
+				owner => 'www-data',
+				group => 'root',
+				mode => '0640',  
 				require => File["/etc/modsecurity/modsecurity.conf"],
 			}		
 			
