@@ -46,7 +46,7 @@ define vb_apache2::module {
 				ensure => 'directory',
 				owner => 'www-data',
 				group => 'root',
-				mode => '0640',  
+				mode => '0770',  
 				require => File["/etc/modsecurity/modsecurity.conf"],
 			}		
 			
