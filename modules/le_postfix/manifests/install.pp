@@ -5,6 +5,10 @@
 #
 # An alternative LDA is only applicable to the server.
 #
+# Relayhosts: 
+#   - use smtp_relayhost_ip for an internal only lan
+#   - use smtp_relayhost_fqdn for internet mail server
+#
 # Sample usage:
 #   le_postfix::install { 'mta' :
 #                              ensure => 'installed',
@@ -13,7 +17,9 @@
 #                  install_cyrus_sasl => 'true',
 #                        procmail_lda => 'true',
 #               server_root_mail_user => 'bekr',
-#                   smtp_relayhost_ip => '192.168.0.11' }
+#                   smtp_relayhost_ip => '192.168.0.11',
+#                 smtp_relayhost_fqdn => 'smtp.example.com',
+#    }
 #
 define le_postfix::install(
     $ensure ,
@@ -24,6 +30,7 @@ define le_postfix::install(
     $procmail_lda = '',
     $server_root_mail_user='',
     $smtp_relayhost_ip = '',
+    $smtp_relayhost_fqdn = '',
 
 ) {
 
