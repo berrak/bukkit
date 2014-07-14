@@ -32,7 +32,7 @@ node 'www-node.debinix.org' {
 			install_cyrus_sasl => 'true',
 			          mta_type => 'server',
 		 server_root_mail_user => 'bekr',			  
-		   smtp_relayhost_fqdn => 'smtp.debinix.org',
+		   smtp_relayhost_fqdn => 'smtp.gmail.com',
 		  no_lan_outbound_mail => 'false',
 	}
 	
