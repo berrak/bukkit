@@ -39,10 +39,10 @@ node 'www-node.debinix.org' {
     # use apache2 prefork
     include vb_apache2 
     	
-	## Define a new Apache2 virtual host (docroot directory writable by group 'bekr')
+	## Define a new Apache2 virtual host (docroot directory writable by group 'root')
     vb_apache2::vhost { 'www.debinix.org' :
             priority => '001',
-          devgroupid => 'bekr',
+          devgroupid => 'root',
           execscript => 'none',
     }
 	
