@@ -289,6 +289,15 @@ define vb_apache2::vhost ( $priority='', $devgroupid='', $urlalias='', $aliastgt
                 require => Class["vb_apache2::install"],
                 notify => Service["apache2"],
             }
+			
+			# only "allow" Google, SN, and Bing for now
+            file { "/var/www/${name}/public/robot.txt":
+                source => "puppet:///modules/vb_apache2/robot.txt",    
+                owner => 'root',
+                group => 'root',
+                require => File["/var/www/${name}"],
+            }     			
+			
             
             # No need to copy other vhost site files (like favicon.ico
 			# index.html) since it is maintained by the vhost project
