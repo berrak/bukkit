@@ -31,7 +31,8 @@ node 'www-node.debinix.org' {
 			            ensure => 'installed',
 			install_cyrus_sasl => 'true',
 			          mta_type => 'server',
-			 smtp_relayhost_fqdn => 'smtp.levonline.com',
+		 server_root_mail_user => 'bekr',			  
+		   smtp_relayhost_fqdn => 'smtp.levonline.com',
 		  no_lan_outbound_mail => 'false',
 	}
 	
