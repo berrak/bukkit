@@ -140,7 +140,6 @@ $IPTABLES -A INPUT -p udp -m udp --dport 5353 -j ACCEPT
 # allow Git (port 9418) access for trusted users
 $IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP -m tcp --dport 9418 -m state --state NEW -j ACCEPT
 
-
 ## ==========================
 ## DROP OTHER INBOUND TRAFFIC
 ## ==========================
@@ -155,6 +154,14 @@ $IPTABLES -A INPUT -m state --state INVALID -j DROP
 
 $IPTABLES -A INPUT ! -i lo -j $LOGOPT $RLIMIT --log-prefix "DROP INPUT DEFAULT "
 $IPTABLES -A INPUT ! -i lo -j DROP
+
+## ======================
+## ALLOW OUTBOUND TRAFFIC
+## ======================
+
+# Allow smtp out from host
+$IPTABLES -A OUTPUT -p tcp -m tcp --dport 25 -m state --state NEW -j ACCEPT
+
 
 #############################
 ## SAVE THE FILE
