@@ -5,6 +5,15 @@ class puppetize::config {
 
     include puppetize::params
 
+    # ensure that the top-files directory exists
+    
+    file { "/etc/puppet/files" :
+        ensure => directory,
+        owner => 'root',
+        group => 'root',
+        require => Class["puppetize::install"],
+    }
+
     # sets e.g. if agent runs as daemon or not 
 
     file { "/etc/default/puppet" :
