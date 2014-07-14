@@ -36,7 +36,7 @@ HOSTADDR="217.70.39.231"
 BKTRUSTEDIP="81.237.245.35"
 
 # trusted domain net is google.com
-GOOGLENET="66.249.0.0/16"
+GOOGLENET="66.249.67.0/24"
 
 # Minecraft users network
 DKTRUSTEDNET="81.237.0.0/16"
