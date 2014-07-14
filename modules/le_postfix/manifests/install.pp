@@ -7,8 +7,8 @@
 #
 # Sample usage:
 #   le_postfix::install { 'mta' :
-#                              ensure => installed,
-#                            mta_type => server,
+#                              ensure => 'installed',
+#                            mta_type => 'server',
 #                no_lan_outbound_mail => 'true',
 #                  install_cyrus_sasl => 'true',
 #                        procmail_lda => 'true',
