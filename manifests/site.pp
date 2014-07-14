@@ -25,7 +25,10 @@ node 'www-node.debinix.org' {
 		      fail2ban_modsec => 'true',
 	}
     
+    ### modules from homepup2 repo ###		
 	
+	le_postfix::install { 'mta' : ensure => installed, install_cyrus_sasl => 'true',
+			mta_type => 'server', smtp_relayhost_ip => '217.70.32.66' }
 	
     ### modules from virtualhost repo ###
     
