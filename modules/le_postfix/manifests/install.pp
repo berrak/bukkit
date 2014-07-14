@@ -102,10 +102,19 @@ define le_postfix::install(
     # and common binaries in case needed for authentication.
     
     if $install_cyrus_sasl == 'true' {
+        
         package { "libsasl2-modules" : ensure => present }
+        
         package { "sasl2-bin" : ensure => present }
-    } 
-    
+        
+        file { "/etc/postfix/sasl" : 
+             ensure => 'directory',
+              owner => 'root',
+              group => 'root',
+            require => Package['postfix'],
+        }
+    }
+        
     # start the real postfix installation
     
     if ( $mta_type == 'server' ) {

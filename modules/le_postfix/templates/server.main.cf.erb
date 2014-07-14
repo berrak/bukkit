@@ -36,7 +36,7 @@ smtpd_sasl_auth_enable = yes
 # -- disallow
 smtp_sasl_security_options = noanonymous
 # -- where to find password
-smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_password_maps = hash:/etc/postfix/sasl/sasl_passwd
 # -- enable STARTTLS encryption
 smtp_use_tls = yes
 # -- where to find certificates
