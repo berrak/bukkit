@@ -4,9 +4,12 @@
 class le_iptables::config ( $puppetserver_hostname = '',
                             $fail2ban_apache = 'false',
 							$fail2ban_modsec = 'false',
+							$fail2ban_postfix = 'false',
 ) {
 		
 	include le_iptables
+	
+	$mydomain = $::domain
 	
 	case $::hostname {
     

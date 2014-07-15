@@ -24,7 +24,7 @@ backend = auto
 #
 # Destination email address used solely for the interpolations in
 # jail.{conf,local} configuration files.
-destemail = bertil.kronlund@gmail.com
+destemail = root@<%= mydomain %>
 
 #
 # ACTIONS
@@ -140,7 +140,7 @@ maxretry = 6
 enabled  = <%= fail2ban_modsec %>
 filter   = modsec
 action   = iptables-multiport[name=ModSec, port="http,https"]
-# sendmail-buffered[name=ModSec, lines=5, dest=you@example.com]
+sendmail-buffered[name=ModSec, lines=5, dest=root@<=% mydomain %>]
 logpath  = /var/log/apache2/modsec_audit.log
 bantime  = 172800
 maxretry = 1
@@ -229,7 +229,7 @@ maxretry = 6
 
 [postfix]
 
-enabled  = false
+enabled  = <%= fail2ban_postfix %>
 port     = smtp,ssmtp
 filter   = postfix
 logpath  = /var/log/mail.log
