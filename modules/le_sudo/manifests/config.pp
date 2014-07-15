@@ -8,8 +8,8 @@ define le_sudo::config {
 
     exec { "Add_{$name}_To_Administrator_Group" :
             command => "usermod -a -G sudo $name",
-               path => '/usr/sbin',
-        refreshonly => true,
+               path => '/usr/bin:/usr/sbin:/bin',
+             unless => "groups $name | grep sudo"
             require => Package["sudo"],
     }    
     
