@@ -38,7 +38,6 @@ node 'www-node.debinix.org' {
 		  no_lan_outbound_mail => 'false',
 	}
 	
-	le_mutt::install { 'root': mailserver_hostname => 'www' }
 	le_mutt::install { 'bekr': mailserver_hostname => 'www' }
 	
     ### modules from virtualhost repo ###
