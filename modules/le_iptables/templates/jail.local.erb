@@ -140,7 +140,7 @@ maxretry = 6
 enabled  = <%= fail2ban_modsec %>
 filter   = modsec
 action   = iptables-multiport[name=ModSec, port="http,https"]
-sendmail-buffered[name=ModSec, lines=5, dest=root@<=% mydomain %>]
+sendmail-buffered[name=ModSec, lines=5, dest=root@<%= mydomain %>]
 logpath  = /var/log/apache2/modsec_audit.log
 bantime  = 172800
 maxretry = 1
