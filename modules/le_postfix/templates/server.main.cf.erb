@@ -43,7 +43,7 @@ smtp_sasl_password_maps = hash:/etc/postfix/sasl/sasl_passwd
 smtp_sasl_security_options =
 
 # -- enable STARTTLS encryption
-smtp_use_tls = yes
+smtpd_use_tls = yes
 # -- set TLS policy
 smtp_tls_policy_maps = hash:/etc/postfix/tls_policy
 # -- CA certs
