@@ -25,40 +25,39 @@ mynetworks = 127.0.0.0/8 <%= mynetwork_eth0 %>/24
 readme_directory = no
 recipient_delimiter = +
 relay_domains = $mydestination
-relayhost = <%= smtp_relayhost_fqdn %>:587
+relayhost = [<%= smtp_relayhost_fqdn %>]:587
 
 virtual_alias_maps = hash:/etc/postfix/virtual
 
-# SASL: enable SMTP auth for relaying
-#------------------------------------
+# SASL/TSL configuration
+#-----------------------
+# Outgoing
+#----------
 # -- enable sasl
 smtpd_sasl_auth_enable = yes
+# -- enable STARTTLS encryption
+smtp_use_tls = yes
+# -- set TLS policy
+smtp_tls_policy_maps = hash:/etc/postfix/tls_policy
 # -- disallow
 smtp_sasl_security_options = noanonymous
 # -- where to find password
 smtp_sasl_password_maps = hash:/etc/postfix/sasl/sasl_passwd
-# -- enable STARTTLS encryption
-smtp_use_tls = yes
 # -- where to find certificates
 smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
 
-# -- original settings
-smtpd_sasl_local_domain = $myhostname
+# -- other settings
 broken_sasl_auth_clients = yes
-
-# TLS configuration
-#------------------
-# Outgoing
-#----------
-smtp_tls_security_level = may
 smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 
+# --------
 # Receive
 #---------
 smtpd_banner = $myhostname ESMTP $mail_name (Debian/GNU)
 smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
 smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
 smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtpd_sasl_local_domain = $myhostname
 
 # albeit commented out, postfix defaults still apply
 # sender restriction

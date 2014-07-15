@@ -179,6 +179,24 @@ define le_postfix::install(
                 refreshonly => true,
             }
             
+        } else {
+        
+            # Enable and define TLS policy to use with Google smtp
+            file { '/etc/postfix/tls_policy' :
+                  content =>  template( 'le_postfix/tls_policy.erb' ),
+                    owner => 'root',
+                    group => 'root',
+                  require => Package["postfix"],
+                   notify => Service["postfix"],
+            }
+            
+            exec { "refresh_postfix_tls_policy" :
+                    command => "postmap /etc/postfix/tls_policy",
+                       path => '/usr/sbin',
+                  subscribe => File["/etc/postfix/tls_policy"],
+                refreshonly => true,
+            }    
+        
         }
     
         file { '/etc/postfix/master.cf' :
