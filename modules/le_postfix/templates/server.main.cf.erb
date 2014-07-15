@@ -34,7 +34,7 @@ virtual_alias_maps = hash:/etc/postfix/virtual
 # Outgoing
 #----------
 # -- enable sasl
-smtpd_sasl_auth_enable = yes
+smtp_sasl_auth_enable = yes
 # -- disallow
 smtp_sasl_security_options = noanonymous
 # -- where to find password
@@ -43,7 +43,7 @@ smtp_sasl_password_maps = hash:/etc/postfix/sasl/sasl_passwd
 smtp_sasl_security_options =
 
 # -- enable STARTTLS encryption
-smtpd_use_tls = yes
+smtp_use_tls = yes
 # -- set TLS policy
 smtp_tls_policy_maps = hash:/etc/postfix/tls_policy
 # -- CA certs
@@ -57,6 +57,7 @@ smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 # Receive
 #---------
 smtpd_banner = $myhostname ESMTP $mail_name (Debian/GNU)
+smtpd_use_tls = yes
 smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
 smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
 smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
