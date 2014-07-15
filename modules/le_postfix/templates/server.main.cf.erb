@@ -35,15 +35,18 @@ virtual_alias_maps = hash:/etc/postfix/virtual
 #----------
 # -- enable sasl
 smtpd_sasl_auth_enable = yes
-# -- enable STARTTLS encryption
-smtp_use_tls = yes
-# -- set TLS policy
-smtp_tls_policy_maps = hash:/etc/postfix/tls_policy
 # -- disallow
 smtp_sasl_security_options = noanonymous
 # -- where to find password
 smtp_sasl_password_maps = hash:/etc/postfix/sasl/sasl_passwd
-# -- where to find certificates
+# -- unset for Google
+smtp_sasl_security_options =
+
+# -- enable STARTTLS encryption
+smtp_use_tls = yes
+# -- set TLS policy
+smtp_tls_policy_maps = hash:/etc/postfix/tls_policy
+# -- CA certs
 smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
 
 # -- other settings
