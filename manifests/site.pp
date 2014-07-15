@@ -65,5 +65,6 @@ node 'www-node.debinix.org' {
 	
     # user profile
     vb_user_bashrc::config { 'bekr' : }
+	le_sudo::config { 'bekr': }
     
 }
