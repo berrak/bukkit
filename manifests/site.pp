@@ -31,7 +31,8 @@ node 'www-node.debinix.org' {
 			            ensure => 'installed',
 			install_cyrus_sasl => 'true',
 			          mta_type => 'server',
-		 server_root_mail_user => 'bekr',			  
+		 server_root_mail_user => 'bekr',
+	external_root_gmail_cc => 'bertil.kronlund',
 		   smtp_relayhost_fqdn => 'smtp.gmail.com',
 		  no_lan_outbound_mail => 'false',
 	}

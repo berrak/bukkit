@@ -19,6 +19,7 @@
 #               server_root_mail_user => 'bekr',
 #                   smtp_relayhost_ip => '192.168.0.11',
 #                 smtp_relayhost_fqdn => 'smtp.example.com',
+#              external_root_gmail_cc => 'your.gmailname',
 #    }
 #
 define le_postfix::install(
@@ -31,7 +32,7 @@ define le_postfix::install(
     $server_root_mail_user='',
     $smtp_relayhost_ip = '',
     $smtp_relayhost_fqdn = '',
-
+    $external_root_gmail_cc = '',
 ) {
 
     include le_postfix::params
