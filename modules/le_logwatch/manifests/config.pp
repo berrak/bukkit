@@ -20,8 +20,12 @@ class le_logwatch::config {
 	   require => Package["logwatch"],
     }
 		
-	
-	
-	
-	
+	# Since we have configured this to be logwatch tmp directory	
+	file { "/var/tmp/logwatch":
+		ensure => 'directory',
+		 owner => 'root',
+		 group => 'root',
+		  mode => '0770',
+	   require => File ["/etc/logwatch/logwatch.conf"],
+    }
 }
