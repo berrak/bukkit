@@ -66,5 +66,9 @@ node 'www-node.debinix.org' {
     # user profile
     vb_user_bashrc::config { 'bekr' : }
 	le_sudo::config { 'bekr': }
+	
+	## Receive rsyslogs from HP-system
+	include hp_rsyslog
+	include hp_logrotate
     
 }
