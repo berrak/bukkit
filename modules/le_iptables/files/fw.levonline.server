@@ -122,6 +122,9 @@ $IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP -m tcp --dport 8080 -m state --state N
 # allow NTP to communicate with external time servers
 $IPTABLES -A OUTPUT -p udp -m udp --dport 123 -m state --state NEW -j ACCEPT
 
+# allow rsyslog to accept some remote rsyslog connections
+$IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP --dport 514 -m state --state NEW,ESTABLISHED -j ACCEPT
+
 # allow postgresql to accept local input
 $IPTABLES -A INPUT -p tcp -s 0/0 --sport 1024:65535 -d $HOSTADDR --dport 5432 -m state --state NEW,ESTABLISHED -j ACCEPT
 
