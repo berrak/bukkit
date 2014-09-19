@@ -35,6 +35,9 @@ HOSTADDR="217.70.39.231"
 # Remote access on port: 22, 80, 8080, 5432 (postgreSQL), 9418 (Git)
 BKTRUSTEDIP="81.237.245.35"
 
+# Ensure access to ssh incase Telia change ip (within a resonable range)
+BKTRUSTEDNET="81.237.0.0/16"
+
 # trusted domain net is google.com
 GOOGLENET="66.249.67.0/24"
 
@@ -91,6 +94,7 @@ $IPTABLES -A INPUT -p tcp -s $GOOGLENET -m tcp -m state --state NEW -j ACCEPT
 
 # ssh client access for management
 $IPTABLES -A INPUT -p tcp -s $BKTRUSTEDIP -m tcp --dport 22 -m state --state NEW -j ACCEPT
+$IPTABLES -A INPUT -p tcp -s $BKTRUSTEDNET -m tcp --dport 22 -m state --state NEW -j ACCEPT
 
 # public minecraft friends clients talks to the server on this port
 $IPTABLES -A INPUT -p tcp -s $DKTRUSTEDNET -m tcp --dport 25565:25566 -m state --state NEW -j ACCEPT
