@@ -42,7 +42,26 @@ class hp_rsyslog::config {
 	 	     group => 'adm',
 		      mode => '0755',
            require => Class["hp_rsyslog::install"],              
+        }
+		
+		# create the subdirectories to store remote logs
+		
+		file { "/var/log/REMOTELOGS/$::hp_rsyslog::params::send_host1" :
+            ensure => directory,
+        	 owner => 'root',
+	 	     group => 'adm',
+		      mode => '0755',
+           require => File["/var/log/REMOTELOGS"],              
         }		
+		
+		file { "/var/log/REMOTELOGS/$::hp_rsyslog::params::send_host2" :
+            ensure => directory,
+        	 owner => 'root',
+	 	     group => 'adm',
+		      mode => '0755',
+           require => File["/var/log/REMOTELOGS"],                
+        }
+		
         
         # this script add logs to logcheck to scan, and make sure files get rotated
         

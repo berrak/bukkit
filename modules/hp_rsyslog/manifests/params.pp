@@ -11,4 +11,10 @@ class hp_rsyslog::params {
     
     $logcheckfilespath = '/var/log/logcheck'
     
+    
+    ## receive logs from hosts (needed subdirectory below REMOTELOGS/)
+    
+    $send_host1 = 'hphome'
+    $send_host2 = 'dl380g7'
+    
 }
