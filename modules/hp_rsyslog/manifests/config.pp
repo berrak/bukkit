@@ -25,14 +25,24 @@ class hp_rsyslog::config {
         
         
         # use cron to update any new hosts and their remote log files on loghost
-        
+		
         file { '/etc/cron.d/remoteloghostupdate':
              source => "puppet:///modules/hp_rsyslog/remoteloghostupdate",
               owner => 'root',
               group => 'root',
                mode => '0644',
             require => File["/root/jobs/cron.update_remote_log_directories"],
-        }       
+        }
+		
+		# ensure that the directory referred by above script exist
+		
+        file { "/var/log/REMOTELOGS" :
+            ensure => directory,
+        	 owner => 'root',
+	 	     group => 'adm',
+		      mode => '0750',
+           require => Class["hp_rsyslog::install"],              
+        }		
         
         # this script add logs to logcheck to scan, and make sure files get rotated
         
