@@ -1,7 +1,7 @@
 ##############################################################
 # Managed by Puppet. Do not edit. Changes will be wiped out. #
 ##############################################################
-<VirtualHost *:80>
+<VirtualHost 217.70.39.231:80>
 	
 	ServerAdmin root@localhost
     DocumentRoot /var/www/<%= name %>/public
@@ -33,8 +33,9 @@
 	
     <Directory /var/www/<%= name %>/public>
 		DirectoryIndex disabled
-		DirectoryIndex index.php
 		DirectoryIndex index.html
+		DirectoryIndex index.php
+		
     </Directory>
 
 	ErrorLog ${APACHE_LOG_DIR}/error.log
