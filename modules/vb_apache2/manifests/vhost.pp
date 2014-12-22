@@ -70,6 +70,25 @@ define vb_apache2::vhost ( $priority='', $devgroupid='', $urlalias='', $aliastgt
              mode => '0775',
             require => File["/var/www/${name}"],
         }
+		
+		# Possible style sheets in /styles
+		
+		file { "/var/www/${name}/styles":
+			  ensure => "directory",
+			   owner => 'root',
+			   group => 'root',
+			 require => File["/var/www/${name}"],
+		}
+		
+		# Images in new site
+	
+		file { "/var/www/${name}/images":
+			 ensure => "directory",
+			  owner => 'root',
+			  group => 'root',
+			require => File["/var/www/${name}"],
+		}		
+		
         
     } else {
     
@@ -298,10 +317,30 @@ define vb_apache2::vhost ( $priority='', $devgroupid='', $urlalias='', $aliastgt
                 require => File["/var/www/${name}"],
             }     			
 			
-            
-            # No need to copy other vhost site files (like favicon.ico
-			# index.html) since it is maintained by the vhost project
-            
+			# Site index file and favicon 
+			
+			file { "/var/www/${name}/public/index.html":
+				 source => "puppet:///modules/vb_apache2/default.index.html",    
+				  owner => 'root',
+				  group => 'root',
+                require => File["/var/www/${name}"],
+			}
+		
+			file { "/var/www/${name}/public/favicon.ico":
+				 source => "puppet:///modules/vb_apache2/tux-favicon.ico",    
+				  owner => 'root',
+				  group => 'root',
+                require => File["/var/www/${name}/public"],
+			}  
+					
+			file { "/var/www/${name}/images/toolbox.jpg":
+				 source => "puppet:///modules/vb_apache2/tux-toolbox.jpg",    
+				  owner => 'root',
+				  group => 'root',
+				require => File["/var/www/${name}/images"],
+			}
+			
+
    
         }		
         
