@@ -73,20 +73,20 @@ define vb_apache2::vhost ( $priority='', $devgroupid='', $urlalias='', $aliastgt
 		
 		# Possible style sheets in /styles
 		
-		file { "/var/www/${name}/styles":
+		file { "/var/www/${name}/public/styles":
 			  ensure => "directory",
 			   owner => 'root',
 			   group => 'root',
-			 require => File["/var/www/${name}"],
+			 require => File["/var/www/${name}/public"],
 		}
 		
 		# Images in new site
 	
-		file { "/var/www/${name}/images":
+		file { "/var/www/${name}/public/images":
 			 ensure => "directory",
 			  owner => 'root',
 			  group => 'root',
-			require => File["/var/www/${name}"],
+			require => File["/var/www/${name}/public"],
 		}		
 		
         
@@ -314,7 +314,7 @@ define vb_apache2::vhost ( $priority='', $devgroupid='', $urlalias='', $aliastgt
                 source => "puppet:///modules/vb_apache2/robot.txt",    
                 owner => 'root',
                 group => 'root',
-                require => File["/var/www/${name}"],
+                require => File["/var/www/${name}/public"],
             }     			
 			
 			# Site index file and favicon 
@@ -323,7 +323,7 @@ define vb_apache2::vhost ( $priority='', $devgroupid='', $urlalias='', $aliastgt
 				 source => "puppet:///modules/vb_apache2/default.index.html",    
 				  owner => 'root',
 				  group => 'root',
-                require => File["/var/www/${name}"],
+                require => File["/var/www/${name}/public"],
 			}
 		
 			file { "/var/www/${name}/public/favicon.ico":
@@ -333,11 +333,11 @@ define vb_apache2::vhost ( $priority='', $devgroupid='', $urlalias='', $aliastgt
                 require => File["/var/www/${name}/public"],
 			}  
 					
-			file { "/var/www/${name}/images/toolbox.jpg":
+			file { "/var/www/${name}/public/images/toolbox.jpg":
 				 source => "puppet:///modules/vb_apache2/tux-toolbox.jpg",    
 				  owner => 'root',
 				  group => 'root',
-				require => File["/var/www/${name}/images"],
+				require => File["/var/www/${name}/public/images"],
 			}
 			
 
