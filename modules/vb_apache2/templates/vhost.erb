@@ -7,6 +7,7 @@
     DocumentRoot /var/www/<%= name %>/public
 	
 	ServerName <%= name %>
+	ServerAlias <%= site_domain %>
 	
 	<% if urlalias != '' -%><%= "Alias /#{urlalias}/    #{aliastgtpath}/" -%><% end %>
 	

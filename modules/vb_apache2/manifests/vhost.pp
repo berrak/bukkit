@@ -47,6 +47,8 @@ define vb_apache2::vhost ( $priority='', $devgroupid='', $urlalias='', $aliastgt
         }
          
     }
+	
+	$site_domain = $::domain
     
     
 	## Create the COMMON directories for this vhost site
